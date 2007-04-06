@@ -1,0 +1,59 @@
+var Feed = {};
+
+Feed.invalidateCache = function() {
+  var feedCache = zimki.file.search({ glob: "*feed*" });
+  var feedCount = feedCache.length;
+  feedCache.forEach( function(e) {
+    zimki.file.deleteFile( e.id );
+  });
+  return feedCount;
+}
+
+// generate a syndication feed from published entries
+function feedGenerator ( args, path, match, objects ) {
+  zimki.log.debug("no cached feed for " + path + ", generating...");
+  // suck in Tom's feed library from the library realm.
+  zimki.library.require('library', 'feed.js');
+  var type = 'atom'
+  // if we are being asked for a different type of feed, well, then we supply it
+  if ( match[1] ) type = match[1];
+  zimki.library.require("library", "wiky.js");
+  return zimki.render.feed(
+           {title: theBlog.name, type: type, description: theBlog.strap},            
+           // only get the 10 most recent posts, we don't need any more than that
+           objects || theBlog.getRecentPosts(),
+           {
+             'description': function(e) { return Wiky.toHtml(e.content) },
+             'link': function(e) { return e.permalink; }
+           }
+         );
+}
+
+zimki.publishPath(/^feed(|\/.+)/, feedGenerator);
+zimki.publishPath('/whoot/index.rdf', function ( args, path ) {
+  var match = ['','rss1'];
+  return feedGenerator( args, path, match );
+});
+zimki.publishPath('/whoot/rss.xml', function ( args, path ) {
+  var match = ['', 'rss2'];
+  return feedGenerator( args, path, match );
+});
+zimki.publishPath('/whoot/atom.xml', function ( args, path ) {
+  var match = ['', 'atom'];
+  return feedGenerator( args, path, match );
+});
+zimki.publishPath('/index.cgi/xml', function ( args, path ) {
+  var match = ['', 'atom'];
+  return feedGenerator( args, path, match );
+});
+zimki.publishPath('/index.cgi/?format=atom', function ( args, path ) {
+  var match = ['', 'atom'];
+  return feedGenerator( args, path, match );
+});
+
+zimki.publishPath(/commentsFeed(\/(.+)|)/,
+  function ( args, path, match ) {
+    match = [ '', match[2] ];
+    return feedGenerator( args, path, match, theBlog.getRecentComments() );
+  }
+);

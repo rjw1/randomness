@@ -1,0 +1,110 @@
+// provide a link to download the software
+zimki.publishPath('/zimkiBlog.zip', zimki.backup.zipFile());
+
+// load the entries for the first page
+function displayEntries( args ) {
+  // get some libraries that are appropriate
+  zimki.library.require('library', 'trimpath.js');
+  zimki.library.require('library', 'wiky.js');
+  return zimki.render.trimpath('entries.html', { blog: theBlog });
+}
+zimki.publishPath('/', displayEntries);
+
+function displayAnnotations ( args ) {
+  zimki.library.require('library', 'trimpath.js');
+  zimki.library.require('library', 'wiky.js');
+  return zimki.render.trimpath('annotations.html', { blog: theBlog });
+}
+zimki.publishPath('/annotations', displayAnnotations);
+
+function rawEntry ( args ) {
+  return uneval(Entry.get(args.id));
+}
+zimki.publishPath('/raw', rawEntry);
+
+function annotate ( args ) {
+  if (!args.id) throw new Error("no post id");
+  if (!args.text) throw new Error("no annotated text");
+  if (!args.annotation) throw new Error("no annotation");
+  var theEntry = Entry.get(args.id)
+  theEntry.annotate( args.text, args.annotation );
+  theEntry.save();
+  return uneval(theEntry.annotations);
+}
+zimki.publishPath('/annotate', annotate);
+
+// this is really nasty, but its so that I can edit files
+// directly.  Later on I should just move these to published
+// paths, but for now it's handy...
+function displayPage ( args, path, match ) {
+  var name = match[1];
+  if ( name.match(/\.(html|css|js)/) ) {
+    try { return zimki_template.get( { name: match[1] } ).content }
+    catch (e) { return { status: 404 }; }
+  }
+  return { status: 404 };
+}
+zimki.publishPath(/((.+)\.(.+))/, displayPage );
+
+// get a single entry and its comments.
+function displayEntry ( args, path, match ) {
+  // get some libraries that are appropriate
+  zimki.library.require('library', 'trimpath.js');
+  zimki.library.require('library', 'wiky.js');
+  return zimki.render.trimpath('entry.html', { blog: theBlog, entry: theBlog.getPostNamed(match[1])});
+}
+zimki.publishPath(/entry\/(.+)/, displayEntry);
+
+// when you post an unverified comment it is only valid for
+// fifteen minutes.  If you don't verify it within that
+// period then it expires and goes away.
+function postComment ( args, path, match, theComment ) {
+  if (!theComment) theComment = Comment.create( args );
+  // get some libraries that are appropriate
+  zimki.library.require('library', 'trimpath.js');
+  zimki.library.require('library', 'wiky.js');
+  return zimki.render.trimpath("verify_comment.html", { comment: theComment });
+}
+zimki.publishPath('/postComment', postComment);
+
+// this just does the captcha verification to
+// ensure that a comment poster is human.  Pretty
+// straightforward really.
+function verifyComment( args, path, match ) {
+  var theComment = Comment.get( args.commentId );
+  try {
+    theComment.verify( args.captchaCode );
+    return zimki.redirect(theComment.entry.permalink);
+  } catch(e) {
+    // get some libraries that are appropriate
+    zimki.library.require('library', 'trimpath.js');
+    zimki.library.require('library', 'wiky.js');
+    return zimki.render.trimpath("verify_comment.html", { comment: theComment });
+  }
+}
+zimki.publishPath('/verifyComment', verifyComment);
+
+// renders a page that has all the entries tagged with a tag that is 
+// supplied on the URL
+function tagView (args,path,match) {
+  // get some libraries that are appropriate
+  zimki.library.require('library', 'trimpath.js');
+  zimki.library.require('library', 'wiky.js');
+  return zimki.render.trimpath('tagged.html', { blog: theBlog, tag: match[1] });
+}
+zimki.publishPath(/tags\/(.+)/, tagView);
+
+// typepad used to have this URL available, so we should probably have it
+// as well.
+zimki.publishPath('/whoot', function() { return zimki.redirect(zimki.root) });
+
+
+
+
+
+
+
+
+
+
+

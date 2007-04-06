@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Setup your Blog</title>
+  </head>
+  <body>
+    <h1>Setup your Blog</h1>
+    {if !error}
+    <p>
+      This is my little blogging engine.  I've done what I can to make it
+      simple to install.  Once you've got things configured you'll be able
+      to do everything you need from the admin screens, but first of all
+      you need to name your blog, and give yourself a username and password.
+    </p>
+    {else}
+    <p>${error}</p>
+    {/if}
+    <form name="blogSetup" action="/" method="post">
+      <label for="form_blogname">What are you going to call your blog?</label>
+      <input type="text" name="name" id="form_blogname"/>
+      <label for="form_blogstrap">Now describe your blog in a simple sentance:</label><
+      <input type="text" name="strap" id="form_blogstrap"/>
+      <label for="form_username">I also need your username:</label>
+      <input type="text" name="username" id="form_username"/>
+      <label for="form_password1">And your password</label>
+      <input type="password" name="password1" id="form_password1"/>
+      <label for="form_password2">Twice.</label>
+      <input type="password" name="password2" id="form_password2"/>.
+      And thats it.  Just click the setup button!
+      <input type="submit" value="Setup"/>
+    </form>
+  </body>
+</html>
+    

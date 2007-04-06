@@ -1,0 +1,57 @@
+zimki.library.require('library', 'xmlrpc.js');
+XMLRPC.prototype.call = function(method, args) {
+  var xml  = XMLRPC.makeRequest(method, args);
+  var data = zimki.remote.postXML( this.endpoint, xml.toXMLString(), null, null, 'text/xml' );
+  return XMLRPC.parseResponse( data );
+};
+
+function typepadBlogId( username, password, blogurl, endpoint ) {
+  // use a specified endpoint if we have one
+  if (endpoint) typepad = new XMLRPC(endpoint)
+  else typepad = new XMLRPC('http://www.typepad.com/t/api');
+
+  var response = typepad.call('blogger.getUsersBlogs',['zblog',username, password]);
+  if (blogurl == null)
+    return response[0].blogid;
+  for each ( let blog in response ) {
+    if ( blog.url == blogurl ) {
+      return blog.blogid;
+    }
+  }
+  throw new Error("no blog matching url found");
+}
+
+// to import simply call this...
+function importFromTypepad( username, password, numOfPosts, endpoint ) {
+  // use a specified endpoint if we have one
+  if (endpoint) typepad = new XMLRPC(endpoint)
+  else typepad = new XMLRPC('http://www.typepad.com/t/api');
+
+  var blogId  = typepadBlogId( username, password, null, endpoint );
+  var response = typepad.call('metaWeblog.getRecentPosts',[blogId, username, password, numOfPosts]);
+
+  var theUser = zimki.user.search()[0];
+  
+  for each ( post in response ) {
+    let anEntry;
+    try {
+      anEntry = Entry.get({ tpPostId: post.postid });
+    } catch(e) {
+      anEntry = Entry.create(
+         {
+           tpPostId: post.postid,
+           tpPermalink: post.permalink,
+           name: post.title
+         }
+      );
+    }
+    try {
+      anEntry.content= Wiky.toWiki( post.description );
+    } catch (e) { anEntry.html = post.description }
+    anEntry.creation_date = post.dateCreated;
+    anEntry.owner = theUser;
+    anEntry.slug  = anEntry.name;
+    anEntry.published = true;
+    anEntry.save();
+  }
+}

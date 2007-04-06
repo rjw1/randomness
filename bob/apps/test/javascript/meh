@@ -1,0 +1,7 @@
+function meh() {
+var captcha = zimki.captcha.create() ;
+
+return "This is the "+zimki.version+" version of Zimki"+"<br /><img src=\""+zimki.root+captcha.url+"\">" ;
+
+}
+zimki.publishPath("/" , meh);

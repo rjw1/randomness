@@ -1,0 +1,39 @@
+/* this is a prototype tag engine, in lieu of having a built in, lightning fast tag engine */
+/* It probably is slow in places, as it is naive to the extreme.  But I don't care, this is a */
+/* blog not a social bookmarking site */
+
+var TagEngine = function() {};
+
+TagEngine.prototype = {
+
+  'parse': function ( tagstring ) {
+    // first of all try the simplest thing that could work
+    var tags = [];
+    if (tagstring.indexOf('"') == -1) {
+      tags = tagstring.split(/\s+/);
+    } else {
+      start = tagstring.indexOf('"');
+      end = tagstring.indexOf('"', start+1);
+      var quotedTag = tagstring.substr(start+1, end-1);
+      tags.push(quotedTag);
+      let remaining = tagstring.substr(end+1);      
+      tags = tags.concat( this.parse( remaining ) ).filter(function(e) { return e.length>0 });
+    }
+    return tags;
+  },
+  
+  'tag': function ( url, tagstring ) {
+     var tags = this.parse( tagstring );
+     var fulltags = new Array();
+     for each (let tag in tags) {
+       var theTag = Tag.tagFor( tag );
+       var theUrl = URL.urlFor( url );
+       theUrl.addTag( tag );
+       theTag.addURL( url );
+       theTag.save();
+       theUrl.save();
+     }
+     return fulltags;
+  }
+
+};

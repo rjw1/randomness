@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>Verify your Comment</title>
+    <link rel="stylesheet" href="${zimki.root}/blog.css"></link>
+  </head>
+  <body>
+    <h1>Thanks for your Comment</h1>
+    <p>
+      Unfortunately due to the high amount of blog spam people
+      get these days, you'll need to verify you are a person
+      by typing in the text you see in this image.
+    </p>
+    <p>
+      <img src="${comment.captcha.url}">
+    </p>
+    <form name="captcha_verify" action="${zimki.root}/verifyComment" method="post">
+      <input type="hidden" name="captchaId" value="${comment.captcha.id}"/>
+      <input type="hidden" name="commentId" value="${comment.id}"/>
+      <input type="text" name="captchaCode"/>
+      <input type="submit" value="I'm a Person!"/>
+    </form>
+  </body>
+</html>
+    

@@ -1,0 +1,15 @@
+zimki.publishPath('/index.cgi/id_bash_functions', function() {
+  return zimki.redirect("http://tech.randomness.org.uk/entry/bash_functions");
+});
+zimki.publishPath('/index.cgi/id_nagios_docs', function() {
+  return zimki.redirect("http://tech.randomness.org.uk/entry/nagios_setup");
+});
+zimki.publishPath('/index.cgi/id_switching', function() {
+  return zimki.redirect("http://tech.randomness.org.uk/entry/switching");
+});
+zimki.publishPath('/index.cgi/id_migrating_mailinglist', function() {
+  return zimki.redirect("http://tech.randomness.org.uk/entry/migrating_mailinglists");
+});
+zimki.publishPath('/index.cgi/id_shiny_lights', function() {
+  return zimki.redirect("http://tech.randomness.org.uk/entry/shiny_lights");
+});

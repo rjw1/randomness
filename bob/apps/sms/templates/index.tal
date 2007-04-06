@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<html xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Fun with Sms</title>
+</head>
+<body>
+
+<img src="zimki_logo.gif" 
+    tal:attributes="src string:${root}/zimki_logo.gif"
+/>
+<p>
+<a href="sms.html">sms</a><br />
+<a href="wappush.html">wappush</a>
+</p>
+<p>
+This site uses the power of <a href="http://www.kapow.co.uk">kapow</a>
+</p>
+</body>
+</html>
+
+

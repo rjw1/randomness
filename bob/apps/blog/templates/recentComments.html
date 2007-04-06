@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>Recent Comments</title>
+    <link rel="stylesheet" href="${zimki.root}/blog.css"></link>
+
+  </head>
+  <body>
+    <div id="entries">
+      <h1>Recent Comments (${blog.getRecentComments().length})</h1>
+      {for comment in blog.getRecentComments()}
+      <div id="entry">
+        <h1 class="entry_title">Comment by ${comment.name}</h1>
+        ${Wiky.toHtml(comment.content)}
+        {if comment.entry}
+        <p class="entry_footer">
+          Written on ${comment.creation_date}<br/>
+          Attached to <a href="/${comment.entry.slug}">${comment.entry.name}</a>
+        </p>
+        {/if}
+      </div>
+      {/for}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+<head>
+</head>
+<body>
+
+<a name="1">
+<p>Bash Startup Stuff<p>
+<pre>
+bob@betty:~ >cat .bashrc
+[ -f ~/.bash&#95;aliases ] && . ~/.bash&#95;aliases
+PS1="\u@\h:\w >"
+PATH=$PATH:/usr/sbin:/usr/local/sbin:/sbin
+bob@betty:~ >cat .bash&#95;aliases
+for MACHINE in `cat ~/.machines`
+do
+alias $MACHINE="xterm -T $MACHINE -e ssh $MACHINE &"
+done
+</pre>
+</a>
+
+<a name="2">
+<p>a function</p>
+<pre>
+function testmachine {
+machine=`grep $1 ~/.machines`
+if [ "x$machine" = "x" ]
+then
+        echo "not in ~/.machines adding"
+        echo $1 >> ~/.machines
+        source ~/.bash&#95;aliases
+fi
+}
+</pre>
+</a>
+
+</body>
+</html>

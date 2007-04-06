@@ -1,0 +1,17 @@
+Tag.tagFor = function( tag ) {
+  try {
+    var aTag = Tag.get({name: tag});
+    return aTag;
+  } catch(e) {
+    return Tag.create({name: tag, urls: {}});
+  }
+};
+
+Tag.prototype.addURL = function( url ) {
+  this.urls[url] += 1;
+};
+
+Tag.prototype.hasTagged = function( url ) {
+  if (this.urls[url]) return true;
+  return false;
+};

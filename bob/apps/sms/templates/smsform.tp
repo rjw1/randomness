@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>Send a SMS</title>
+</head>
+<body>
+<form action="smssend.html" method=post>
+<ul>
+<li>username: <input type="text" size=40 name="username">
+<li>Number:  <input type="text" size=40 name="mobile">
+<li>Message: <input type="text" size=160 name="sms">
+</ul>
+<input type="submit">
+</form>
+</body>
+</html>

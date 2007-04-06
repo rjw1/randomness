@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>${entry.name}</title>
+    <link rel="stylesheet" href="${zimki.root}/blog.css"></link>
+    <script src="http://service.zimki.com/user/library-staging/wiky.js"></script>
+    <script src="${zimki.root}/preview.js"></script>
+  </head>
+  <body>
+    <div id="entries">
+      ${%zimki.render.trimpath('head.html',{blog: theBlog})%}
+
+
+
+${zimki.render.trimpath('sidebar.html')}
+     <div id="content">
+ <div id="paging">
+        {if entry.previousBy('creation_date',1)[0]}<a href="/entry/${entry.previousBy('creation_date',1)[0].slug}">&lt;&lt ${entry.previousBy('creation_date',1)[0].name}</a>{/if}
+        <a href="/">Main</a>
+        {if entry.nextBy('creation_date',1)[0]}<a href="/entry/${entry.nextBy('creation_date',1)[0].slug}">${entry.nextBy('creation_date',1)[0].name} &gt;&gt</a>{/if}
+      </div>
+      <div id="entry">
+        <h1 class="entry_title">${entry.name}</h1>
+        ${Wiky.toHtml(entry.content)}
+        <p class="entry_footer">
+          Written by ${entry.owner.username} on ${entry.creation_date.toDateString()}
+          {if zimki.session.username}| <a href="${zimki.root}/edit/${entry.id}">Edit this</a>{/if}
+        </p>
+        {if entry.tags}
+        <p class="entry_footer">
+          Tags: ${entry.tagObject.asBlog()}
+        </p>
+        {/if}
+      </div>
+     <div id="comments">
+        <h1><a name="comments">Comments</a></h1>
+        {for comment in entry.comments}
+        <div id="comment">
+          ${Wiky.toHtml(comment.content)}
+        </div>
+        <p id="comment_footer">
+          {if comment.url}
+          Posted by <a href="${comment.url}">${comment.name}</a> on 
+          {else}
+          Posted by ${comment.name} on
+          {/if}
+          ${comment.creation_date.toDateString()}
+        </p>
+        {/for}
+        <form action="${zimki.root}/postComment" method="post">
+          <input type="hidden" name="entryId" value="${entry.id}"/>
+          <label for="form_name">Name:</label><br/>
+          <input id="form_name" size="50" type="text" name="name"/><br/>
+          <label for="form_email">Email:</label><br/>
+          <input id="form_email" size="50" type="text" name="email"/><br/>
+          <label for="form_url">Url:</label><br/>
+          <input id="form_url" size="50" type="text" name="url"/><br/>
+          <label for="toPreview">Comments (using <a href="http://goessner.net/articles/wiky/">Wiky</a> syntax):</label><br/>
+          <textarea id="toPreview" name="content" rows="10" cols="50"></textarea>
+          <br/>
+          <input type="submit" value="Post"/>
+        </form>
+        <div id="preview"></div>
+      </div>
+    </div>
+</div>
+  </body>
+</html>

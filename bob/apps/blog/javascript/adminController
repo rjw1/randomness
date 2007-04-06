@@ -1,0 +1,117 @@
+// this is a simple function to wrap zimki.publishPath with
+//   something that ensures people are logged in to use the
+//   requested functionality.  If they're not it redirects to
+//   a login page.  I'd like to think of a way to make this
+//   a generic library function, but can't think how to keep
+//   it simple at the moment.
+zimki.publishAdmin = function( path, method ) {
+  var myFunction = function (args, path, match ) {
+    if (!zimki.session.username) {
+      return zimki.redirect( zimki.root + "/login.html" );
+    } else {
+      return method( args, path, match );
+    }
+  };
+  zimki.publishPath(path, myFunction);
+};
+
+// this provides the admin area with the ability to save
+//  new entries and to edit old ones.
+function saveEntry( args ) {
+  var theEntry;
+  
+  // if we have an id, then we are updating,
+  // otherwise we need to create an entry
+  if (args.id) {
+    theEntry = Entry.get(args.id);
+    theEntry.content = args.content;
+    theEntry.name    = args.name;
+  } else {
+    // if we don't have the title of the entry and the content of the entry
+    //  we should probably throw an error here that gets passed back
+    //  to the user.  I can't be arsed at the moment though...
+    theEntry = Entry.create( { content: args.content, name: args.name });
+  }
+  
+  // take the optional data if we have it
+  if (args.slug) theEntry.slug = args.slug;
+  if (args.published) theEntry.published = true;
+  if (args.tags) theEntry.tag( args.tags );
+
+  theEntry.save();
+  return zimki.redirect(zimki.root + "/admin");
+}
+zimki.publishAdmin('/save', saveEntry );
+
+// a simple login function
+function runLogin( args ) {
+  zimki.session.login( args.username, args.password );
+  return zimki.redirect(zimki.root + "/admin");
+}
+zimki.publishPath('/login', runLogin );
+
+// renders the main admin page
+function displayAdmin() {
+  // get some libraries that are appropriate
+  zimki.library.require('library', 'trimpath.js');
+  zimki.library.require('library', 'wiky.js');
+  return zimki.render.trimpath('admin.html', { blog: theBlog });
+}
+zimki.publishAdmin('/admin', displayAdmin);
+
+// renders the blog detail page
+function blogDetail () {
+  // get some libraries that are appropriate
+  zimki.library.require('library', 'trimpath.js');
+  zimki.library.require('library', 'wiky.js');
+  return zimki.render.trimpath('blog_detail_edit.html',{ blog: theBlog});
+}
+zimki.publishAdmin('/blogDetail', blogDetail);
+
+// save the blog's main details
+function blogSave ( args ) {
+  theBlog.name=args.name;
+  theBlog.strap=args.strap;
+  theBlog.save();
+  return zimki.redirect(zimki.root+'/admin');
+}
+zimki.publishAdmin('/blogSave', blogSave);
+
+// delete a comment attached to an entry.
+function deleteComment ( args ) {
+  var theComment = Comment.get( args.id );
+  var theEntry   = theComment.entry;
+  theComment.deleteInstance();
+  return zimki.redirect(zimki.root+'/edit/'+theEntry.id);
+}
+zimki.publishAdmin('/deleteComment', deleteComment);
+
+// remove an entry from the object store
+function deleteEntry ( args, path, match ) {
+  var theEntry = Entry.get( match[1]  );
+  theEntry.comments.forEach(function( c ) { c.deleteInstance(); });
+  theEntry.deleteInstance();
+  return zimki.redirect(zimki.root + '/admin');
+}
+zimki.publishAdmin(/delete\/(.+)/, deleteEntry );
+
+// edit/create an entry
+function displayEdit ( args, path, match ) {
+  var theEntry;
+  if (match) theEntry = Entry.get(match[1]);
+  else theEntry = {};
+  // get some libraries that are appropriate
+  zimki.library.require('library', 'trimpath.js');
+  zimki.library.require('library', 'wiky.js');
+  return zimki.render.trimpath('edit.html', { blog: theBlog, entry: theEntry });
+}
+zimki.publishAdmin('/create',displayEdit);
+zimki.publishAdmin(/edit\/(.+)/, displayEdit);
+zimki.publishAdmin('/logout', function() { zimki.session.logout(); return zimki.redirect(zimki.root) } );
+
+function recentComments( args ) {
+  zimki.library.require('library','trimpath.js');
+  zimki.library.require('library','wiky.js');
+  return zimki.render.trimpath('recentComments.html', { blog: theBlog } );
+}
+zimki.publishPath( '/recentComments', recentComments );

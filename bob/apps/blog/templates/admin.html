@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Administer your Blog</title>
+    <link rel="stylesheet" href="edit.css"/>
+  </head>
+  <body>
+    <h1>Administer your Blog</h1>
+    <ul>
+      <li><a href="/">View your Blog</a></li>
+      <li><a href="/blogDetail">Edit your Blog's Details</a></li>
+      <li><a href="/recentComments">View Recent Comments</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+    <table border=1>
+      <tr>
+        <td colspan="4"><a href="create">Create an Entry</a></td>
+      </tr>
+      <tr>
+        <th>Created</th>
+        <th>Subject</th>
+        <th>Published</th>
+        <th>Actions</th>
+      </tr>
+      {for entry in blog.entries}     
+      <tr>
+        <td>${entry.creation_date.toDateString()}</td>
+        <td><a href="${entry.permalink}">${entry.name}</a></td>
+        <td>{if entry.published}true{else}false{/if}</td>
+        <td>
+          <ul class="nav">
+            <li class="nav"><a href="edit/${entry.id}">edit</a></li>
+            <li class="nav"><a href="delete/${entry.id}">delete</a></li>
+          </ul>
+        </td>
+      </tr>
+      {/for}
+      <tr class="final">
+        <td colspan="4"><a href="create">Create an Entry</a></td>
+      </tr>        
+    </table>
+  </body>
+</html>

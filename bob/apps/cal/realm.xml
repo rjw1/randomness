@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<realm name="bobcal">
+  <classes>
+    <class instance_permissions="000000" name="cal" permissions="000000"/>
+  </classes>
+  <users/>
+  <groups/>
+</realm>

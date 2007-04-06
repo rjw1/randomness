@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<realm name="bobwiki">
+  <classes>
+    <class instance_permissions="000000" name="Page" permissions="000000"/>
+  </classes>
+  <users>
+    <user groups="" name="bob" password="password"/>
+  </users>
+  <groups/>
+</realm>

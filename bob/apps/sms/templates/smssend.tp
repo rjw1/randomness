@@ -1,0 +1,12 @@
+<head>
+    <title>Sent ${type}</title>
+</head>
+<body>
+<p>your message to  ${mobile}was ${result}</p>
+<p>This account has ${number} messages left</p>
+<p><a href="${type}.html">send a ${type}</a><br>
+<a href="/">main page</a>
+</p>
+
+</body>
+</html>

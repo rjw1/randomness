@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>Edit your Blog's Details</title>
+    <link rel="stylesheet" href="${zimki.root}/edit.css"></link>
+  </head>
+  <body>
+    <h1>Edit your Blog's Details</h1>
+    <form name="blog_details" action="/blogSave" method="post">
+      <label for="blog_name">Name:</label>
+      <input id="blog_name" type="text" name="name" value="${blog.name}"><br/>
+      <label for="blog_strap">Strapline:</label>
+      <input id="blog_strap" type="text" size="50" name="strap" value="${blog.strap}"><br/>
+      <input type="submit" value="Update"/>
+      <input type="submit" value="Cancel" onclick="javascript:history.back(); return false;"/>
+    </form>
+  </body>
+</html>

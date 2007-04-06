@@ -1,0 +1,53 @@
+
+/* this blog's details, things like the name and whatever */
+var theBlog = (Blog.search())[0];
+
+// We want to be able to get the blog's entries very easily
+// so we'll just define a getter that searchs the Entry table
+// If we are logged in (and therfore an admin) then we don't
+// return every entry, even if it has been published.
+Blog.prototype.__defineGetter__("entries", function() {
+  if (!zimki.session || ( zimki.session && !zimki.session.username ))
+    return Entry.search({published: true},{order_by: "-creation_date"});
+  else return Entry.search({},{order_by:"-creation_date"});
+});
+
+// returns a list of recent posts if aNumber is provided
+// then it will get the last aNumber posts.  Otherwise
+// it gets the last 10 posts.
+Blog.prototype.getRecentPosts = function( aNumber ) {
+  if (!aNumber) aNumber = 10; // sensible default
+  return Entry.search({published:true}, {order_by:"-creation_date", page: 1, per_page: aNumber});
+}
+
+// gets a post named with the slug named aName
+Blog.prototype.getPostNamed = function( aName ) {
+  if (aName == null) throw new Error("a name must be provided");
+  searchName = aName;
+  if (searchName.match(/\s/)) {
+    searchName = aName.replace(/\s/g, '_');
+    searchName = aName.replace(/\W/g, '_');  
+  }
+  return Entry.get({ rawSlug: searchName });
+}
+
+// returns all the posts tagged with aTag
+Blog.prototype.getTaggedPosts = function( aTag ) {
+  if (aTag == null) throw new Error("a tag must be provided!");
+  var tag = Tag.tagFor(aTag);  
+  var entries = new Array();
+  try {
+    for ( let id in tag.urls ) entries.push( Entry.get( id ) );
+  } catch (e) { zimki.log.debug("we failed to get some of the tagged entries"); }
+  // sort the list of entries by reverse creation_date.
+  return entries.sort( function(a,b) {
+    if (a.creation_date > b.creation_date) return -1;
+    if (a.creation_date == b.creation_date) return 0;
+    if (a.creation_date < b.creation_date) return 1;
+  });
+}
+
+Blog.prototype.getRecentComments = function(aNumber) {
+  if (!aNumber) aNumber = 10; // sensible default
+  return Comment.search({ verified: true }, {order_by:"-creation_date", page: 1, per_page: aNumber});
+};

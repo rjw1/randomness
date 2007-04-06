@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>getSelectedText test</title>    
+  </head>
+  <body>
+  <a href="#" onclick="foo()">select text, then click</a>
+  <script type="text/javascript">
+    
+      var annotations = {};
+      
+      function show ( sel ) {
+        var urlsDiv = document.getElementById('urls');
+        var urls    = new Array();
+        for ( i=0; i<annotations[sel].length; i++ ) {
+          var text = "<a href=\"" + annotations[sel][i] +"\">"+annotations[sel][i]+"</a>";
+          urls[i] = text;
+        }
+        urlsDiv.innerHTML = urls.join(', ');
+      }
+      
+      function viewhtml () {
+        alert(document.getElementById('text').innerHTML);
+      }
+      
+      function foo () {
+        var theDiv = document.getElementById("text");
+        var sel = window.getSelection();
+        var url = prompt("how do you want to annotate this text?",'');
+        if (url == null) return;
+        if (!annotations[sel]) {
+          annotations[sel] = new Array();
+          annotations[sel].push(url);
+        } else {
+         annotations[sel].push(url);
+         return;
+        }
+        var text = theDiv.innerHTML;
+        var re  = new RegExp(sel, "g");
+        theDiv.innerHTML = text.replace(re, "<a href='#' onmouseover=\"show('" + sel +"')\">" + sel + "</a>");
+      }
+    </script>
+  <div id="text">
+  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras viverra est ut magna. Sed aliquam dui dignissim felis. Nulla tempus. Pellentesque dolor lectus, faucibus vitae, auctor in, venenatis nec, erat. Vestibulum nec neque. Pellentesque posuere sollicitudin est. Pellentesque eget nisl. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus interdum eros ac est. Quisque lacinia, orci et lacinia suscipit, est enim porttitor nibh, ut mollis dui quam vel libero. Morbi dapibus, velit facilisis fermentum accumsan, nisl tortor placerat pede, nec interdum mi neque id odio. Quisque accumsan nisl vel risus.
+Duis malesuada. Suspendisse interdum, nibh ut feugiat commodo, neque nunc molestie mauris, eget faucibus neque lacus ac tortor. Integer accumsan. Vivamus dapibus. Nulla arcu elit, mollis eu, fringilla vitae, mattis nec, nunc. Curabitur aliquet. Nulla ut nulla ac sapien tincidunt fermentum. Vestibulum tempor congue ipsum. Etiam nisi. Morbi sit amet dolor sed mi faucibus commodo. Proin eget augue.
+Maecenas augue elit, rhoncus nec, luctus in, vehicula et, arcu. Donec vel eros. Suspendisse vehicula, turpis tincidunt condimentum hendrerit, elit arcu imperdiet libero, vel volutpat leo velit nec enim. Etiam posuere fringilla diam. Sed vestibulum augue a nibh. Maecenas quam purus, tempus nec, ultricies eu, rutrum eu, orci. Etiam pellentesque magna eu augue. Fusce porta libero ac diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras cursus posuere sem. Nulla pellentesque elementum justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Mauris in lacus. Suspendisse tortor. Ut luctus magna a massa. Phasellus iaculis.
+Integer et metus. Quisque tempus aliquet quam. Sed tincidunt ligula bibendum nisi. Sed molestie massa in sapien. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse at ante. Morbi ipsum. Mauris neque dui, sagittis nec, semper eu, luctus eget, justo. Aliquam luctus nisi bibendum arcu. Proin massa arcu, commodo at, adipiscing non, sollicitudin in, diam. Curabitur nonummy nunc. Proin vulputate viverra eros. Nunc odio. Donec in libero non mi placerat consequat. Morbi ullamcorper, pede quis blandit iaculis, tortor urna accumsan pede, ut sagittis enim turpis nec erat. Integer et risus.
+Integer porttitor lorem nec lorem. Vivamus nibh. Morbi euismod felis eget arcu. Proin porttitor aliquam turpis. Praesent viverra tempor velit. Phasellus eget dui. Aliquam erat volutpat. Duis dui tellus, pharetra at, tincidunt in, dictum nec, leo. Nunc gravida, erat imperdiet ultricies dignissim, nunc turpis vehicula mauris, id tincidunt enim dui sed felis. Sed pharetra luctus dui.
+   </div>
+   <div id="urls">
+   
+   </div>
+   </div>
+  </body>
+<html>

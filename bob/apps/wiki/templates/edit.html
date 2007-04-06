@@ -1,0 +1,43 @@
+{if zimki.session.username}
+
+<div>
+<h1>edit page ${name}</h1>
+
+<!-- load the markup language from the server (same library as the server-side markup) -->
+<script src="http://service.zimki.com/u/library/wiky.js"> </script>
+
+<!-- this function updates the preview div -->
+<script>
+  function updatePreview() {
+    document.getElementById("preview").innerHTML = Wiky.toHtml( document.getElementById("source").value );
+  }
+</script>
+
+<table border="1">
+<tr>
+
+<td valign="top">
+
+<!-- the edit form -->
+<form method="post" action="${ zimki.root }/${ name }">
+  <textarea id="source" rows="30" cols="70" name="content" onkeyup="updatePreview()" 
+    >${page?page.content:''|h}</textarea>
+  <p><input type="submit" name="save" value="save"></p>
+</form>
+
+</td>
+<td valign="top">
+
+<!-- text preview lives here -->
+<div id="preview"></div>
+
+</td></tr></table>
+
+<!-- update preview on first page load -->
+<script>updatePreview()</script>
+
+</div>
+{else}<div> you need to be logged in </div>
+{/if}
+
+

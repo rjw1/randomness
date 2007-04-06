@@ -1,0 +1,70 @@
+
+/*
+  We also want to be able to get the entry that relates to
+  a comment very easily
+*/
+Comment.prototype.__defineGetter__("entry", function() {
+  return Entry.get(this.entryId);
+});
+
+// override the create function with one of
+// our own.  Any comment that hasn't been verified
+// expires after 15 minutes and has a captcha
+// attached.
+Comment.create = function( args ) {
+  var commentArgs = args;
+  // we need to expire in 15 minutes if the comment
+  // verified
+  commentArgs.expires = "+15m";
+  commentArgs.verified = false;
+  // create the object in the db.
+  theComment = Comment.createInstance( commentArgs );
+  // create the captcha that we'll use to verify the commment.
+  theComment.captcha = zimki.captcha.create();
+  // save the comment, so that we save the captcha
+  theComment.save();
+  // return it to the calling function.
+  return theComment;
+};
+
+Comment.prototype.__defineGetter__("permalink",
+  function () {
+    return this.entry.permalink; 
+  });
+
+// fetches the entry this comment is attached to
+Comment.prototype.__defineGetter__("entry",
+  function() {
+    try {
+      return Entry.get( this.entryId );
+    } catch(e) { /* do nothing here */ }
+  }
+);
+
+// if a comment is verified successfully (i.e.
+// doesn't throw an exception) then the comment's expiry
+// and captcha are removed and it is marked as verified.
+// If the comment fails verification we generate a new 
+// captcha and throw an exception.
+Comment.prototype.verify = function( code ) {
+  try {
+    zimki.captcha.verify( this.captcha.id, code );
+    // it worked, so delete the captcha instance
+    zimki_captcha.get( this.captcha.id ).deleteInstance();
+    // now change the settings on the comment.
+    // we've verified it, and we don't want it to expire anymore.
+    this.verified = true;
+    delete this.expires;
+    // save our changes
+    this.save();
+  } catch (e) {
+    // failed to verify the comment, so delete the old
+    // captcha and create a new one
+    zimki_captcha.get( this.captcha.id ).deleteInstance();
+    this.captcha = zimki.captcha.create();
+    // save the new captcha
+    this.save();
+    // throw an error.
+    throw new Error("could not verify comment");
+  }
+};

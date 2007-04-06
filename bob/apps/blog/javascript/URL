@@ -1,0 +1,41 @@
+URL.prototype.hasTag = function( tag ) {
+  if (this.tagList[tag]) return true;
+  return false;
+};
+
+URL.prototype.__defineGetter__('tags', function() {
+  var tags = new Array;
+  for (let key in this.tagList) {
+    if ( key.indexOf(" ") >= 0) { key = '"' + key + '"'; }
+    tags.push(key);
+  }
+  return tags.join(" ");
+});
+
+URL.urlFor = function( url ) {
+  try {
+    return URL.get({name: url});
+  } catch(e) {
+    return URL.create({name: url, tagList: {}});
+  }
+};
+
+URL.prototype.addTag = function( tag ) {
+  this.tagList[tag] += 1;
+};
+
+URL.prototype.asTechnorati = function() {
+  var tags = new Array();
+  for ( let tag in this.tagList) {
+    tags.push('<a href="http://technorati.com/tag/'+tag+'" rel="tag">'+tag+'</a>')
+  }
+  return tags.join(", ");
+};
+
+URL.prototype.asBlog = function() {
+  var tags = new Array();
+  for ( let tag in this.tagList) {
+    tags.push('<a href="' + zimki.root + '/tags/' + tag +'" rel="tag">'+tag+'</a>');
+  }
+  return tags.join(", ");
+};

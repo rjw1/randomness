@@ -1,0 +1,18 @@
+<h1>${page.name|h}</h1>
+
+<p>
+  page revision ${page.revision} created ${ page.creation_date }
+</p>
+
+<p><a href="?history=1">history</a>
+ {if zimki.session.username}/ <a href="?edit=1">edit</a>{/if}
+ / <a href="${ zimki.root }">homepage</a>
+ / <a href="${ zimki.root }/all.html">all pages</a>
+</p> 
+<p>{if zimki.session.username}logged in {/if}</p>
+
+
+<hr>
+${page.html()}
+<hr>
+

@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>${blog.name}</title>
+    <link rel="stylesheet" href="${zimki.root}/blog.css"></link>
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="${zimki.root}/feed"/>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var annotations = {};
+      function showAnnotation ( theId, theAnnotation ) {
+        alert(annotations[theId][theAnnotation]);
+      }
+      
+      function annotate( entryId, annotations ) {
+        if (annotations == null) annotations = {};
+        var text = window.getSelection();
+        var theDiv = document.getElementById( entryId );
+        var aText = prompt("How do you want annotate\n'" + text + "'");
+        var xhr = new XMLHttpRequest();
+        var url =  '${zimki.root}' + '/annotate?id=' + entryId + '&text=' + text + '&annotation=' + aText;
+        xhr.open('get', url, true);
+        xhr.send("");
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
+            annotations[entryId] = eval(xhr.responseText); 
+          }
+        };
+        alert(entryId);
+      }
+      alert(annotations);
+    </script>
+    <div id="entries">
+      <h1>${blog.name}</h1>
+      <p class="strapline">${blog.strap}</p>      
+      {for entry in blog.getRecentPosts()}
+      <div id="entry">
+        <div id="${entry.id}">
+          <script>annotations["${entry.id}"] = ${uneval(entry.annotations)};</script>
+          <h1 class="entry_title">${entry.name}</h1>
+          ${entry.rendered}
+          <p class="entry_footer">
+            Written by ${entry.owner.username} on ${entry.creation_date.toDateString()} |
+            <a href="${entry.permalink}">Permalink</a> |
+            <a href="${entry.permalink}#comments">Comments (${entry.comments.length})</a> |
+            <a href="#" onclick="annotate('${entry.id}', ${uneval(entry.annotations)})">Annotate</a>         
+            {if zimki.session.username}| <a href="${zimki.root}/edit/${entry.id}">Edit this</a>{/if}
+          </p>
+          {if entry.tags}
+          <p class="entry_footer">
+            Tags: ${entry.tagObject.asBlog()}
+          </p>
+          {/if}
+        </div>
+      </div>
+      {/for}
+    </div>
+    <div id="software">
+      <a href="/zimkiBlog.zip">download</a>
+    </div>
+  </body>
+</html>
+    

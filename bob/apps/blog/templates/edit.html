@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Edit an Entry</title>
+    <script type="text/javascript" src="wiki.js"></script>
+    <link rel="stylesheet" type="text/css" href="/edit.css"/>
+    <script src="http://service.zimki.com/user/library-staging/wiky.js"></script>
+    <script src="${zimki.root}/preview.js"></script>
+  </head>
+  <body>
+    <h1>Edit {if entry.name} "${entry.name}"{else} your Post{/if}</h1>
+    <form name="edit" action="${zimki.root}/save" method="post">
+      {if entry.id}
+      <input type="hidden" name="id" value="${entry.id}">
+      {/if}
+      <label for="form_title">Subject:</label>
+      <input type="text" name="name" id="form_title" value="${entry.name}"><br/>
+      <label for="form_tags">tags:</label>
+      <input type="text" name="tags" id="form_tags" value="${entry.tags}"><br/>
+      <label for="form_slug">slug:</label>
+      <input type="text" name="slug" id="form_slug" value="${entry.slug}"><br/>
+      <label for="form_published">Published?</label>
+      <input id="form_published" type="checkbox" name="published" {if entry.published}checked="true"{/if}><br/>
+      <label for="toPreview">Body:</label><br/>
+      <textarea id="toPreview"
+              name="content" rows="25" cols="80">${entry.content}</textarea><br/>
+      <input type="submit" value="Save">
+    </form>
+    <div id="preview">${Wiky.toHtml(entry.content)}</div>
+    {if entry.comments && entry.comments.length>0}
+    <div id="comments">
+      <h1><a name="comments">Comments</a></h1>
+      {for comment in entry.comments}
+      <div id="comment">
+        ${Wiky.toHtml(comment.content)}
+      </div>
+      <p id="comment_footer">
+        {if comment.url}
+        Posted by <a href="${comment.url}">${comment.name}</a> on 
+        {else}
+        Posted by ${comment.name} on
+        {/if}
+        ${comment.creation_date.toDateString()}
+        <a href="/deleteComment?id=${comment.id}">delete</a>
+      </p>
+      {/for}
+    </div>
+    {/if}
+  </body>
+</html>

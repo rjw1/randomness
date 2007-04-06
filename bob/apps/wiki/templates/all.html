@@ -1,0 +1,6 @@
+<h1>all pages</h1>
+<ul>
+{for page in pages}
+<li><a href="${zimki.root}/${page.name}">${page.name}</a> last edited ${page.creation_date}</li>
+{/for}
+</ul>

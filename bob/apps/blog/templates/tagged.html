@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>${blog.name}</title>
+    <link rel="stylesheet" href="${zimki.root}/blog.css"></link>
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="${zimki.root}/feed"/>
+  </head>
+  <body>
+${%zimki.render.trimpath('head.html',{blog: theBlog})%}
+
+
+
+    <div id="entries">
+       
+${zimki.render.trimpath('sidebar.html')}
+<div id="content">
+      <div id="paging">
+        <a href="/">Main</a>
+      </div>
+      {for entry in blog.getTaggedPosts(tag)}
+      <div id="entry">
+        <h1 class="entry_title">${entry.name}</h1>
+        ${Wiky.toHtml(entry.content)}
+        <p class="entry_footer">
+          Written by ${entry.owner.username} on ${entry.creation_date.toDateString()} |
+          <a href="${entry.permalink}">Permalink</a> |
+          <a href="${entry.permalink}#comments">Comments (${entry.comments.length})</a>
+          {if zimki.session.username}| <a href="${zimki.root}/edit/${entry.id}">Edit this</a>{/if}
+        </p>
+        {if entry.tags}
+        <p class="entry_footer">
+          Tags: ${entry.tagObject.asBlog()}
+        </p>
+        {/if}
+      </div>
+      {/for}
+    </div>
+</div>
+  </body>
+</html>
+    

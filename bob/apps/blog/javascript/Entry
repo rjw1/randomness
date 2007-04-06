@@ -1,0 +1,80 @@
+
+// a getter that defines a permalink property
+Entry.prototype.__defineGetter__("permalink", function() {
+  return zimki.root + '/entry/' + this.slug;
+});
+
+// the slug setter makes sure that there are no
+// strange characters in the slug.
+Entry.prototype.__defineSetter__("slug", function(aSlug) {
+  aSlug = aSlug + "";
+  this.rawSlug = aSlug.toLowerCase();
+  this.rawSlug = this.rawSlug.replace(/\s/g, '_');
+  this.rawSlug = this.rawSlug.replace(/\W/g, '_');
+});
+
+// we need a getter for the setter
+Entry.prototype.__defineGetter__("slug", function() {
+  if (!this.rawSlug) this.slug = this.name;
+  return this.rawSlug;
+});
+
+Entry.prototype.__defineGetter__("rendered", function() {  
+  var rendered = Wiky.toHtml(this.content);
+  for ( let annotation in this.annotations ) {
+    zimki.log.debug("processing '" + annotation + "'");
+    var theAnnotation = this.annotations[annotation];
+    zimki.log.debug(theAnnotation);
+    var re = new RegExp(annotation, 'gi');
+    for each ( let entry in theAnnotation ) {
+      let lstring = '<a href="#" onclick="showAnnotation(\'' + this.id + '\', ' + annotation + ')">' + annotation + "</a>";
+      zimki.log.debug('replacing ' + re.toString() + ' with ' + lstring);
+      rendered = rendered.replace(re, lstring);
+    }
+  }
+  return rendered;
+});
+
+Entry.prototype.annotate = function( text, annotation ) {
+  if (!this.annotations) this.annotations = {};
+  if (!this.annotations[text]) this.annotations[text] = new Array();
+  this.annotations[text].push( annotation ); 
+};
+
+// a tag function that assigns tags
+// to an entry.
+Entry.prototype.tag = function( tags ) {
+  var tp = new TagEngine();
+  tp.tag(this.id, tags);
+}
+
+// a getter that returns all the comments.
+// if the user is logged in (and therefore admin)
+// then we return even the unverified comments.
+Entry.prototype.__defineGetter__("comments", function() {
+  if (!zimki.session || ( zimki.session && !zimki.session.username ))
+    return Comment.search({entryId: this.id }, { order_by: "creation_date"});
+  return Comment.search({entryId: this.id, verified: true }, {order_by: "creation_date"});    
+});
+
+// returns the tags attached to a post as a list of
+// strings.
+Entry.prototype.__defineGetter__("tags", function() {
+  var theUrl = this.tagObject;
+  return theUrl.tags;
+});
+
+// returns the complicated tagObject that you probably
+// won't ever need.
+Entry.prototype.__defineGetter__("tagObject", function() {
+  var theUrl = URL.urlFor(this.id);
+  return theUrl;
+});
+
+// override save so that we can ensure we have a valid
+// slug before we actually write anything.
+Entry.prototype.realSave = Entry.prototype.save;
+Entry.prototype.save = function() {
+  if (!this.rawSlug) this.slug;
+  this.realSave();
+};

@@ -33,6 +33,7 @@ my %tt_vars = (
                 common_categories => $config->enable_common_categories,
                 common_locales => $config->enable_common_locales,
                 catloc_link => $config->script_url . $config->script_name . "?id=",
+                not_editable => 1,
               );
 my $custom_template_path = $config->custom_template_path || "";
 my $template_path = $config->template_path;

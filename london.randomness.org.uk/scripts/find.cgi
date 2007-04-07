@@ -113,7 +113,7 @@ ORDER BY node.name
     } else {
       my $base_url = $config->script_url . $config->script_name . "?";
       my $last_origin = "";
-      print "<table border=\"1\">\n"
+      print "<table border=\"1\" class=\"category_search_results\">\n"
             . "<tr><th><b>$cat1</b></th><th><b>$cat2</b></th>"
             . "<th><b>Distance (metres)</b></th></tr>\n";
       foreach my $set ( @results ) {
@@ -129,7 +129,7 @@ ORDER BY node.name
         } else {
           print "<td>&nbsp;</td>\n";
         }
-        print "<td><a href=\"$end_url\">$end_name</a></td>\n"
+        print "<td valign=\"top\"><a href=\"$end_url\">$end_name</a></td>\n"
               . "<td>" . $set->{dist}   . "</td>\n"
               . "</tr>\n";
         $last_origin = $origin_name;

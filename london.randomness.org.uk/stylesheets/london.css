@@ -384,6 +384,15 @@ div.category_search_example {
   text-align: right;
 }
 
+table.category_search_results {
+  font-size: 0.9em;
+}
+
+table.category_search_results td {
+  padding: 0.5em;
+  padding-right: 0.5em;
+}
+
 /* The 'before' part of a diff listing */
 .diff1
 {

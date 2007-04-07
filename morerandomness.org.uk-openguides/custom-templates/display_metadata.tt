@@ -1,0 +1,107 @@
+[% USE CGI %]
+<!-- METADATA STARTS -->
+[% IF phone OR fax OR address OR postcode OR formatted_website_text
+       OR hours_text OR map_link OR categories.size OR locales.size OR
+       node_image %]
+<div id="metadata" class="vcard">
+[% IF node_image %]
+  <div id="node_image_box">
+    [% IF node_image_url %]<a href="[% node_image_url %]">[% END %]
+    <img id="node_image" src="[% node_image %]"
+         alt="Picture of [% node_name %]" />
+    [% IF node_image_url %]</a>[% END %]
+    [% IF node_image_copyright %]
+      <div id="node_image_copyright">
+        [% IF node_image_licence %]
+          <a href="[% node_image_licence %]">&copy;
+            [% node_image_copyright %]</a>
+        [% ELSE %]
+          &copy; [% node_image_copyright %]
+        [% END %]
+      </div>
+    [% END %]
+  </div>
+[% ELSE %]
+  <span id="node_no_image" />
+[% END %]
+
+  <!-- For the vcard -->
+  <span class="fn" style="display:none">[% node_name %]</span>
+[% IF phone OR fax OR address OR postcode OR formatted_website_text
+      OR hours_text OR map_link %] 
+  <ul id="general_metadata">
+
+    [% IF phone %]
+      <li class="telephone">
+        <span class="metadata_label">Telephone:</span> <span class="tel">[% CGI.escapeHTML(phone) %]</span>
+      </li>
+    [% END %]
+    [% IF fax %]
+      <li class="fax">
+        <span class="metadata_label">Fax:</span> [% CGI.escapeHTML(fax) %]
+      </li>
+    [% END %]
+    [% IF address %]
+      <li class="address">
+        <span class="metadata_label">Address:</span>
+        <span class="adr"><span class="street-address">[% CGI.escapeHTML(address) %]</span></span><!--, [% default_city %] --> [%# uncomment at left to show city %]
+        [% IF map_link %]
+          (<a href="[% map_link %]">map</a>)
+        [% END %]
+        [% IF wgs84_lat AND wgs84_long %]
+          (<a href="http://maps.google.co.uk/maps?q=[% wgs84_lat %],[% wgs84_long %]&zoom=5">gmap</a>)
+        [% END %]
+      </li>
+    [% ELSIF map_link %]
+      <li class="map">
+        <span class="metadata_label">Finding this place:</span> (<a href="[% map_link %]">map</a>)
+        [% IF wgs84_lat AND wgs84_long %]
+          (<a href="http://maps.google.co.uk/maps?q=[% wgs84_lat %],[% wgs84_long %]&zoom=5">gmap</a>)
+        [% END %]
+      </li>
+    [% END %]
+    [% IF postcode %]
+      <li class="postcode">
+        <span class="metadata_label">Postcode:</span>
+        <span class="adr"><span class="postal-code">[% CGI.escapeHTML(postcode) %]</span></span>
+      </li>
+    [% END %]
+    [% IF formatted_website_text %]
+      <li class="website_link">
+        <span class="metadata_label">Website:</span> <span class="url">[% formatted_website_text %]</span>
+      </li>
+    [% END %]
+    [% IF hours_text %]
+      <li class="opening_hours">
+        <span class="metadata_label">Opening Hours:</span>
+        [% CGI.escapeHTML(hours_text) %]
+      </li>
+    [% END %]
+  </ul>
+[% END %]
+
+[% IF (categories.size AND categories.size > 0)
+   OR (locales.size AND locales.size > 0) %]
+  <ul id="categories_and_locales">
+    [% IF categories.size AND categories.size > 0 %]
+      <li class="categories_list">
+        <span class="metadata_label">Categories:</span>
+        [% FOREACH category = categories %]
+          <a href="[% category.url %]" class="category">[% category.name %]</a>[%- "," UNLESS loop.last %]
+        [% END %]
+      </li>
+    [% END %]
+
+    [% IF locales.size AND locales.size > 0 %]
+      <li class="locales_list">
+        <span class="metadata_label">Locales:</span>
+        [% FOREACH locale = locales %]
+          <a href="[% locale.url %]" class="addr locality">[% locale.name %]</a>[%- "," UNLESS loop.last %]
+        [% END %]
+      </li>
+    [% END %]
+  </ul>
+[% END %]
+</div>
+[% END %]
+<!-- METADATA ENDS -->

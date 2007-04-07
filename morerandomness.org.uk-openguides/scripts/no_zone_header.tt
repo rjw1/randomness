@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="[% stylesheet %]" type="text/css" />
+    <title>[% site_name %] &#8212; stations with no zone</title>
+  </head>
+
+  <body>
+    <div id="body_wrapper">
+      <div id="banner">
+        <h1><a href="[% site_url %]">[% site_name %]</a></h1>
+        <div id="summary"></div>
+      </div>
+      <div id="content">
+        <div id="maincontent">
+          <h2>Stations with no zone</h2>
+

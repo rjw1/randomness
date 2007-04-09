@@ -65,7 +65,7 @@ div#body_wrapper {
 }
 
 /* Node summary */
-#summary {
+div#summary {
   margin-left: -0.5em;
   padding-left: 0.5em;
   padding-top: 5px;
@@ -193,7 +193,7 @@ div.summary_bar_link {
   font-size: 0.8em;
 }
 
-#node_image_box
+div#node_image_box
 {
   float: right;
   padding-left: 0.5em;
@@ -204,11 +204,11 @@ div.summary_bar_link {
   margin: -1em -0.8em 0em 1em;
 }
 
-#node_image_box img {
+div#node_image_box img {
   border: 1px solid #595A38;
 }
 
-#node_image_copyright {
+div#node_image_copyright {
   text-align: right;
 }
 

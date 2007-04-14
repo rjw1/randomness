@@ -9,7 +9,7 @@ use OpenGuides;
 use OpenGuides::Config;
 use Wiki::Toolkit::Plugin::Locator::Grid;
 
-my $config_file = $ENV{OPENGUIDES_CONFIG_FILE} || "wiki.conf";
+my $config_file = $ENV{OPENGUIDES_CONFIG_FILE} || "../wiki.conf";
 my $config = OpenGuides::Config->new( file => $config_file );
 
 my $guide = OpenGuides->new( config => $config );

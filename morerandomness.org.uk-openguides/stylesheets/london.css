@@ -193,7 +193,7 @@ div.summary_bar_link {
   font-size: 0.8em;
 }
 
-#node_image_box
+div#node_image_box
 {
   float: right;
   padding-left: 0.5em;
@@ -204,11 +204,11 @@ div.summary_bar_link {
   margin: -1em -0.8em 0em 1em;
 }
 
-#node_image_box img {
+div#node_image_box img {
   border: 1px solid #595A38;
 }
 
-#node_image_copyright {
+div#node_image_copyright {
   text-align: right;
 }
 
@@ -413,6 +413,10 @@ div.commit_edit {
 
 /* Edit page global stuff */
 
+form.edit_page_form fieldset {
+  margin: 1em;
+}
+
 div.edit_form_group {
   position: relative;
 }
@@ -424,8 +428,13 @@ span.hint {
   height: 4em;
   border: 1px solid #000000;
   padding: 0.3em;
-  font-size: 0.9em;
+  font-size: 0.8em;
   background-color: #FFFFFF;
+}
+
+div#summary_group span.hint {
+  top: -2em;
+  height: 1em;
 }
 
 div.edit_form_group label {
@@ -471,7 +480,7 @@ div#summary_group {
   clear: both;
 }
 
-/* Edit page additional information */
+/* Labels on the left, fields on the right. */
 
 fieldset#additional_information label {
   display: block;
@@ -488,8 +497,15 @@ fieldset#additional_information div.edit_form_group {
   clear: both;
 }
 
+/* Additional imformation */
+
 div#fax_group {
   display: none;
+}
+
+/* Edit page image stuff */
+span.photo_note {
+  font-size: 0.8em;
 }
 
 /* Edit page username etc */

@@ -393,6 +393,145 @@ table.category_search_results td {
   padding-right: 0.5em;
 }
 
+/* Edit page actions */
+div.edit_actions {
+  text-align: center;
+}
+
+div.preview_edit {
+  float: left;
+  width: 33%;
+}
+div.cancel_edit {
+  float: left;
+  width: 33%;
+}
+div.commit_edit {
+  float: right;
+  width: 33%;
+}
+
+/* Edit page global stuff */
+
+form.edit_page_form fieldset {
+  margin: 1em;
+}
+
+div.edit_form_group {
+  position: relative;
+}
+
+span.hint {
+  display: none;
+  position: absolute;
+  top: -5em;
+  height: 4em;
+  border: 1px solid #000000;
+  padding: 0.3em;
+  font-size: 0.8em;
+  background-color: #FFFFFF;
+}
+
+div#summary_group span.hint {
+  top: -2em;
+  height: 1em;
+}
+
+div.edit_form_group label {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+div.edit_box textarea, input, select {
+  border: 1px solid #000000;
+}
+
+div.edit_box textarea {
+  width: 98%;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
+div.edit_box input {
+  width: 98%;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+/* Edit page main information */
+
+fieldset#main_information {
+  clear: both;
+}
+
+div#locales_group {
+  float: left;
+  width: 45%;
+}
+
+div#categories_group {
+  float: right;
+  width: 45%;
+}
+
+div#summary_group {
+  clear: both;
+}
+
+/* Labels on the left, fields on the right. */
+
+fieldset#additional_information label {
+  display: block;
+  width: 20%;
+  float: left;
+}
+
+fieldset#additional_information div.edit_box {
+  width: 75%;
+  float: right;
+}
+
+fieldset#additional_information div.edit_form_group {
+  clear: both;
+}
+
+/* Additional imformation */
+
+div#fax_group {
+  display: none;
+}
+
+/* Edit page image stuff */
+span.photo_note {
+  font-size: 0.8em;
+}
+
+/* Edit page username etc */
+fieldset#openguides_information {
+  clear: both;
+  display: table;
+}
+
+fieldset#openguides_information div.edit_form_group {
+  display: table-cell;
+  padding: 0.5em;
+  vertical-align: bottom;
+}
+
+div#username_stuff {
+  width: 20%;
+}
+
+div#username_stuff label a {
+  white-space: nowrap;
+}
+
+div#edit_type_stuff {
+  width: 15%;
+}
+
 /* The 'before' part of a diff listing */
 .diff1
 {

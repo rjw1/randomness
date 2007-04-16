@@ -448,7 +448,7 @@ div.edit_box textarea, input, select {
 
 div.edit_box textarea {
   width: 98%;
-  padding: 0.5em;
+  padding: 0.2em;
   margin-bottom: 1em;
 }
 
@@ -456,8 +456,8 @@ div.edit_box input {
   width: 98%;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
 }
 
 /* Edit page main information */

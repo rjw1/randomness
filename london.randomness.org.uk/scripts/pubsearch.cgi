@@ -37,6 +37,7 @@ my %all_criteria = (
 setup_form_variables();
 
 if ( $q->param( "Search" ) ) {
+  $tt_vars{doing_search} = 1;
   my @dbparams;
   my $locale = $q->param( "locale" );
   my $district = $q->param( "postal_district" );

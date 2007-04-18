@@ -3,9 +3,12 @@
 use strict;
 use warnings;
 
+use lib "lib";
+
 use CGI qw( :standard );
 use CGI::Carp qw( fatalsToBrowser );
 use OpenGuides;
+use RGL::Addons;
 use OpenGuides::Config;
 use Template;
 
@@ -16,27 +19,9 @@ my $guide = OpenGuides->new( config => $config );
 my $wiki = $guide->wiki;
 my $formatter = $wiki->formatter;
 
+my %tt_vars = RGL::Addons->get_tt_vars( config => $config );
+
 my $q = CGI->new;
-
-print $q->header;
-my $self_url = $q->url( -relative );
-
-my %tt_vars = (
-                stylesheet => $config->stylesheet_url,
-                language   => $config->default_language,
-                site_name  => $config->site_name,
-                script_url => $config->script_url,
-                site_url   => $config->script_url . $config->script_name,
-                full_cgi_url => $config->script_url . $config->script_name,
-                common_categories => $config->enable_common_categories,
-                common_locales => $config->enable_common_locales,
-                catloc_link => $config->script_url
-                               . $config->script_name . "?id=",
-                formatting_rules_link => $config->formatting_rules_link,
-                formatting_rules_node => $config->formatting_rules_node,
-                not_editable => 1,
-                addon_title => "Good Beer Guide pubs without a photo",
-              );
 
 my $locale = $q->param( "locale" );
 
@@ -102,8 +87,13 @@ foreach my $pub ( @pubs ) {
   }
 }
 
-$tt_vars{all} = \@pubs;
-$tt_vars{lacking} = \@lacking;
+%tt_vars = (
+             %tt_vars,
+             addon_title => "Good Beer Guide pubs without a photo",
+             all         => \@pubs,
+             lacking     => \@lacking,
+           );
 
+print $q->header;
 $tt->process( "missing_images.tt", \%tt_vars );
 

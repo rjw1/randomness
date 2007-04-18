@@ -418,8 +418,17 @@ div.commit_edit {
 
 /* Edit page global stuff */
 
+h1.edit_form_title {
+  text-align: center;
+  font-size: 1.5em;
+}
+
 form.edit_page_form fieldset {
   margin: 1em;
+}
+
+fieldset legend {
+  font-size: 0.9em;
 }
 
 div.edit_form_group {
@@ -463,6 +472,15 @@ div.edit_box input {
   margin-bottom: 0.1em;
   padding-left: 0.2em;
   padding-right: 0.2em;
+}
+
+/* Edit page username etc */
+
+fieldset#openguides_information {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 /* Edit page main information */
@@ -535,6 +553,42 @@ div#username_group label a {
 
 div#edit_type_group {
   width: 15%;
+}
+
+/* Pubsearch */
+div.criteria_search_group label {
+  display: block;
+  float: left;
+  width: 25%;
+}
+
+div.criteria_search_box {
+  float: right;
+  width: 75%;
+}
+
+div.criteria_search_checkbox {
+  float: left;
+  width: 5%;
+}
+
+div.criteria_search_checkbox_group label {
+  display: block;
+  float: right;
+  width: 95%;
+}
+
+div.criteria_search_group, div.criteria_search_checkbox_group {
+  clear: both;
+}
+
+div#garden_group {
+  padding-top: 1em;
+}
+
+div.criteria_search_submit {
+  clear: both;
+  padding-top: 1em;
 }
 
 /* The 'before' part of a diff listing */

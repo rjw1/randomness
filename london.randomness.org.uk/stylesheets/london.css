@@ -525,15 +525,15 @@ fieldset#openguides_information div.edit_form_group {
   vertical-align: bottom;
 }
 
-div#username_stuff {
+div#username_group {
   width: 20%;
 }
 
-div#username_stuff label a {
+div#username_group label a {
   white-space: nowrap;
 }
 
-div#edit_type_stuff {
+div#edit_type_group {
   width: 15%;
 }
 

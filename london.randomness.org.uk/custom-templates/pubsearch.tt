@@ -1,0 +1,28 @@
+[% INCLUDE addons_header.tt %]
+
+<h2>[% addon_title %]</h2>
+
+<form action="[% self_url %]" method="get">
+  Locale: [% locale_box %]<br />
+  Postal district: [% postal_district_box %]<br />
+  Has a beer garden [% checkboxes.garden %]<br />
+  Serves real ale [% checkboxes.realale %]<br />
+  Serves real cider [% checkboxes.realcider %]<br />
+  In the Good Beer Guide [% checkboxes.gbg %]<br />
+  Offers free wifi [% checkboxes.wifi %]<br />
+  Serves food at lunchtime [% checkboxes.lunch %]<br />
+  Serves food in the evening [% checkboxes.dinner %]<br />
+  <input type="submit" name="Search" value="Search" />
+</form>
+
+[% IF pubs.size %]
+  <ul>
+    [% FOREACH pub = pubs %]
+      <li><a href="[% full_cgi_url %]?[% pub.param %]">[% pub.name %]</a></li>
+    [% END %]
+  </ul>
+[% ELSE %]
+  <p>No pubs found, sorry.  Try again with fewer criteria.</p>
+[% END %]
+
+[% INCLUDE addons_footer.tt %]

@@ -12,13 +12,14 @@
     [% END %]
 
     [% IF preview_html AND preview_above_edit_box %]
-      <h2>Preview</h2>
-      [% IF summary %]
-        <div id="summary">[% summary %]</div>
-      [% END %]
-      [% INCLUDE display_metadata.tt %]
-      [% preview_html %]
-      <br clear="all" />
+      <div id="maincontent">
+        <h2>Preview</h2>
+        [% IF summary %]
+          <div id="summary">[% summary %]</div>
+        [% END %]
+        [% INCLUDE display_metadata.tt %]
+        [% preview_html %]
+      </div>
     [% END %]
 
     <form id="edit_page_form" action="[% cgi_url %]" method="post"
@@ -201,7 +202,7 @@
           [% END %]
         </div>
 
-        <div class="edit_form_group id="website_group">
+        <div class="edit_form_group" id="website_group">
           [% IF conflict %]
             <label for="website">Current website:</label>
           [% ELSE %]
@@ -253,7 +254,7 @@
           </label>
           <div class="edit_box">
             <input type="text" size="50" id="address" name="address"
-             value="[% address %]" /></td>
+             value="[% address %]" />
           </div>
           [% IF conflict %]
             <div class="conflict_group">
@@ -370,13 +371,14 @@
 </form>
 
 [% IF preview_html AND NOT preview_above_edit_box %]
-  <h2>Preview</h2>
-  [% IF summary %]
-    <div id="summary">[% summary %]</div>
-  [% END %]
-  [% INCLUDE display_metadata.tt %]
-  [% preview_html %]
-  <br clear="all" />
+  <div id="maincontent">
+    <h2>Preview</h2>
+    [% IF summary %]
+      <div id="summary">[% summary %]</div>
+    [% END %]
+    [% INCLUDE display_metadata.tt %]
+    [% preview_html %]
+  </div>
 [% END %]
 
 [% INCLUDE footer.tt %]

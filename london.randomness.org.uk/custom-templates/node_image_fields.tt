@@ -1,4 +1,4 @@
-<fieldset id="node_image">
+<fieldset id="node_image_fields">
   <legend>Image to illustrate this page</legend>
 
   <div class="edit_form_group" id="node_image_group">
@@ -68,7 +68,7 @@
     [% END %]
   </div>
 
-  <div class="edit_form_group id="node_image_info_group">
+  <div class="edit_form_group" id="node_image_info_group">
     <label for="node_image_url">
       [% IF conflict %]
         Current info page:

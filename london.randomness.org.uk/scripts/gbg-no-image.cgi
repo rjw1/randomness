@@ -7,7 +7,7 @@ use CGI qw( :standard );
 use CGI::Carp qw( fatalsToBrowser );
 use OpenGuides;
 use OpenGuides::Config;
-use Wiki::Toolkit::Plugin::Locator::Grid;
+use Template;
 
 my $config_file = $ENV{OPENGUIDES_CONFIG_FILE} || "../wiki.conf";
 my $config = OpenGuides::Config->new( file => $config_file );
@@ -21,16 +21,22 @@ my $q = CGI->new;
 print $q->header;
 my $self_url = $q->url( -relative );
 
-print <<EOHTML;
-<head>
-  <link rel="stylesheet" href="http://london.randomness.org.uk/london.css"
-  type="text/css" />
-  <title>Randomness Guide to London &#8212; Good Beer Guide pubs with no node image</title>
-</head>
-<body>
-  <h1 id="header"><a href="http://london.randomness.org.uk/">Randomness Guide to London</a> &#8212; <a href="http://london.randomness.org.uk/wiki.cgi?Category_Good_Beer_Guide">Good Beer Guide pubs</a> with no node image</h1>
-  <div id="content">
-EOHTML
+my %tt_vars = (
+                stylesheet => $config->stylesheet_url,
+                language   => $config->default_language,
+                site_name  => $config->site_name,
+                script_url => $config->script_url,
+                site_url   => $config->script_url . $config->script_name,
+                full_cgi_url => $config->script_url . $config->script_name,
+                common_categories => $config->enable_common_categories,
+                common_locales => $config->enable_common_locales,
+                catloc_link => $config->script_url
+                               . $config->script_name . "?id=",
+                formatting_rules_link => $config->formatting_rules_link,
+                formatting_rules_node => $config->formatting_rules_node,
+                not_editable => 1,
+                addon_title => "Good Beer Guide pubs without a photo",
+              );
 
 my $locale = $q->param( "locale" );
 
@@ -67,50 +73,37 @@ while ( my ( $name, $this_locale ) = $sth->fetchrow_array ) {
   }
 }
 
-print_form( keys %locales );
+my @localelist = map { s/^Locale //; $_; } keys %locales;
+@localelist = sort( @localelist );
+
+my $any_string = " -- any -- ";
+$tt_vars{locale_box} = $q->popup_menu( -name   => "locale",
+                                       -values => [ "", @localelist ],
+                                       -labels => { "" => $any_string,
+                                                    map { $_ => $_ }
+                                                          @localelist },
+                                     );
+my $custom_template_path = $config->custom_template_path || "";
+my $template_path = $config->template_path;
+my $tt = Template->new( { INCLUDE_PATH =>
+                                   "$custom_template_path:$template_path"  } );
 
 my @pubs = keys %data;
 @pubs = sort @pubs;
 
 my @lacking;
+my $base_url = $config->script_url . $config->script_name . "?";
 foreach my $pub ( @pubs ) {
   my %data = $wiki->retrieve_node( $pub );
   if ( !$data{metadata}{node_image} ) {
-    push @lacking, $pub;
+    push @lacking, { url => $base_url
+                            . $formatter->node_name_to_node_param( $pub ),
+                     name => CGI->escapeHTML( $pub ) };
   }
 }
 
-print "<p>Total count: " . scalar @lacking . " of " . scalar @pubs . "</p>\n";
+$tt_vars{all} = \@pubs;
+$tt_vars{lacking} = \@lacking;
 
-print "<ul>\n";
-my $base_url = $config->script_url . $config->script_name . "?";
-foreach my $pub ( @lacking ) {
-  my $url = $base_url . $formatter->node_name_to_node_param( $pub );
-  print "<li><a href=\"$url\">" . CGI->escapeHTML( $pub ) . "</a></li>\n";
-}
-
-print <<EOHTML;
-</ul>
-</body>
-</html>
-EOHTML
-
-sub print_form {
-  my @locales = @_;
-  my $any_string = " -- any -- ";
-  @locales = map { s/^Locale //; $_; } @locales;
-  @locales = sort( @locales );
-
-  my $locbox = $q->popup_menu( -name   => "locale",
-                               -values => [ "", @locales ],
-                               -labels => { "" => $any_string,
-                                            map { $_ => $_ } @locales }
-                             );
-  print <<EOHTML;
-    <form action="$self_url" method="GET">
-      <p>Restrict results to locale $locbox <small>(Locales not listed have no pubs with missing images.)</small></p>
-      <input type="submit" name="Search" value="Search">
-    </form>
-EOHTML
-}
+$tt->process( "missing_images.tt", \%tt_vars );
 

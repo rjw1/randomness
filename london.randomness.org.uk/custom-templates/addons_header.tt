@@ -1,0 +1,4 @@
+[% INCLUDE header.tt page_title=addon_title %]
+[% INCLUDE banner.tt %]
+  <div id="content">
+    <div id="maincontent">

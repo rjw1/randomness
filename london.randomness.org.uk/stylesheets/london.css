@@ -257,15 +257,20 @@ div#metadata
 {
   font-size: 0.85em;
   margin-left: -1em;
+  padding-top: 1em;
 }
 
 ul#categories_and_locales
 {
-#  margin-top: -1em;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 ul#general_metadata {
-  margin-bottom: -1em;
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 div#metadata ul li {

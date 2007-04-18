@@ -68,7 +68,7 @@
       <li><a href="[% full_cgi_url %]?[% pub.param %]">[% pub.name %]</a></li>
     [% END %]
   </ul>
-[% ELSE %]
+[% ELSIF doing_search %]
   <p>No pubs found, sorry.  Try again with fewer criteria.</p>
 [% END %]
 

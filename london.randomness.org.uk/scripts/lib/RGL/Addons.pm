@@ -11,6 +11,7 @@ sub get_tt_vars {
                   script_url => $config->script_url,
                   site_url   => $config->script_url . $config->script_name,
                   full_cgi_url => $config->script_url . $config->script_name,
+                  home_link => $config->script_url. $config->script_name,
                   common_categories => $config->enable_common_categories,
                   common_locales => $config->enable_common_locales,
                   catloc_link => $config->script_url

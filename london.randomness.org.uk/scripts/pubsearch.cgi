@@ -48,11 +48,15 @@ if ( $q->param( "Search" ) ) {
   }
 
   my $sql = "
-SELECT node.name FROM node
+SELECT node.name, summary.metadata_value FROM node
 INNER JOIN metadata as pub
   ON ( node.id = pub.node_id AND node.version = pub.version
        AND lower(pub.metadata_type) = 'category'
        AND lower(pub.metadata_value) = 'pubs'
+     )
+INNER JOIN metadata as summary
+  ON ( node.id = summary.node_id AND node.version = summary.version
+       AND lower( summary.metadata_type ) = 'summary'
      )
 ";
 
@@ -90,9 +94,9 @@ INNER JOIN metadata AS $criterion
   $sth->execute( @dbparams ) or die $dbh->errstr;
 
   my @pubs;
-  while ( my ( $pub ) = $sth->fetchrow_array ) {
-    my $param = $formatter->node_name_to_node_param( $pub );
-    push @pubs, { name => $pub, param => $param };
+  while ( my ( $name, $summary ) = $sth->fetchrow_array ) {
+    my $param = $formatter->node_name_to_node_param( $name );
+    push @pubs, { name => $name, param => $param, summary => $summary };
   }
 
   $tt_vars{pubs} = \@pubs;

@@ -210,6 +210,7 @@ div#node_image_box img {
 
 div#node_image_copyright {
   text-align: right;
+  margin-bottom: 0.2em;
 }
 
 /* The Recent Changes listing on the home page */
@@ -284,7 +285,6 @@ div#metadata ul li span.metadata_label {
 
 #content_text
 {
-  padding-top: 0.5em;
   margin-bottom: 2.5em;
 }
 

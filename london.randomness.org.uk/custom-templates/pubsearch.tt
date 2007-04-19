@@ -63,9 +63,14 @@
 </form>
 
 [% IF pubs.size %]
-  <ul>
+  <h3>[% pubs.size %] pub[% IF pubs.size > 1 %]s[% END %] found</h3>
+
+  <dl class="criteria_search_results">
     [% FOREACH pub = pubs %]
-      <li><a href="[% full_cgi_url %]?[% pub.param %]">[% pub.name %]</a></li>
+      <dt><a href="[% full_cgi_url %]?[% pub.param %]">[% pub.name %]</a></dt>
+      [% IF pub.summary %]
+        <dd>[% pub.summary %]</dd>
+      [% END %]
     [% END %]
   </ul>
 [% ELSIF doing_search %]

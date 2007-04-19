@@ -591,6 +591,15 @@ div.criteria_search_submit {
   padding-top: 1em;
 }
 
+dl.criteria_search_results dt {
+  margin-left: 2em;
+}
+
+dl.criteria_search_results dd {
+  font-style: italic;
+  font-size: 0.9em;
+}
+
 /* The 'before' part of a diff listing */
 .diff1
 {

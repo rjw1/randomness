@@ -628,3 +628,15 @@ dl.criteria_search_results dd {
 div.last_verified {
   font-size: 0.8em;
 }
+
+div.free_geodata {
+  font-size: 0.8em;
+}
+
+div.inline_hint {
+  padding: 0.5em;
+  float: right;
+  width: 35%;
+  font-size: 0.8em;
+  border: 1px dotted #595A38;
+}

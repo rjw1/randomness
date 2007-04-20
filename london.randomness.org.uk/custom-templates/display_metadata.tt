@@ -49,7 +49,7 @@
           (<a href="[% map_link %]">map</a>)
         [% END %]
         [% IF wgs84_lat AND wgs84_long %]
-          (<a href="http://maps.google.co.uk/maps?q=[% wgs84_lat %],[% wgs84_long %]&zoom=5">gmap</a>)
+          (<a href="http://maps.google.co.uk/maps?q=[% wgs84_lat %],[% wgs84_long %]&z=15">gmap</a>)
         [% END %]
       </li>
     [% ELSIF map_link %]

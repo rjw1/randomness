@@ -11,6 +11,7 @@ use OpenGuides;
 use RGL::Addons;
 use OpenGuides::Config;
 use Template;
+use Wiki::Toolkit::Plugin::Locator::Grid;
 
 my $config_file = $ENV{OPENGUIDES_CONFIG_FILE} || "../wiki.conf";
 my $config = OpenGuides::Config->new( file => $config_file );
@@ -19,6 +20,8 @@ my $guide = OpenGuides->new( config => $config );
 my $wiki = $guide->wiki;
 my $formatter = $wiki->formatter;
 my $dbh = $wiki->store->dbh;
+my $locator = Wiki::Toolkit::Plugin::Locator::Grid->new( x => "os_x", y => "os_y" );
+$wiki->register_plugin( plugin => $locator );
 
 my %tt_vars = RGL::Addons->get_tt_vars( config => $config );
 
@@ -41,10 +44,20 @@ if ( $q->param( "Search" ) ) {
   my @dbparams;
   my $locale = $q->param( "locale" );
   my $district = $q->param( "postal_district" );
+  my $tube = $q->param( "tube" );
   my %criteria;
 
   foreach my $criterion ( keys %all_criteria ) {
     $criteria{$criterion} = $q->param( $criterion );
+  }
+
+  my %candidates;
+  if ( $tube ) {
+    my @cand_arr = $locator->find_within_distance(
+        node => $tube,
+        metres => 750,
+    );
+    %candidates = map { $_ =>1 } @cand_arr;
   }
 
   my $sql = "
@@ -95,8 +108,10 @@ INNER JOIN metadata AS $criterion
 
   my @pubs;
   while ( my ( $name, $summary ) = $sth->fetchrow_array ) {
-    my $param = $formatter->node_name_to_node_param( $name );
-    push @pubs, { name => $name, param => $param, summary => $summary };
+    if ( !scalar keys %candidates or $candidates{$name} ) {
+      my $param = $formatter->node_name_to_node_param( $name );
+      push @pubs, { name => $name, param => $param, summary => $summary };
+    }
   }
 
   $tt_vars{pubs} = \@pubs;
@@ -113,7 +128,7 @@ my $tt = Template->new( { INCLUDE_PATH =>
            );
 
 print $q->header;
-$tt->process( "pubsearch.tt", \%tt_vars );
+$tt->process( "pubsearch-2.tt", \%tt_vars );
 
 sub setup_form_variables {
 
@@ -171,5 +186,6 @@ sub setup_form_variables {
   }
 
   $tt_vars{checkboxes} = \%checkboxes;
+
+  $tt_vars{tube_box} = RGL::Addons->get_tube_dropdown( guide => $guide, q => $q );
 }
-  

@@ -10,13 +10,17 @@
     </div>
   </div>
   <div class="criteria_search_group" id="postal_district_group">
-    <label for="postal_district">Postal district:</lable>
+    or: <label for="postal_district">Postal district:</lable>
     <div class="criteria_search_box">
       [% postal_district_box %]
     </div>
   </div>
   <div class="criteria_search_group" id="near_tube_group">
-    <label for="tube_station">Near Tube station:</lable>
+    or: <label for="tube_distance">Within</label>
+      <div class="criteria_search_box">
+        [% tube_distance_box %]
+      </div>
+    <label for="tube_station">of Tube station:</lable>
     <div class="criteria_search_box">
       [% tube_box %]
     </div>

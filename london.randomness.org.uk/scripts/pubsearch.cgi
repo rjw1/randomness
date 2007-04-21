@@ -55,7 +55,7 @@ if ( $q->param( "Search" ) ) {
   if ( $tube ) {
     my @cand_arr = $locator->find_within_distance(
         node => $tube,
-        metres => 750,
+        metres => $q->param( "tube_distance" ) || 750,
     );
     %candidates = map { $_ =>1 } @cand_arr;
   }
@@ -131,6 +131,15 @@ print $q->header;
 $tt->process( "pubsearch.tt", \%tt_vars );
 
 sub setup_form_variables {
+
+  $tt_vars{tube_distance_box} = $q->popup_menu( -name   => "tube_distance",
+                                         -values => [ 500, 1000, 1500, 2000 ],
+                                         -labels => { 500 => "500m",
+                                                      1000 => "1km",
+                                                      1500 => "1.5km",
+                                                      2000 => "2km",
+                                                    },
+                                       );
 
   # Find all locales that have pubs in.
   my $sql = "

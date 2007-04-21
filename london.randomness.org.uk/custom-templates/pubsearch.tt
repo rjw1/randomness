@@ -15,6 +15,12 @@
       [% postal_district_box %]
     </div>
   </div>
+  <div class="criteria_search_group" id="near_tube_group">
+    <label for="tube_station">Near Tube station:</lable>
+    <div class="criteria_search_box">
+      [% tube_box %]
+    </div>
+  </div>
   <div class="criteria_search_checkbox_group" id="garden_group">
     <div class="criteria_search_checkbox">
       [% checkboxes.garden %]

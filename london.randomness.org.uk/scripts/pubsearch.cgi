@@ -128,7 +128,7 @@ my $tt = Template->new( { INCLUDE_PATH =>
            );
 
 print $q->header;
-$tt->process( "pubsearch-2.tt", \%tt_vars );
+$tt->process( "pubsearch.tt", \%tt_vars );
 
 sub setup_form_variables {
 

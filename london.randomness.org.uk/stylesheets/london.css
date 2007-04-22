@@ -635,8 +635,58 @@ div.free_geodata {
 
 div.inline_hint {
   padding: 0.5em;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
   float: right;
   width: 35%;
   font-size: 0.8em;
   border: 1px dotted #595A38;
+}
+
+div.news_comment {
+  padding-top: 0;
+  margin-top: -1em;
+  text-align: right;
+  font-size: 0.8em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px dotted #595A38;
+}
+
+/* Featured article */
+div#featured_article {
+  float: right;
+  width: 240px;
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
+  border: 1px dotted #595A38;
+  margin-top: 1em;
+}
+
+div#featured_article_header {
+  background: #F1C969;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.2em;
+  border-bottom: 1px dotted #595A38;
+}
+
+img#featured_article_image {
+  border-bottom: 1px dotted #595A38;
+}
+
+div#featured_article_image_copyright {
+  text-align: right;
+  font-size: 0.6em;
+  padding: 0.2em 0.4em 0 0;
+}
+
+div#featured_article_blurb {
+  text-align: center;
+  padding: 0.5em;
+  font-size: 0.8em;
+}
+
+#featured_article_title {
+  display: inline;
+  font-weight: bold;
 }

@@ -25,16 +25,20 @@ my $self_url = $q->url( -relative );
 
 print <<EOHTML;
 <head>
-  <link rel="stylesheet" href="http://london.randomness.org.uk/london.css"
+  <link rel="stylesheet" href="http://london.randomness.org.uk/stylesheets/london.css"
   type="text/css" />
   <title>Randomness guide Kakesearch</title>
 </head>
 <body>
-  <h1 id="header"><a href="http://london.randomness.org.uk/">Randomness Guide to London</a> &#8212; Kakesearch</h1>
-  <div id="content">
+  <div id="body_wrapper">
+  
+  <div id="banner"><h1><a href="http://london.randomness.org.uk/">Randomness Guide to London</a> &#8212; Kakesearch</h1></div>
+
+  <div id="maincontent">
 
     <p>Note: not intended for general use, just a little thingy to help me
-    figure out locales.</p>
+    figure out locales.  I know the stylesheet doesn't look right on this
+    page.  I may fix it one day, but it's not a high priority.</p>
 EOHTML
 
 print_form();
@@ -123,6 +127,7 @@ ORDER BY node.name
 }
 
 print <<EOHTML;
+</div>
 </body>
 </html>
 EOHTML

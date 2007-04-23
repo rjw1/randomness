@@ -108,7 +108,7 @@ INNER JOIN metadata AS $criterion
 
   my @pubs;
   while ( my ( $name, $summary ) = $sth->fetchrow_array ) {
-    if ( !scalar keys %candidates or $candidates{$name} ) {
+    if ( !$tube or $candidates{$name} ) {
       my $param = $formatter->node_name_to_node_param( $name );
       push @pubs, { name => $name, param => $param, summary => $summary };
     }

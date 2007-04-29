@@ -1,0 +1,16 @@
+[% INCLUDE addons_header.tt %]
+
+<h2>[% addon_title %]</h2>
+
+[% IF lacking.size %]
+  <p>Tube/rail stations missing a zone:</p>
+  <ul>
+    [% FOREACH station = lacking %]
+      <li><a href="[% station.url %]">[% station.name %]</a></li>
+    [% END %]
+  </ul>
+[% ELSE %]
+  <p>No Tube or rail stations without zones!  Yay!</p>
+[% END %]
+
+[% INCLUDE addons_footer.tt %]

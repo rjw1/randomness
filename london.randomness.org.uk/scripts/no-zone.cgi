@@ -39,12 +39,18 @@ my $template_path = $config->template_path;
 my $tt = Template->new( { INCLUDE_PATH => ".:$custom_template_path:$template_path"  } );
 $tt->process( "no_zone_header.tt", \%tt_vars );
 
-# Get Tube stations.
+# Get stations.
 my @tubes = $wiki->list_nodes_by_metadata(
     metadata_type => "category",
     metadata_value => "tube",
     ignore_case => 1,
 );
+my @rails = $wiki->list_nodes_by_metadata(
+    metadata_type => "category",
+    metadata_value => "rail",
+    ignore_case => 1,
+);
+my @stations = ( @tubes, @rails );
 
 # Strip out the ones that are categories (they're lines).
 my @cats = $wiki->list_nodes_by_metadata(
@@ -52,33 +58,33 @@ my @cats = $wiki->list_nodes_by_metadata(
     metadata_value => "category",
     ignore_case => 1,
 );
-my %tubehash = map { $_ => 1 } @tubes;
+my %stationhash = map { $_ => 1 } @stations;
 my %cathash = map { $_ => 1 } @cats;
-foreach my $key ( @tubes ) {
+foreach my $key ( @stations ) {
   if ( $cathash{$key} ) {
-    delete $tubehash{$key};
+    delete $stationhash{$key};
   }
 }
-@tubes = keys %tubehash;
+@stations = keys %stationhash;
 
 my @nozones;
-foreach my $tube ( sort @tubes ) {
-  my @cats = $categoriser->categories( node => $tube );
+foreach my $station ( sort @stations ) {
+  my @cats = $categoriser->categories( node => $station );
   my @zones = grep { /Zone.*Stations/ } @cats;
-#  print "$tube has zones: " . join( ", ", @zones ) . "\n";
+#  print "$station has zones: " . join( ", ", @zones ) . "\n";
   if ( !scalar @zones ) {
-    push @nozones, $tube;
+    push @nozones, $station;
   }
 }
 
 if ( !scalar @nozones ) {
-  print "<p>No Tube stations without zones!  Yay!</p>\n";
+  print "<p>No Tube or rail stations without zones!  Yay!</p>\n";
 } else {
   my $base_url = $config->script_url . $config->script_name . "?";
-  print "<p>Tube stations missing a zone:</p>\n<ul>";
-  foreach my $tube ( sort @nozones ) {
-    my $url = $base_url . $formatter->node_name_to_node_param( $tube );
-    my $name = CGI->escapeHTML( $tube );
+  print "<p>Tube/rail stations missing a zone:</p>\n<ul>";
+  foreach my $station ( sort @nozones ) {
+    my $url = $base_url . $formatter->node_name_to_node_param( $station );
+    my $name = CGI->escapeHTML( $station );
     print qq( <li><a href="$url">$name</a></li>\n );
   }
   print "</ul>\n";

@@ -98,6 +98,9 @@ ORDER BY node.name
     foreach my $origin ( @cat1stuff ) {
       my @thisres;
       foreach my $end ( @cat2stuff ) {
+        if ( $origin->{name} eq $end->{name} ) {
+          next;
+        }
         my $thisdist = int( sqrt(   ( $origin->{x} - $end->{x} )**2
                                   + ( $origin->{y} - $end->{y} )**2
                                 ) + 0.5 );

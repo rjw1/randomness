@@ -58,38 +58,51 @@ if ( $q->param( "do_search" ) ) {
   $dist ||= 0;
   $dist =~ s/[^0-9]//g;
 
-  if ( !$dist || !$cat1 || !$cat2 ) {
-    print "<p>Must supply both categories, and a distance.</p>";
+  if ( !$dist || !$cat1 ) {
+    # Yes, the categories are displayed the wrong way around.  Don't want to
+    # break URLs, so don't change it.
+    print "<p>Must supply at least the second category, and a distance.</p>";
   } else {
     my $dbh = $wiki->store->dbh;
-    my $sql = "
-SELECT node.id, node.name, mx.metadata_value as x, my.metadata_value as y
-FROM node
-INNER JOIN metadata as mc
-  ON ( node.id=mc.node_id
-       AND node.version=mc.version
-       AND lower(mc.metadata_type)='category'
-       AND lower(mc.metadata_value)=?)
-INNER JOIN metadata as mx
-  ON ( node.id=mx.node_id
-       AND node.version=mx.version
-       AND lower(mx.metadata_type)='os_x' )
-INNER JOIN metadata as my
-  ON ( node.id=my.node_id
-       AND node.version=my.version
-       AND lower(my.metadata_type)='os_y' )
-ORDER BY node.name
-";
-
-    my $sth = $dbh->prepare( $sql );
+    my %sql;
+    foreach my $key ( qw( cat1 cat2 ) ) {
+	$sql{$key} = "
+          SELECT DISTINCT node.id, node.name, mx.metadata_value as x,
+                 my.metadata_value as y
+          FROM node
+          INNER JOIN metadata as mc
+            ON ( node.id=mc.node_id
+                 AND node.version=mc.version
+                 AND lower(mc.metadata_type)='category'";
+      if ( $key eq "cat1" || ( $key eq "cat2" && $cat2 ) ) {
+          $sql{$key} .= " AND lower(mc.metadata_value)=? ";
+      }
+      $sql{$key} .= "
+               )
+          INNER JOIN metadata as mx
+            ON ( node.id=mx.node_id
+                 AND node.version=mx.version
+                 AND lower(mx.metadata_type)='os_x' )
+          INNER JOIN metadata as my
+            ON ( node.id=my.node_id
+                 AND node.version=my.version
+                 AND lower(my.metadata_type)='os_y' )
+          ORDER BY node.name";
+    }
 
     my @cat1stuff;
     my @cat2stuff;
+    my $sth = $dbh->prepare( $sql{cat1} );
     $sth->execute( lc( $cat1 ) ) or die $dbh->errstr;
     while ( my ( $id, $name, $x, $y ) = $sth->fetchrow_array ) {
       push @cat1stuff, { id => $id, name => $name, x => $x, y => $y };
     }
-    $sth->execute( lc( $cat2 ) ) or die $dbh->errstr;
+    $sth = $dbh->prepare( $sql{cat2} );
+    if ( $cat2 ) {
+      $sth->execute( lc( $cat2 ) ) or die $dbh->errstr;
+    } else {
+      $sth->execute or die $dbh->errstr;
+    }
     while ( my ( $id, $name, $x, $y ) = $sth->fetchrow_array ) {
       push @cat2stuff, { id => $id, name => $name, x => $x, y => $y };
     }
@@ -118,7 +131,9 @@ ORDER BY node.name
       my $base_url = $config->script_url . $config->script_name . "?";
       my $last_origin = "";
       print "<table border=\"1\" class=\"category_search_results\">\n"
-            . "<tr><th><b>$cat1</b></th><th><b>$cat2</b></th>"
+            . "<tr><th><b>$cat1</b></th><th><b>"
+            . ( $cat2 ? $cat2 : "&nbsp;" )
+            . "</b></th>"
             . "<th><b>Distance (metres)</b></th></tr>\n";
       foreach my $set ( @results ) {
         my $origin_name = $set->{origin}->{name};

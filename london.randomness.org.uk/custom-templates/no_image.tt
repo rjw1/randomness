@@ -1,0 +1,34 @@
+[% INCLUDE addons_header.tt %]
+
+<h2>[% addon_title %]</h2>
+
+<form action="[% self_url %]" method="get">
+  <p>Restrict results to locale [% locale_box %]
+     <small>(Locales not listed have no pages with missing images.)
+     </small>
+  </p>
+
+  <p>Restrict results to category [% category_box %]
+     <small>(Categories not listed have no pages with missing images.)
+     </small>
+  </p>
+
+  <p>Restrict results to within [% os_dist_box %] metres of
+     OS X [% os_x_box %], OS Y [% os_y_box %]</p>
+
+  <p>
+    [% exclude_locales_box %] Exclude locale pages.<br />
+    [% exclude_categories_box %] Exclude category pages.
+  </p>
+  <input type="submit" name="Search" value="Search" />
+</form>
+
+<p>Total count: [% lacking.size %]</p>
+
+<ul>
+  [% FOREACH lack = lacking %]
+    <li><a href="[% lack.url %]">[% lack.name %]</a></li>
+  [% END %]
+</ul>
+
+[% INCLUDE addons_footer.tt %]

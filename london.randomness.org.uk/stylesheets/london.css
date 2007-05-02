@@ -690,3 +690,10 @@ div#featured_article_blurb {
   display: inline;
   font-weight: bold;
 }
+
+div.see_other_searches {
+  text-align: right;
+  font-size: 0.8em;
+  padding-top: 0.5em;
+  margin-bottom: -1em;
+}

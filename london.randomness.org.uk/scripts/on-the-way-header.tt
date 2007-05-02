@@ -35,5 +35,9 @@
       //]]> 
     </script>
 
+  <div class="see_other_searches">
+    See also: <a href="wiki.cgi?Ways_To_Search_RGL">Ways To Search RGL</a>
+  </div>
+
   <h1 id="header"><a href="[% home_link %]">[% site_name %]</a> &#8212; Search for things on the way to other things</h1>
   <div id="content">

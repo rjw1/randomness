@@ -18,6 +18,7 @@ sub get_tt_vars {
                                  . $config->script_name . "?id=",
                   formatting_rules_link => $config->formatting_rules_link,
                   formatting_rules_node => $config->formatting_rules_node,
+                  gmaps_api_key => $config->gmaps_api_key,
                   not_editable => 1,
                 );
 

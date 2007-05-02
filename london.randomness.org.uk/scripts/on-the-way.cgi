@@ -3,12 +3,15 @@
 use strict;
 use warnings;
 
+use lib "lib";
+
 use CGI qw( :standard );
 use CGI::Carp qw( fatalsToBrowser );
 use Data::Dumper;
 use Geo::HelmertTransform;
 use OpenGuides;
 use OpenGuides::Config;
+use RGL::Addons;
 use Template;
 use Wiki::Toolkit::Plugin::Locator::Grid;
 
@@ -26,75 +29,55 @@ my $fudge = 200;
 
 my $q = CGI->new;
 
-my $raw = $q->param( "raw" );
+my %tt_vars = RGL::Addons->get_tt_vars( config => $config );
+$tt_vars{self_url} = $q->url( -relative );
 
-print $q->header unless $raw;
-my $self_url = $q->url( -relative );
+$tt_vars{os_x_origin_box} = $q->textfield( -name =>"x1",
+                                           -size => 6, -maxlength => 6 );
+$tt_vars{os_y_origin_box} = $q->textfield( -name =>"y1",
+                                           -size => 6, -maxlength => 6 );
+$tt_vars{os_x_destin_box} = $q->textfield( -name =>"x2",
+                                           -size => 6, -maxlength => 6 );
+$tt_vars{os_y_destin_box} = $q->textfield( -name =>"y2",
+                                           -size => 6, -maxlength => 6 );
 
-my %tt_vars = (
-                stylesheet    => $config->stylesheet_url,
-                gmaps_api_key => $config->gmaps_api_key,
-                site_name     => $config->site_name,
-                home_link     => $config->script_url . $config->script_name,
-              );
-my $tt = Template->new( { INCLUDE_PATH => "." } );
-$tt->process( "on-the-way-header.tt", \%tt_vars ) unless $raw;;
-
-my $x1 = $q->param( "x1" ) || "";
-my $y1 = $q->param( "y1" ) || "";
-my $x2 = $q->param( "x2" ) || "";
-my $y2 = $q->param( "y2" ) || "";
-my $origin = $q->param( "origin" ) || "";
-my $dest = $q->param( "dest" ) || "";
-my $choose_how = $q->param( "choose_how" ) || "os";
-
-print_form() unless $raw;
+my @all_nodes = get_nodes_with_geodata();
+my %choices = map { $_ => $_ } @all_nodes;
+$tt_vars{origin_list} = $q->popup_menu( -name   => "origin",
+                                        -values => [ "", sort keys %choices ],
+                                        -labels => { "" => " -- choose -- ",
+                                                     %choices },
+                                      );
+$tt_vars{destin_list} = $q->popup_menu( -name   => "dest",
+                                        -values => [ "", sort keys %choices ],
+                                        -labels => { "" => " -- choose -- ",
+                                                     %choices },
+                                      );
+my @buttons = $q->radio_group( -name   => "choose_how",
+                               -values => [ "os", "name" ],
+                               -labels => { os => "", name => "" } );
+$tt_vars{choose_how_buttons} = { os => $buttons[0], name => $buttons[1] };
 
 if ( $q->param( "do_search" ) ) {
   do_search();
 }
 
-print <<EOHTML;
-</body>
-</html>
-EOHTML
+# Make sure the maps work.
+$tt_vars{enable_gmaps} = 1;
+$tt_vars{display_google_maps} = 1;
 
-sub print_form {
-  my $origin_boxes = <<EOHTML;
-    OS X <input type="text" size="6" maxlength="6" name="x1" value="$x1" />
-    OS Y <input type="text" size="6" maxlength="6" name="y1" value="$y1" />
-EOHTML
-  my $dest_boxes = <<EOHTML;
-    OS X <input type="text" size="6" maxlength="6" name="x2" value="$x2" />
-    OS Y <input type="text" size="6" maxlength="6" name="y2" value="$y2" />
-EOHTML
-  my @all_nodes = get_nodes_with_geodata();
-  my %choices = map { $_ => $_ } @all_nodes;
-  my $origin_list = $q->popup_menu( -name   => "origin",
-                                    -values => [ "", sort keys %choices ],
-                                    -labels => { "" => " -- choose -- ",
-                                                 %choices },
-                                  );
-  my $dest_list = $q->popup_menu(   -name   => "dest",
-                                    -values => [ "", sort keys %choices ],
-                                    -labels => { "" => " -- choose -- ",
-                                                 %choices },
-                                  );
-  my $choose_os = '<input type="radio" name="choose_how" value="os" '
-                  . ( $choose_how eq "os" ? "checked=\"1\" " : "" ) . '/>';
-  my $choose_name = '<input type="radio" name="choose_how" value="name" '
-                  . ( $choose_how eq "name" ? "checked=\"1\" " : "" ) . '/>';
+# Do the template stuff.
+my $custom_template_path = $config->custom_template_path || "";
+my $template_path = $config->template_path;
+my $tt = Template->new( { INCLUDE_PATH =>
+                                   "$custom_template_path:$template_path"  } );
+%tt_vars = (
+             %tt_vars,
+             addon_title => "Things on the way to other things",
+           );
 
-  print <<EOHTML;
-    <form action="$self_url" method="GET">
-      <p>Find me things on the way from:<br />
-      $choose_os $origin_boxes to $dest_boxes<br />
-      $choose_name $origin_list to $dest_list.</p>
-      <input type="hidden" name="do_search" value="1">
-      <input type="submit" name="Search" value="Search">
-    </form>
-EOHTML
-}
+print $q->header;
+$tt->process( "on_the_way.tt", \%tt_vars ) || die $tt->error;
 
 sub get_nodes_with_geodata {
   my $dbh = $wiki->store->dbh;
@@ -130,13 +113,21 @@ sub get_nodes_with_geodata {
 }
 
 sub do_search {
+  my $x1 = $q->param( "x1" ) || "";
+  my $y1 = $q->param( "y1" ) || "";
+  my $x2 = $q->param( "x2" ) || "";
+  my $y2 = $q->param( "y2" ) || "";
+  my $choose_how = $q->param( "choose_how" ) || "os";
+  my $origin = $q->param( "origin" ) || "";
+  my $dest = $q->param( "dest" ) || "";
+
   if ( $choose_how eq "name" ) {
     if ( !$origin || !$dest ) {
-      print "<p>Must supply both origin and destination.</p>";
+      $tt_vars{message} = "Must supply both origin and destination.";
       return;
     }
   } elsif ( !$x1 || !$y1 || !$x2 || !$y2 ) {
-    print "<p>Must supply x and y for both origin and destination.</p>";
+    $tt_vars{message} = "Must supply x and y for both origin and destination.";
     return;
   }
 
@@ -211,33 +202,23 @@ sub do_search {
                         long => $long, param => $param, endpoint => $endpoint };
   }
 
-  if ( $raw ) {
-    print Dumper @candidates;
-    exit 0;
-  }
+  $tt_vars{nodes} = \@candidates;
 
-  if ( ! scalar @candidates ) {
-    print "<p>Nothing found, sorry.</p>\n";
-  } else {
+  if ( scalar @candidates ) {
     %tt_vars = (
-                    x1       => $x1,
-                    y1       => $y1,
-                    x2       => $x2,
-                    y2       => $y2,
-                    nodes    => \@candidates,
-                    long     => $q->param( "long" ) || $config->centre_long,
-                    lat      => $q->param( "lat" ) || $config->centre_lat,
-                    zoom     => $q->param( "zoom" )
-                                    || $config->default_gmaps_zoom,
-                    map_type => $q->param( "map_type" ) || "",
-                    base_url => $config->script_url . $config->script_name,
-                  );
-
-    my $output;
-    $tt = Template->new( { INCLUDE_PATH => "." } );
-    $tt->process( "on-the-way.tt", \%tt_vars, \$output );
-    $output ||= "<p>Failed to process template.</p>\n";
-    print $output unless $raw;
+                 %tt_vars,
+                 x1       => $x1,
+                 y1       => $y1,
+                 x2       => $x2,
+                 y2       => $y2,
+                 long     => $q->param( "long" ) || $config->centre_long,
+                 lat      => $q->param( "lat" ) || $config->centre_lat,
+                 zoom     => $q->param( "zoom" )
+                                 || $config->default_gmaps_zoom,
+                 map_type => $q->param( "map_type" ) || "",
+                 base_url => $config->script_url . $config->script_name,
+               );
   }
 }
+
 

@@ -1,4 +1,11 @@
 [% INCLUDE header.tt page_title=addon_title %]
 [% INCLUDE banner.tt %]
+
+
+[% IF exclude_navbar %]
+  <div id="content" style="padding-right:2em">
+    <div id="maincontent" style="width:100%">
+[% ELSE %]
   <div id="content">
     <div id="maincontent">
+[% END %]

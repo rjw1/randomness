@@ -22,7 +22,7 @@ input.form_button {
 
 /* Main body */
 div#body_wrapper {
-  background: #F3E8AA;
+  background: #F2E9BC;
   margin-left: 7%;
   margin-right: 7%;
   margin-top: 2em;
@@ -141,7 +141,7 @@ div.summary_bar_link {
 
 #nav_search {
   color: #333333;
-  background: #F3E8AA;
+  background: #F2E9BC;
   padding-left: 0.2em;
   margin-bottom: 0.2em;
   border: 1px solid #58078E;
@@ -299,7 +299,7 @@ div#metadata ul li span.metadata_label {
 }
 
 #location_stuff select {
-  background: #F3E8AA;
+  background: #F2E9BC;
   border: 1px solid #58078E;
 }
 
@@ -582,7 +582,7 @@ div.criteria_search_group, div.criteria_search_checkbox_group {
   clear: both;
 }
 
-div#garden_group {
+div#garden_group, div#vegan_friendly_group, div#food_style_group {
   padding-top: 1em;
 }
 

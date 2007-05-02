@@ -23,7 +23,11 @@
   <input type="submit" name="Search" value="Search" />
 </form>
 
-<p>Total count: [% lacking.size %]</p>
+[% IF lacking.size %]
+  <p>Total count: [% lacking.size %]</p>
+[% ELSE %]
+  <p>No pages found matching your criteria.</p>
+[% END %]
 
 <ul>
   [% FOREACH lack = lacking %]

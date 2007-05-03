@@ -50,6 +50,7 @@
         [% END %]
         [% IF wgs84_lat AND wgs84_long %]
           (<a href="http://maps.google.co.uk/maps?q=[% wgs84_lat %],[% wgs84_long %]&z=15">gmap</a>)
+          (<a href="http://www.multimap.com/maps/#t=l&map=[% wgs84_lat %],[% wgs84_long %]|15|4&loc=GB:[% wgs84_lat %]:[% wgs84_long %]:15">multimap</a>)
         [% END %]
       </li>
     [% ELSIF map_link %]
@@ -57,6 +58,7 @@
         <span class="metadata_label">Finding this place:</span> (<a href="[% map_link %]">map</a>)
         [% IF wgs84_lat AND wgs84_long %]
           (<a href="http://maps.google.co.uk/maps?q=[% wgs84_lat %],[% wgs84_long %]&zoom=5">gmap</a>)
+          (<a href="http://www.multimap.com/maps/#t=l&map=[% wgs84_lat %],[% wgs84_long %]|15|4&loc=GB:[% wgs84_lat %]:[% wgs84_long %]:15">multimap</a>)
         [% END %]
       </li>
     [% END %]

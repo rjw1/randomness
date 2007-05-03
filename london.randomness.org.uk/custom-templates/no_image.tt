@@ -1,7 +1,7 @@
 [% INCLUDE addons_header.tt %]
 
 <div class="see_other_searches">
-  See also: <a href="wiki.cgi?Ways_To_Search_RGL">Ways To Search RGL</a>
+  See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
 </div>
 
 <h2>[% addon_title %]</h2>

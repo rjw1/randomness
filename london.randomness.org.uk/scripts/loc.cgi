@@ -36,7 +36,7 @@ print <<EOHTML;
 
   <div id="maincontent">
     <div class="see_other_searches">
-      See also: <a href="wiki.cgi?Ways_To_Search_RGL">Ways To Search RGL</a>
+      See also: <a href="../wiki.cgi?Ways_To_Search_RGL">Ways To Search RGL</a>
     </div>
 
     <p>Note: not intended for general use, just a little thingy to help me

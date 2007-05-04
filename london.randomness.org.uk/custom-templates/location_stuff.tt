@@ -2,7 +2,7 @@
   [% IF coord_field_1_value AND coord_field_2_value %]
     <div id="nearby_tubes">
       <form onSubmit="return showTubeStations()">
-        <p>Show nearby Tubes:
+        <p>Show nearby Tube stations:
         <input type="submit" name="Show" value="Show" class="form_button" />
       </form>
     </div>

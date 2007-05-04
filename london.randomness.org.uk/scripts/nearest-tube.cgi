@@ -29,60 +29,93 @@ my $q = CGI->new;
 print $q->header;
 
 if ( $q->param( "origin" ) ) {
-  my $origin = $q->param( "origin" );
-  $origin = $formatter->node_param_to_node_name( $origin );
-
-  my @nearby = $locator->find_within_distance( node   => $origin,
-                                               metres => 1000 );
-  my @stations = $wiki->list_nodes_by_metadata(
-      metadata_type  => "category",
-      metadata_value => "Tube",
-      ignore_case    => 1,
-  );
-  my %stationhash = map { $_ => 1 } @stations;
-
-  my $base_url = $config->script_url . $config->script_name . "?";
-  my @results;
-  foreach my $near ( @nearby ) {
-    if ( $stationhash{ $near } ) {
-      my $distance = $locator->distance( from_node => $origin,
-                                         to_node   => $near );
-      my @lines = $categoriser->categories( node => $near );
-      @lines = grep { /Line$/ } @lines;
-      my @tubelines;
-      foreach my $line ( @lines ) {
-          # Pull out just the Tube lines.
-	  my @cats = $categoriser->categories( node => "Category $line" );
-          @cats = grep { /^Tube$/ } @cats;
-          if ( scalar @cats ) {
-              $line =~ s/ Line$//;
-              push @tubelines, $line;
-          }
-      }
-      my $url = $base_url . $formatter->node_name_to_node_param( $near );
-      $near =~ s/ Station$//;
-      push @results, { name => $near, distance => $distance,
-                       lines => \@tubelines,
-                       url => $url };
-    }
-  }
-
-  if ( @results == 0 ) {
-    print "Nothing within 1km, sorry.\n";
-  } else {
-    @results = sort { $a->{distance} <=> $b->{distance} } @results;
-    if ( @results > 5 ) {
-      @results = @results[0..4];
-    }
-    my @pretty;
-    foreach my $result ( @results ) {
-      push @pretty, "<a href=\"" . $result->{url} . "\">" . $result->{name} . "</a> (" . $result->{distance} . "m, "
-            . join( ", ", @{$result->{lines}} ) . ")";
-    }
-    print join( "; ", @pretty );
-  }
+    find_stations();
 } else {
-  print "<p>No origin specified.</p>\n";
+    print "<p>No origin specified.</p>\n";
 }
 
+sub find_stations {
+    my $type_param = $q->param( "type" );
+    my $type;
+    if ( $type_param && $type_param eq "rail" ) {
+        $type = "Rail";
+    } elsif ( !$type_param || $type_param eq "tube" ) {
+        $type = "Tube";
+    } else {
+        print "<p>Unknown type: " . $q->escapeHTML( $type_param ). "</p>\n";
+        return;
+    }
 
+    my $origin = $q->param( "origin" );
+    $origin = $formatter->node_param_to_node_name( $origin );
+
+    my @nearby = $locator->find_within_distance( node   => $origin,
+                                                 metres => 1000 );
+    my @stations = $wiki->list_nodes_by_metadata(
+        metadata_type  => "category",
+        metadata_value => $type,
+        ignore_case    => 1,
+    );
+    my %stationhash = map { $_ => 1 } @stations;
+
+    my $base_url = $config->script_url . $config->script_name . "?";
+    my @results;
+    foreach my $near ( @nearby ) {
+        if ( $stationhash{ $near } ) {
+            my $distance = $locator->distance( from_node => $origin,
+                                               to_node   => $near );
+            my $url = $base_url . $formatter->node_name_to_node_param( $near );
+            my $name = $near;
+            $name =~ s/ Station$//;
+
+            if ( $type eq "Rail" ) {
+                push @results, {
+                                 name     => $name,
+                                 distance => $distance,
+                                 url      => $url,
+                               };
+            } else {
+                my @lines = $categoriser->categories( node => $near );
+                @lines = grep { /Line$/ } @lines;
+                my @tubelines;
+                foreach my $line ( @lines ) {
+                    # Pull out just the Tube lines.
+                    my @cats = $categoriser->categories( node =>
+                                                            "Category $line" );
+                    @cats = grep { /^Tube$/ } @cats;
+                    if ( scalar @cats ) {
+                        $line =~ s/ Line$//;
+                        push @tubelines, $line;
+                    }
+                }
+                push @results, {
+                                 name     => $name,
+                                 distance => $distance,
+                                 lines    => \@tubelines,
+                                 url      => $url,
+                               };
+            }
+        }
+    }
+
+    if ( @results == 0 ) {
+        print "Nothing within 1km, sorry.\n";
+    } else {
+        @results = sort { $a->{distance} <=> $b->{distance} } @results;
+        if ( @results > 5 ) {
+            @results = @results[0..4];
+        }
+        my @pretty;
+        foreach my $result ( @results ) {
+            my $listing = "<a href=\"" . $result->{url} . "\">"
+                          . $result->{name} . "</a> (" . $result->{distance};
+            if ( $type eq "Rail" ) {
+                $listing .= "m)";
+            } else {
+                $listing .= "m, " . join( ", ", @{$result->{lines}} ) . ")";
+            }
+            push @pretty, $listing;
+        }
+        print join( "; ", @pretty );
+    }
+}

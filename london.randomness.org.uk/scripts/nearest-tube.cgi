@@ -49,12 +49,20 @@ if ( $q->param( "origin" ) ) {
                                          to_node   => $near );
       my @lines = $categoriser->categories( node => $near );
       @lines = grep { /Line$/ } @lines;
-      my %uniq = map { $_ => 1 } @lines;
-      @lines = keys( %uniq );
-      @lines = map { s/ Line$//; $_; } @lines;
+      my @tubelines;
+      foreach my $line ( @lines ) {
+          # Pull out just the Tube lines.
+	  my @cats = $categoriser->categories( node => "Category $line" );
+          @cats = grep { /^Tube$/ } @cats;
+          if ( scalar @cats ) {
+              $line =~ s/ Line$//;
+              push @tubelines, $line;
+          }
+      }
       my $url = $base_url . $formatter->node_name_to_node_param( $near );
       $near =~ s/ Station$//;
-      push @results, { name => $near, distance => $distance, lines => \@lines,
+      push @results, { name => $near, distance => $distance,
+                       lines => \@tubelines,
                        url => $url };
     }
   }

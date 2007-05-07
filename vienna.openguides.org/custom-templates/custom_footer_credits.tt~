@@ -1,0 +1,6 @@
+<p><a href="[% delete_link %]">Delete page</a> (admins only)</p>
+
+<p>Open Guide to Vienna wird mit <a
+href="http://openguides.org/">OpenGuides</a> ([% openguides_version %])
+erstellt und ist unter dieser
+<a href="[% licence_url %]">[% licence_name %]</a> lizensiert.

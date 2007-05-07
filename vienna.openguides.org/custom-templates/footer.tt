@@ -1,0 +1,59 @@
+<br clear="all" />
+
+<div id="search_form">
+  <form action="search.cgi" method="get">
+    <strong><label for="search">Suchen [% site_name %]:</label></strong> <input type="text" size="50" name="search" id="search" value="Suchbegriff" onclick="this.value=''" /> 
+    <input type="submit" name="Los" value="Los" id="go" class="form_button" />
+  </form>
+</div>
+
+<div id="footer">
+  [% BLOCK delete_link %]
+    [% IF enable_page_deletion AND NOT not_deletable %]
+      <div id="footer_delete_link">
+        <a href="[% full_cgi_url %]?id=[% node_param %];action=delete">Delete page</a> (admins only)
+      </div>
+    [% END %]
+  [% END %]
+
+  [% TRY %]
+    [% INCLUDE custom_footer_credits.tt %]
+  [% CATCH %]
+    <p>
+      [% INCLUDE delete_link %]
+    </p>
+    <p>
+      Powered by <a href="[% full_cgi_url%]?action=about">OpenGuides [% openguides_version %]</a>.
+    </p>
+    [% IF licence_name %]
+      <p>
+        This work is licensed under the 
+        [% IF licence_url %]
+           <a href="[% licence_url %]">[% licence_name %]</a>
+		[% ELSE %]
+			[% licence_name %]
+        [% END %]
+        licence
+        [% IF licence_info_url %]
+           (<a href="[% licence_info_url %]">more info</a>)
+        [% END %]
+      </p>
+    [% END %]
+  [% END %]
+
+</div>
+</div>
+</div>
+
+  [% IF config.google_analytics_key %]
+    <script src="http://www.google-analytics.com/urchin.js"
+     type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      _uacct = "[% CGI.escapeHTML( config.google_analytics_key  ) %]";
+      if ( typeof urchinTracker == 'function' ) urchinTracker();
+    </script>
+  [% END %]
+
+</body>
+</html>

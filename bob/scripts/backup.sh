@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-for db in london capetown
+for db in london capetown vienna
 do
 /usr/bin/pg_dump -Z 9 -f /export/home/bob/backups/$db.sql.`/usr/bin/date +%Y%m%d`.gz -d $db
 done

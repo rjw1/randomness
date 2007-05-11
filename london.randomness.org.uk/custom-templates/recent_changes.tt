@@ -77,7 +77,7 @@
     [% INCLUDE changes nodes = recent_changes.14 days = 14 %]
   [% END %]
 
-  [% IF recent_changes.30 %]
+  [% IF recent_changes.300 %]
     <h2>Pages changed in the last 30 days:</h2>
     [% INCLUDE changes nodes = recent_changes.30 days = 30 %]
   [% END %]

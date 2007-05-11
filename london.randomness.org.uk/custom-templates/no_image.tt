@@ -28,7 +28,7 @@
 </form>
 
 [% IF lacking.size %]
-  <p>Total count: [% lacking.size %]</p>
+  <p>Number of pages without a photo: [% lacking.size %]</p>
 [% ELSE %]
   <p>No pages found matching your criteria.</p>
 [% END %]

@@ -53,6 +53,10 @@ div#body_wrapper {
 #banner h1 a:active { text-decoration: none; }
 #banner h1 a:hover { text-decoration: none; }
 
+div#redirect_message {
+  display: none;
+}
+
 #content {
   //padding: 1em;
 }
@@ -380,7 +384,19 @@ div#create_new_page input#pagename {
 }
 
 div.disallowed_characters_note {
-  padding-top: 1em;
+  padding: 0.5em;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+  float: right;
+  width: 30%;
+  font-size: 0.8em;
+  border: 1px dotted #595A38;
+  margin-top: 1em;
+}
+
+div.new_page_notes {
+  padding: 1em;
+  font-size: 0.9em;
 }
 
 /* Category Search page */
@@ -697,3 +713,8 @@ div.see_other_searches {
   padding-top: 0.5em;
   margin-bottom: -1em;
 }
+
+div.getting_here {
+  font-size: 0.8em;
+}
+

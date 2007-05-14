@@ -1,5 +1,7 @@
 package RGL::Addons;
 
+use OpenGuides::CGI;
+
 sub get_tt_vars {
   my ( $self, %args ) = @_;
 
@@ -21,6 +23,9 @@ sub get_tt_vars {
                   gmaps_api_key => $config->gmaps_api_key,
                   not_editable => 1,
                 );
+
+  my %cookie_data = OpenGuides::CGI->get_prefs_from_cookie(config=>$config); 
+  $tt_vars{username} = $cookie_data{username};
 
   return %tt_vars;
 }

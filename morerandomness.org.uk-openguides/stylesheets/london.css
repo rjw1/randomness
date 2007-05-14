@@ -253,9 +253,10 @@ h2.node_name {
 #  display: inline;
 }
 
-div#title_edit_link {
+div#title_edit_link, div#title_comment_link {
   display: inline;
   font-size: 0.8em;
+  padding-left: 0.5em;
 }
 
 div#metadata

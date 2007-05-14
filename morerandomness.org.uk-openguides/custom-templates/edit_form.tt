@@ -59,8 +59,13 @@
              cols="70" wrap="virtual">[% content %]</textarea>
           </div>
           <span class="hint">
-            The main content of the page.  It can include reviews and
-            descriptions.
+            [% TRY %]
+              [% INCLUDE custom_hint_content %]
+            [% CATCH %]
+              You can write anything here.  Reviews, descriptions, links to
+              other reviews, etc.  You can write in note form or complete
+              sentences, in first person or third person.
+            [% END %]
           </span>
           [% IF conflict %]
             <div class="conflict_group">
@@ -90,7 +95,12 @@
 [% END %]</textarea>
           </div>
           <span class="hint">
-            The areas/neighbourhoods where the subject of the page is located.
+            [% TRY %]
+              [% INCLUDE custom_hint_locales %]
+            [% CATCH %]
+              The areas/neighbourhoods where the subject of the page is
+              located.
+            [% END %]
           </span>
           [% IF conflict %]
             <div class="conflict_group">
@@ -117,9 +127,13 @@
 [% END %]</textarea>
           </div>
           <span class="hint">
-            Useful categories include: what kind of thing is it?  (e.g.
-            &#8220;Pubs&#8221;)  what does it provide?  (e.g. &#8220;Chinese
-            Food&#8221;, &#8220;Real Ale&#8221;)
+            [% TRY %]
+              [% INCLUDE custom_hint_categories %]
+            [% CATCH %]
+              Useful categories include: what kind of thing is it?  (e.g.
+              &#8220;Pubs&#8221;)  what does it provide?  (e.g. &#8220;Chinese
+              Food&#8221;, &#8220;Real Ale&#8221;)
+            [% END %]
           </span>
           [% IF conflict %]
             <div class="conflict_group">
@@ -144,8 +158,12 @@
              value="[% summary %]" />
           </div>
           <span class="hint">
-            A brief description of the thing this page is about.  It'll show
-            up in lists of search results.
+            [% TRY %]
+              [% INCLUDE custom_hint_summary %]
+            [% CATCH %]
+              A brief description of the thing this page is about.  It'll show
+              up in lists of search results.
+             [% END %]
           </span>
           [% IF conflict %]
             <div class="conflict_group">

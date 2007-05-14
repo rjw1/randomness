@@ -1,7 +1,7 @@
 <div id="location_stuff">
   [% IF coord_field_1_value AND coord_field_2_value %]
     <div id="nearby_tubes">
-      <form onSubmit="return showTubeStations()">
+      <form onSubmit="return showTubeStations( '[% node_param %]' )">
         <p>Show nearby Tubes:
         <input type="submit" name="Show" value="Show" class="form_button" />
       </form>
@@ -26,7 +26,7 @@
 
   [% IF postcode %]
     <div id="get_directions">
-      <form onSubmit="return makeDirectionsLinks()">
+      <form onSubmit="return makeDirectionsLinks( '[% postcode %]' )">
         <p>Enter your postcode to show directions to this place:
         <input type="text" id="user_postcode" size="8" />
         <input type="submit" name="Show" value="Show" class="form_button" />

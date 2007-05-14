@@ -2,7 +2,7 @@
   <legend>About your edit</legend>
 
   <div class="edit_form_group" id="username_stuff">
-    <label for=username">
+    <label for="username">
       Your username (<a href="preferences.cgi">set it</a>):
     </label>
     <div class="edit_box">

@@ -22,7 +22,7 @@ input.form_button {
 
 /* Main body */
 div#body_wrapper {
-  background: #F3E8AA;
+  background: #F2E9BC;
   margin-left: 7%;
   margin-right: 7%;
   margin-top: 2em;
@@ -52,6 +52,10 @@ div#body_wrapper {
 
 #banner h1 a:active { text-decoration: none; }
 #banner h1 a:hover { text-decoration: none; }
+
+div#redirect_message {
+  display: none;
+}
 
 #content {
   //padding: 1em;
@@ -141,7 +145,7 @@ div.summary_bar_link {
 
 #nav_search {
   color: #333333;
-  background: #F3E8AA;
+  background: #F2E9BC;
   padding-left: 0.2em;
   margin-bottom: 0.2em;
   border: 1px solid #58078E;
@@ -210,6 +214,7 @@ div#node_image_box img {
 
 div#node_image_copyright {
   text-align: right;
+  margin-bottom: 0.2em;
 }
 
 /* The Recent Changes listing on the home page */
@@ -257,15 +262,20 @@ div#metadata
 {
   font-size: 0.85em;
   margin-left: -1em;
+  padding-top: 1em;
 }
 
 ul#categories_and_locales
 {
-#  margin-top: -1em;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 ul#general_metadata {
-  margin-bottom: -1em;
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 div#metadata ul li {
@@ -279,7 +289,6 @@ div#metadata ul li span.metadata_label {
 
 #content_text
 {
-  padding-top: 0.5em;
   margin-bottom: 2.5em;
 }
 
@@ -294,7 +303,7 @@ div#metadata ul li span.metadata_label {
 }
 
 #location_stuff select {
-  background: #F3E8AA;
+  background: #F2E9BC;
   border: 1px solid #58078E;
 }
 
@@ -375,7 +384,19 @@ div#create_new_page input#pagename {
 }
 
 div.disallowed_characters_note {
-  padding-top: 1em;
+  padding: 0.5em;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+  float: right;
+  width: 30%;
+  font-size: 0.8em;
+  border: 1px dotted #595A38;
+  margin-top: 1em;
+}
+
+div.new_page_notes {
+  padding: 1em;
+  font-size: 0.9em;
 }
 
 /* Category Search page */
@@ -394,7 +415,7 @@ table.category_search_results td {
 }
 
 /* Edit page actions */
-div.edit_actions {
+div.edit_form_actions {
   text-align: center;
 }
 
@@ -413,8 +434,17 @@ div.commit_edit {
 
 /* Edit page global stuff */
 
+h1.edit_form_title {
+  text-align: center;
+  font-size: 1.5em;
+}
+
 form.edit_page_form fieldset {
   margin: 1em;
+}
+
+fieldset legend {
+  font-size: 0.9em;
 }
 
 div.edit_form_group {
@@ -448,7 +478,7 @@ div.edit_box textarea, input, select {
 
 div.edit_box textarea {
   width: 98%;
-  padding: 0.5em;
+  padding: 0.2em;
   margin-bottom: 1em;
 }
 
@@ -456,8 +486,17 @@ div.edit_box input {
   width: 98%;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+}
+
+/* Edit page username etc */
+
+fieldset#openguides_information {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 /* Edit page main information */
@@ -520,16 +559,61 @@ fieldset#openguides_information div.edit_form_group {
   vertical-align: bottom;
 }
 
-div#username_stuff {
+div#username_group {
   width: 20%;
 }
 
-div#username_stuff label a {
+div#username_group label a {
   white-space: nowrap;
 }
 
-div#edit_type_stuff {
+div#edit_type_group {
   width: 15%;
+}
+
+/* Pubsearch */
+div.criteria_search_group label {
+  display: block;
+  float: left;
+  width: 25%;
+}
+
+div.criteria_search_box {
+  float: right;
+  width: 75%;
+}
+
+div.criteria_search_checkbox {
+  float: left;
+  width: 5%;
+}
+
+div.criteria_search_checkbox_group label {
+  display: block;
+  float: right;
+  width: 95%;
+}
+
+div.criteria_search_group, div.criteria_search_checkbox_group {
+  clear: both;
+}
+
+div#garden_group, div#vegan_friendly_group, div#food_style_group {
+  padding-top: 1em;
+}
+
+div.criteria_search_submit {
+  clear: both;
+  padding-top: 1em;
+}
+
+dl.criteria_search_results dt {
+  margin-left: 2em;
+}
+
+dl.criteria_search_results dd {
+  font-style: italic;
+  font-size: 0.9em;
 }
 
 /* The 'before' part of a diff listing */
@@ -555,3 +639,82 @@ div#edit_type_stuff {
 {
   font-weight: bold;
 }
+
+/* Extras */
+div.last_verified {
+  font-size: 0.8em;
+}
+
+div.free_geodata {
+  font-size: 0.8em;
+}
+
+div.inline_hint {
+  padding: 0.5em;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+  float: right;
+  width: 35%;
+  font-size: 0.8em;
+  border: 1px dotted #595A38;
+}
+
+div.news_comment {
+  padding-top: 0;
+  margin-top: -1em;
+  text-align: right;
+  font-size: 0.8em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px dotted #595A38;
+}
+
+/* Featured article */
+div#featured_article {
+  float: right;
+  width: 240px;
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
+  border: 1px dotted #595A38;
+  margin-top: 1em;
+}
+
+div#featured_article_header {
+  background: #F1C969;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.2em;
+  border-bottom: 1px dotted #595A38;
+}
+
+img#featured_article_image {
+  border-bottom: 1px dotted #595A38;
+}
+
+div#featured_article_image_copyright {
+  text-align: right;
+  font-size: 0.6em;
+  padding: 0.2em 0.4em 0 0;
+}
+
+div#featured_article_blurb {
+  text-align: center;
+  padding: 0.5em;
+  font-size: 0.8em;
+}
+
+#featured_article_title {
+  display: inline;
+  font-weight: bold;
+}
+
+div.see_other_searches {
+  text-align: right;
+  font-size: 0.8em;
+  padding-top: 0.5em;
+  margin-bottom: -1em;
+}
+
+div.getting_here {
+  font-size: 0.8em;
+}
+

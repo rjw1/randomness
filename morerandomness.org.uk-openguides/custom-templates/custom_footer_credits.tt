@@ -3,13 +3,13 @@
 Design adapted from the <a href="http://creativecommons.org/licenses/by-nc/2.5/" target="new">Creative Commons Licensed</a> &#8220;Naturalist&#8221; by <a href="http://www.designsbydarren.com/" target="new">Designs by Darren</a>.</p>
     [% IF licence_name %]
       <p>
-        This work is licensed under the 
+        The textual content of this work is licensed under the 
         [% IF licence_url %]
            <a href="[% licence_url %]">[% licence_name %]</a>
 		[% ELSE %]
 			[% licence_name %]
         [% END %]
-        licence
+        licence.
         [% IF licence_info_url %]
            (<a href="[% licence_info_url %]">more info</a>)
         [% END %]

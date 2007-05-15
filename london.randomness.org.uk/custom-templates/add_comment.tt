@@ -1,0 +1,48 @@
+[% INCLUDE addons_header.tt %]
+
+<h2>[% addon_title %]</h2>
+
+[% IF !node_param %]
+  <p>Page name missing or in error; please go back and try again.  If this
+  message persists, please contact the site administrator and tell them what
+  you were trying to do.</p>
+[% ELSIF comment_submitted %]
+  <p>Thank you for your comment.
+  <a href="[% full_cgi_url %]?[% node_param %]">Return to the page</a>.
+  </p>
+[% ELSIF commit_error %]
+  <p>Error saving comment; please go back and try again.  If this
+  message persists, please contact the site administrator and tell them what
+  you were trying to do.</p>
+[% ELSE %]
+  <p>(<a href="[% full_cgi_url %]?[% node_param %]">Cancel and return to page</a>.)</p>
+  <form action="[% self_url %]" method="post">
+    <p>
+      Note: your comment will be appended to the bottom of the page, and will
+      be freely editable by other people.
+    </p>
+
+    <p>
+      <label for="username">
+        Your username (<a href="[% script_url %]preferences.cgi">set it</a>):
+        <br />
+      </label>
+      <input type="text" size="30" name="username" id="username"
+       value="[% username %]" />
+    </p>
+
+    <p>
+      <label for="comment">
+        Your comment:<br />
+      </label>
+      <textarea name="comment" id="comment" rows="5" cols="50"></textarea>
+    </p>
+
+    <input type="hidden" name="id" value="[% node_name %]" />
+    <p><input type="submit" name="Submit Comment" value="Submit Comment"
+        class="form_button" /></p>
+
+  </form>
+[% END %]
+
+[% INCLUDE addons_footer.tt %]

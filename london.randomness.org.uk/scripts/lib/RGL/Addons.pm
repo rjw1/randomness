@@ -55,10 +55,9 @@ INNER JOIN metadata as tube
     push @tubes, $tube;
   }
 
-  my $any_string = " -- any -- ";
   my $box = $q->popup_menu( -name   => "tube",
                             -values => [ "", @tubes ],
-                            -labels => { "" => $any_string,
+                            -labels => { "" => "",
                                          map { $_ => $_ } @tubes },
                            );
 

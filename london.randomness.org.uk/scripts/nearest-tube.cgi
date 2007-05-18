@@ -68,33 +68,42 @@ sub find_stations {
             my $name = $near;
             $name =~ s/ Station$//;
 
+            my @cats = $categoriser->categories( node => $near );
+
+            my %details;
+
             if ( $type eq "Rail" ) {
-                push @results, {
-                                 name     => $name,
-                                 distance => $distance,
-                                 url      => $url,
-                               };
+                %details = (
+                             name     => $name,
+                             distance => $distance,
+                             url      => $url,
+                           );
             } else {
-                my @lines = $categoriser->categories( node => $near );
-                @lines = grep { /Line$/ } @lines;
+                my @lines = grep { /Line$/ } @cats;
                 my @tubelines;
                 foreach my $line ( @lines ) {
                     # Pull out just the Tube lines.
-                    my @cats = $categoriser->categories( node =>
+                    my @thiscats = $categoriser->categories( node =>
                                                             "Category $line" );
-                    @cats = grep { /^Tube$/ } @cats;
-                    if ( scalar @cats ) {
+                    @thiscats = grep { /^Tube$/ } @thiscats;
+                    if ( scalar @thiscats ) {
                         $line =~ s/ Line$//;
                         push @tubelines, $line;
                     }
                 }
-                push @results, {
-                                 name     => $name,
-                                 distance => $distance,
-                                 lines    => \@tubelines,
-                                 url      => $url,
-                               };
+                %details = (
+                                name     => $name,
+                                distance => $distance,
+                                lines    => \@tubelines,
+                                url      => $url,
+                              );
             }
+            my %cathash = map { lc($_) => 1; } @cats;
+            if ( $cathash{ "temporarily closed" } ) {
+                $details{name} .= " (temporarily closed)";
+            }
+
+            push @results, \%details;
         }
     }
 

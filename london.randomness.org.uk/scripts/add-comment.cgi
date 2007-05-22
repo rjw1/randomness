@@ -67,8 +67,8 @@ if ( $node && $comment ) {
                       major_change => 1,
                     );
 
-    # Towards a cleaner diff output.
-    foreach my $param ( qw( osie_x osie_y ) ) {
+    # Don't want blank values in integerifiable fields.
+    foreach my $param ( qw( osie_x osie_y os_x os_y ) ) {
         if ( $new_metadata{$param} eq "" ) {
             delete $new_metadata{$param};
         }

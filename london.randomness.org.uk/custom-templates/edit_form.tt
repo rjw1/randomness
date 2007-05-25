@@ -80,7 +80,7 @@
           [% IF conflict %]
             Current locales:
           [% ELSE %]
-            Locales (one per line):
+            Locales (one per line) (<a href="[% full_cgi_url %]?Category_Locales" target="_blank">view all locales in a new window)</a>:
           [% END %]
         </label>
         <div class="edit_box">
@@ -104,7 +104,7 @@
           [% IF conflict %]
             Current categories:
           [% ELSE %]
-            Categories (one per line):
+            Categories (one per line) (<a href="[% full_cgi_url %]?Category_Category" target="_blank">view all categories in a new window)</a>:
           [% END %]
         </label>
         <div class="edit_box">

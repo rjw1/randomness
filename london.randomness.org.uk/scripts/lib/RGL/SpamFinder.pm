@@ -16,7 +16,7 @@ sub looks_like_spam {
     }
 
     if ( $args{via_add_comment} ) {
-        if ( ( $content =~ /very\s+good\s+site\.\s+thank/i )
+        if ( ( $content =~ /good\s+site\.\s+thank/i )
              || ( $content =~ /nice\s+site\.\s+thank/i ) ) {
             if ( $content =~ 'http://' ) {
                 $class->notify_admins( %args, reason => "'nice site' + URL" );

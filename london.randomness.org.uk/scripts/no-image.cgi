@@ -28,9 +28,9 @@ my $category = $q->param( "category" );
 my $os_x = $q->param( "os_x" );
 my $os_y = $q->param( "os_y" );
 my $os_dist = $q->param( "os_dist" );
-$os_x =~ s/[^0-9]//g;
-$os_y =~ s/[^0-9]//g;
-$os_dist =~ s/[^0-9]//g;
+$os_x =~ s/[^0-9]//g if $os_x;
+$os_y =~ s/[^0-9]//g if $os_y;
+$os_dist =~ s/[^0-9]//g if $os_dist;
 
 my $dbh = $wiki->store->dbh;
 my $sql = "

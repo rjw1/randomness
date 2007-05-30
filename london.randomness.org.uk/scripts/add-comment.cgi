@@ -77,6 +77,33 @@ if ( $node && $comment ) {
     my $new_content = $node_data{content} . "\r\n\r\n"
                       . "Comment added by $username: $comment";
 
+    my $spam_detector = $config->spam_detector_module; 
+    my $is_spam; 
+    if ( $spam_detector ) { 
+        eval { 
+            eval "require $spam_detector"; 
+            $is_spam = $spam_detector->looks_like_spam( 
+                node    => $node, 
+                content => $new_content, 
+                metadata => \%new_metadata,
+                via_add_comment => 1,
+            ); 
+        }; 
+    } 
+    
+    if ( $is_spam ) { 
+        my $output = OpenGuides::Template->output( 
+            wiki     => $wiki, 
+            config   => $config, 
+            template => "spam_detected.tt", 
+            vars     => { 
+                          not_editable => 1, 
+                        }, 
+        ); 
+        print $output; 
+        return; 
+    } 
+
     my $ok = $wiki->write_node( $node, $new_content, $node_data{checksum},
                                 \%new_metadata );
 

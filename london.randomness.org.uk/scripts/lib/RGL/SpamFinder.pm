@@ -15,12 +15,39 @@ sub looks_like_spam {
         return 1;
     }
 
+    if ( $content =~ /\bsupermeganah\b/i ) {
+        $class->notify_admins( %args, reason => "Matches supermeganah" );
+        return 1;
+    }
+
     if ( $args{via_add_comment} ) {
+        if ( $content =~ /http:\/\/.*http:\/\//s ) {
+            $class->notify_admins( %args, reason => "comment with more than one URL in" );
+            return 1;
+        }
         if ( ( $content =~ /good\s+site\.\s+thank/i )
+             || ( $content =~ /cool\s+site\.\s+thank/i )
              || ( $content =~ /nice\s+site\.\s+thank/i ) ) {
             if ( $content =~ 'http://' ) {
                 $class->notify_admins( %args, reason => "'nice site' + URL" );
+                return 1;
             }
+        }
+        if ( $content =~ 'http://' && $content =~ /\banal\b/ && $content =~ /\bsex\b/ ) {
+            $class->notify_admins( %args, reason => "'anal' + 'sex' + URL" );
+            return 1;
+        }
+        if ( $content =~ 'http://' && $content =~ /\bxanax\b/ ) {
+            $class->notify_admins( %args, reason => "'xanax' + URL" );
+            return 1;
+        }
+        if ( $content =~ 'http://' && $content =~ /\boxycodone\b/ ) {
+            $class->notify_admins( %args, reason => "'oxycodone' + URL" );
+            return 1;
+        }
+        if ( $content =~ 'http://' && $content =~ /free\s+video\s+download/ ) {
+            $class->notify_admins( %args, reason => "'free video download' + URL" );
+            return 1;
         }
     }
 }

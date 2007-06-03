@@ -27,7 +27,7 @@ sub looks_like_spam {
     }
 
     if ( $args{via_add_comment} ) {
-        if ( $content =~ /http:\/\/.*http:\/\//s ) {
+        if ( $args{added_comment} =~ /http:\/\/.*http:\/\//s ) {
             $class->notify_admins( %args, reason => "comment with more than one URL in" );
             return 1;
         }

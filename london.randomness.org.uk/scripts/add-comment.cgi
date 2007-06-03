@@ -87,6 +87,7 @@ if ( $node && $comment ) {
                 content => $new_content, 
                 metadata => \%new_metadata,
                 via_add_comment => 1,
+                added_comment => $comment,
             ); 
         }; 
     } 
@@ -101,19 +102,18 @@ if ( $node && $comment ) {
                         }, 
         ); 
         print $output; 
-        return; 
-    } 
+        exit 0;
+    }
 
     my $ok = $wiki->write_node( $node, $new_content, $node_data{checksum},
                                 \%new_metadata );
 
     if ( $ok ) {
-#        $tt_vars{comment_submitted} = 1;
         print $guide->redirect_to_node( $node );
         exit 0;
-    } else {
-        $tt_vars{commit_error} = 1;
     }
+
+    $tt_vars{commit_error} = 1;
 }
 
 # Do the template stuff.

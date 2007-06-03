@@ -8,9 +8,15 @@ use Email::Send;
 sub looks_like_spam {
     my ( $class, %args ) = @_;
 
+    if ( $args{metadata}{comment} =~ /some grammatical corrections/i ) {
+        $class->notify_admins( %args,
+                               reason => "'some grammatical corrections'" );
+        return 1;
+    }
+
     my $content = $args{content};
 
-    if ( $content =~ /\bviagra\b/i ) {
+    if ( $content =~ /\bviagra\b/is ) {
         $class->notify_admins( %args, reason => "Matches viagra" );
         return 1;
     }

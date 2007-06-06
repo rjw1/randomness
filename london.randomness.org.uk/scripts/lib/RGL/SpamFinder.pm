@@ -15,6 +15,7 @@ sub looks_like_spam {
     }
 
     my $content = $args{content};
+    my $username = $args{metadata}{username};
 
     if ( $content =~ /\bviagra\b/is ) {
         $class->notify_admins( %args, reason => "Matches viagra" );
@@ -39,12 +40,24 @@ sub looks_like_spam {
                 return 1;
             }
         }
+
+        if ( $username =~ /^[a-z]+\s[a-z]+$/ ) {
+            if ( $args{added_comment} =~ /q[a-tv-z].*q[a-tv-z]/ ) {
+                $class->notify_admins( %args, reason => "two-word lowercase username + two occurrences of q+non-u" );
+                return 1;
+            }
+        }
+
         if ( $content =~ 'http://' && $content =~ /\banal\b/ && $content =~ /\bsex\b/ ) {
             $class->notify_admins( %args, reason => "'anal' + 'sex' + URL" );
             return 1;
         }
         if ( $content =~ 'http://' && $content =~ /\bxanax\b/ ) {
             $class->notify_admins( %args, reason => "'xanax' + URL" );
+            return 1;
+        }
+        if ( $content =~ 'http://' && $content =~ /\bphentermine\b/ ) {
+            $class->notify_admins( %args, reason => "'phentermine' + URL" );
             return 1;
         }
         if ( $content =~ 'http://' && $content =~ /\boxycodone\b/ ) {

@@ -42,7 +42,8 @@ sub looks_like_spam {
         }
 
         if ( $username =~ /^[a-z]+\s[a-z]+$/ ) {
-            if ( $args{added_comment} =~ /q[a-tv-z].*q[a-tv-z]/ ) {
+            my $text = "$username $args{added_comment}";
+            if ( $text =~ /q[a-tv-z].*q[a-tv-z]/ ) {
                 $class->notify_admins( %args, reason => "two-word lowercase username + two occurrences of q+non-u" );
                 return 1;
             }

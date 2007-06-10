@@ -27,6 +27,23 @@ sub looks_like_spam {
         return 1;
     }
 
+    my @cats = @{ $args{metadata}{category} };
+    foreach my $cat ( @cats ) {
+        if ( $cat =~ m'http://'i ) {
+            $class->notify_admins( %args, reason => "URL in category field" );
+            return 1;
+        }
+    }
+
+    my @locs = @{ $args{metadata}{locale} };
+    foreach my $loc ( @locs ) {
+        if ( $loc =~ m'http://'i ) {
+            $class->notify_admins( %args, reason => "URL in locales field" );
+            return 1;
+        }
+    }
+
+    # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
         if ( $args{added_comment} =~ /http:\/\/.*http:\/\//s ) {
             $class->notify_admins( %args, reason => "comment with more than one URL in" );

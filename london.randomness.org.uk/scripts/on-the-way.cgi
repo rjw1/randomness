@@ -25,7 +25,7 @@ my $locator = Wiki::Toolkit::Plugin::Locator::Grid->new( x => "os_x",
 $wiki->register_plugin( plugin => $locator );
 my $formatter = $wiki->formatter;
 
-my $fudge = 200;
+my $fudge = 300;
 
 my $q = CGI->new;
 

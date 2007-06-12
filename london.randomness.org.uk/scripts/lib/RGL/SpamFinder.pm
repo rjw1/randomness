@@ -49,6 +49,10 @@ sub looks_like_spam {
             $class->notify_admins( %args, reason => "comment with more than one URL in" );
             return 1;
         }
+        if ( $args{added_comment} =~ m{<a href= ></a>}is ) {
+            $class->notify_admins( %args, reason => "malformed hyperlink in comment" );
+            return 1;
+        }
         if ( ( $content =~ /good\s+site\.\s+thank/i )
              || ( $content =~ /cool\s+site\.\s+thank/i )
              || ( $content =~ /nice\s+site\.\s+thank/i ) ) {

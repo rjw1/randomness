@@ -113,35 +113,7 @@ We don't have a node called "[% node_param %]". Would you like to <a href="[% fu
 [% IF (latitude AND longitude) OR (os_x AND os_y) OR (osie_x AND osie_y)%]
 </div>
 [% END %]
-<div id="rdf_link">
-  <a href="[% cgi_url %]?id=[% node_param %];format=rdf">RDF/XML for this
-  node</a>
-  [% IF rss_locale_url %]
-    / <a href="[% rss_locale_url %]">RSS feed for this locale</a>
-  [% END %]
-  [% IF rss_category_url %]
-    / <a href="[% rss_category_url %]">RSS feed for this category</a>
-  [% END %]
-</div>
-<div id="version">
-[% IF current %]
-  Letzte &#196;nderung: [% last_modified %]
-  [% IF version == 1 %]
-    (version [% version %])
-  [% ELSE %]
-    (version [% version %];
-    <a href="[% cgi_url %]?id=[% node_param %];version=[% version - 1 %];diffversion=[% version %]">diff</a>).
-  [% END %]
-[% ELSE %]
-  This is version <span class="version">[% version %]</span> 
-  (as of [% last_modified %]). 
-  <a href="[% cgi_url %]?[% node_param %]">View current version.</a> 
-[% END %]
-[% IF version AND version > 1 %]
-<a href="[% cgi_url %]?action=list_all_versions;id=[% node_param %]">List all
-versions.</a>
-[% END %]
-</div>
+
 [% END %]
 </div>
 

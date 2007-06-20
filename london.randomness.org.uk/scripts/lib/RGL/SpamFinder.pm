@@ -17,13 +17,8 @@ sub looks_like_spam {
     my $content = $args{content};
     my $username = $args{metadata}{username};
 
-    if ( $content =~ /\bviagra\b/is ) {
-        $class->notify_admins( %args, reason => "Matches viagra" );
-        return 1;
-    }
-
-    if ( $content =~ /\bsupermeganah\b/i ) {
-        $class->notify_admins( %args, reason => "Matches supermeganah" );
+    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine)\b/is ) {
+        $class->notify_admins( %args, reason => "Matches $1" );
         return 1;
     }
 

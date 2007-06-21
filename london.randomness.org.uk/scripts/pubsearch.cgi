@@ -35,6 +35,7 @@ my %all_criteria = (
                      wifi      => "free wireless",
                      lunch     => "food served lunchtimes",
                      dinner    => "food served evenings",
+                     thai      => "thai food",
                    );
 
 setup_form_variables();

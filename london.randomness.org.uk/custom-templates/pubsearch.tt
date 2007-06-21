@@ -71,6 +71,12 @@
     </div>
     <label for="dinner">Serves food in the evening</label>
   </div>
+  <div class="criteria_search_checkbox_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.thai %]
+    </div>
+    <label for="thai">Serves Thai food</label>
+  </div>
   <div class="criteria_search_submit">
     <input type="submit" name="Search" value="Search" class="form_button" />
   </div>

@@ -69,6 +69,10 @@ acronym {
 	width: 75%;
 }
 
+#rdf_link {
+	margin-top: 20px;
+}
+
 div#navbar {
 	float: right;
 	width: 20%;

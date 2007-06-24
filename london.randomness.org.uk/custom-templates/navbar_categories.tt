@@ -1,11 +1,11 @@
-[% IF common_categories %]
+[% IF config.enable_common_categories %]
   <div id="navbar_categories">
     <div class="navbar_group_title">Categories:</div>
     <ul class="navbar_group">
       [% FOREACH cat = [ 'Pubs', 'Restaurants', 'Travel' ] %]
-        <li><a href="[% catloc_link %]Category_[% cat %]">[% cat %]</a></li>
+        <li><a href="[% config.script_url _ config.script_name %]?id=Category_[% cat %]">[% cat %]</a></li>
       [% END %]
-      <li><a href="[% catloc_link %]Category_Category">All Categories</a></li>
+      <li><a href="[% config.script_url _ config.script_name %]?id=Category_Category">All Categories</a></li>
     </ul>
   </div>
 [% END %]

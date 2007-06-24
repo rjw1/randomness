@@ -42,6 +42,11 @@ locales.size > 0 %][% FOREACH locale = locales %][% locale.name %][%-
   [% END %]
     <link rel="alternate" type="application/rss+xml" title="[% site_name %] - Recent Changes (RSS 1.0)" href="[% full_cgi_url %]?action=rc;format=rss" />
     <link rel="alternate" type="application/atom+xml" title="[% site_name %] - Recent Changes (Atom)" href="[% full_cgi_url %]?action=rc;format=atom" />
+ <link rel="search"
+          type="application/opensearchdescription+xml"
+          title="Search the site '[% site_name %]'"
+          href="[% full_cgi_url %]?action=about;format=opensearch"  />
+
   [% IF deter_robots %]
     <meta name="robots" content="noindex,nofollow" />
   [% END %]

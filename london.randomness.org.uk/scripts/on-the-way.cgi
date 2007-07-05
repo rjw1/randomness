@@ -41,8 +41,8 @@ $tt_vars{os_x_destin_box} = $q->textfield( -name =>"x2",
 $tt_vars{os_y_destin_box} = $q->textfield( -name =>"y2",
                                            -size => 6, -maxlength => 6 );
 
-my @all_nodes = get_nodes_with_geodata();
-my %choices = map { $_ => $_ } @all_nodes;
+my @all_nodes = RGL::Addons->get_nodes_with_geodata( wiki => $wiki );
+my %choices = map { $_->{name} => $_->{name} } @all_nodes;
 $tt_vars{origin_list} = $q->popup_menu( -name   => "origin",
                                         -values => [ "", sort keys %choices ],
                                         -labels => { "" => " -- choose -- ",
@@ -78,39 +78,6 @@ my $tt = Template->new( { INCLUDE_PATH =>
 
 print $q->header;
 $tt->process( "on_the_way.tt", \%tt_vars ) || die $tt->error;
-
-sub get_nodes_with_geodata {
-  my $dbh = $wiki->store->dbh;
-  my $sql = "
-    SELECT node.name
-    FROM node
-    INNER JOIN metadata as mx
-      ON ( node.id=mx.node_id
-           AND node.version=mx.version
-           AND lower(mx.metadata_type)='os_x' )
-    INNER JOIN metadata as my
-      ON ( node.id=my.node_id
-           AND node.version=my.version
-           AND lower(my.metadata_type)='os_y' )
-    INNER JOIN metadata as mlat
-      ON ( node.id=mlat.node_id
-           AND node.version=mlat.version
-           AND lower(mlat.metadata_type)='latitude' )
-    INNER JOIN metadata as mlong
-      ON ( node.id=mlong.node_id
-           AND node.version=mlong.version
-           AND lower(mlong.metadata_type)='longitude' )
-    ORDER BY node.name";
-
-  my $sth = $dbh->prepare( $sql );
-  $sth->execute or die $dbh->errstr;
-
-  my @nodes;
-  while ( my ( $name ) = $sth->fetchrow_array ) {
-    push @nodes, $name;
-  }
-  return @nodes;
-}
 
 sub do_search {
   my $x1 = $q->param( "x1" ) || "";

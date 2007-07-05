@@ -1,12 +1,52 @@
 [% INCLUDE addons_header.tt %]
 
+<script type="text/javascript" language="javascript">
+<!--
+
+function addLoadEvent( func ) {
+  var oldonload = window.onload;
+  if ( typeof window.onload != 'function' ) {
+    window.onload = func;
+  } else {
+    window.onload = function() {
+      oldonload();
+      func();
+    }
+  }
+}
+
+addLoadEvent( addClearButton );
+
+function addClearButton() {
+  document.getElementById( 'clear_criteria' ).innerHTML = '<input type="submit" name="Clear all criteria" value="Clear all criteria" onClick="return clearAllCriteria()" />';
+}
+
+function clearAllCriteria() {
+  var form = document.getElementById( 'criteria_form' );
+  var textfields = form.getElementsByTagName( 'input' );
+  for ( i = 0; i < textfields.length; i++ ) {
+    if ( textfields[i].getAttribute( 'type' ) == 'text' ) {
+      textfields[i].value = '';
+    }
+  }
+
+  var dropdowns = form.getElementsByTagName( 'select' );
+  for ( i = 0; i < dropdowns.length; i++ ) {
+    dropdowns[i].selectedIndex = 0;
+  }
+  return false;
+}
+
+-->
+</script>
+
 <div class="see_other_searches">
   See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
 </div>
 
 <h2>[% addon_title %]</h2>
 
-<form action="[% self_url %]" method="get">
+<form id="criteria_form" action="[% self_url %]" method="get">
   <p>Restrict results to locale [% locale_box %]
      <small>(Locales not listed have no pages with missing images.)
      </small>
@@ -24,6 +64,7 @@
     [% exclude_locales_box %] Exclude locale pages.<br />
     [% exclude_categories_box %] Exclude category pages.
   </p>
+  <span id="clear_criteria"></span>
   <input type="submit" name="Search" value="Search" />
 </form>
 

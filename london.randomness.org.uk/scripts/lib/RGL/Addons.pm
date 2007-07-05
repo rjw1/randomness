@@ -2,6 +2,25 @@ package RGL::Addons;
 
 use OpenGuides::CGI;
 
+=head1 NAME
+
+RGL::Addons - Addons to OpenGuides for the Randomness Guide to London.
+
+=head1 DESCRIPTION
+
+Helpers for the Randomness Guide to London's extra addon scripts.
+
+=head1 METHODS
+
+=over
+
+=item B<get_tt_vars>
+
+Returns a hash of variables for passing to TT; stylesheet, language,
+site_name, script_url, site_url, etc.  not_editable is always set to 1.
+
+=cut
+
 sub get_tt_vars {
   my ( $self, %args ) = @_;
 
@@ -29,6 +48,13 @@ sub get_tt_vars {
 
   return %tt_vars;
 }
+
+=item B<get_tube_dropdown>
+
+Returns HTML for a dropdown box containing all Tube stations.  Takes no
+account of Temporarily Closed.
+
+=cut
 
 sub get_tube_dropdown {
   my ( $self, %args ) = @_;
@@ -63,5 +89,9 @@ INNER JOIN metadata as tube
 
   return $box;
 }
+
+=back
+
+=cut
 
 1;

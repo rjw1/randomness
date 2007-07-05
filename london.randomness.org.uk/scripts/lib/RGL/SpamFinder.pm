@@ -57,6 +57,13 @@ sub looks_like_spam {
             }
         }
 
+        if ( $args{added_comment} =~
+                             /hello\s+dear\s+webmaster.*via\s+google/is ) {
+            $class->notify_admins( %args,
+                                 reason => "hello dear webmaster via google" );
+            return 1;
+        }
+
         if ( $username =~ /^[a-z]+\s[a-z]+$/ ) {
             my $text = "$username $args{added_comment}";
             if ( $text =~ /q[a-tv-z].*q[a-tv-z]/ ) {
@@ -90,9 +97,11 @@ sub looks_like_spam {
 
 sub notify_admins {
     my ( $class, %args ) = @_;
+    my $datestamp = localtime( time() );
     my $message = <<EOM;
 From: kake\@earth.li
 To: kake\@earth.li, bob\@randomness.org.uk
+Date: $datestamp
 Subject: Attempted spam edit on RGL
 
 Someone just tried to edit RGL, and I said no because it looked like spam.

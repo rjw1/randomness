@@ -49,6 +49,53 @@ sub get_tt_vars {
   return %tt_vars;
 }
 
+=item B<get_nodes_with_geodata>
+
+  my @nodes = RGL::Addons->get_nodes_with_geodata( wiki => $wiki );
+
+Find all nodes which have geodata set (OS x and y plus lat and long).
+Returns an array of hashrefs.  Each hashref currently only contains one
+key/value pair; the key is C<name> and the value is the name of the node.
+
+=cut
+
+sub get_nodes_with_geodata {
+  my ( $class, %args ) = @_;
+
+  my $wiki = $args{wiki};
+
+  my $dbh = $wiki->store->dbh;
+  my $sql = "
+    SELECT node.name
+    FROM node
+    INNER JOIN metadata as mx
+      ON ( node.id=mx.node_id
+           AND node.version=mx.version
+           AND lower(mx.metadata_type)='os_x' )
+    INNER JOIN metadata as my
+      ON ( node.id=my.node_id
+           AND node.version=my.version
+           AND lower(my.metadata_type)='os_y' )
+    INNER JOIN metadata as mlat
+      ON ( node.id=mlat.node_id
+           AND node.version=mlat.version
+           AND lower(mlat.metadata_type)='latitude' )
+    INNER JOIN metadata as mlong
+      ON ( node.id=mlong.node_id
+           AND node.version=mlong.version
+           AND lower(mlong.metadata_type)='longitude' )
+    ORDER BY node.name";
+
+  my $sth = $dbh->prepare( $sql );
+  $sth->execute or die $dbh->errstr;
+
+  my @nodes;
+  while ( my ( $name ) = $sth->fetchrow_array ) {
+    push @nodes, { name => $name };
+  }
+  return @nodes;
+}
+
 =item B<get_tube_dropdown>
 
 Returns HTML for a dropdown box containing all Tube stations.  Takes no

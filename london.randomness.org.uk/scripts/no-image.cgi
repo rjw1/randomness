@@ -28,6 +28,20 @@ my $category = $q->param( "category" );
 my $os_x = $q->param( "os_x" );
 my $os_y = $q->param( "os_y" );
 my $os_dist = $q->param( "os_dist" );
+my $origin = $q->param( "origin" );
+my $origin_dist = $q->param( "origin_dist" );
+
+if ( $origin && defined $origin_dist ) {
+    my %data = $wiki->retrieve_node( $origin );
+    my $x = $data{metadata}{os_x}[0];
+    my $y = $data{metadata}{os_y}[0];
+    if ( $x && $y ) {
+        $os_x = $x;
+        $os_y = $y;
+        $os_dist = $origin_dist;
+    }
+}
+
 $os_x =~ s/[^0-9]//g if $os_x;
 $os_y =~ s/[^0-9]//g if $os_y;
 $os_dist =~ s/[^0-9]//g if $os_dist;
@@ -131,6 +145,16 @@ $tt_vars{os_y_box} = $q->textfield( -name => "os_y", -size => 6,
                                     -maxlength => 6 );
 $tt_vars{os_dist_box} = $q->textfield( -name => "os_dist", -size => 4,
                                        -maxlength => 4 );
+
+my @all_nodes = RGL::Addons->get_nodes_with_geodata( wiki => $wiki );
+my %choices = map { $_->{name} => $_->{name} } @all_nodes;
+$tt_vars{origin_list} = $q->popup_menu( -name   => "origin",
+                                        -values => [ "", sort keys %choices ],
+                                        -labels => { "" => " -- choose -- ",
+                                                     %choices },
+                                      );
+$tt_vars{origin_dist_box} = $q->textfield( -name => "origin_dist", -size => 4,
+                                           -maxlength => 4 );
 
 $tt_vars{exclude_locales_box} = $q->checkbox( -name => "exclude_locales",
                                               -value => 1, label => "" );

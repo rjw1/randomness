@@ -69,6 +69,11 @@ sub looks_like_spam {
             return 1;
         }
 
+        if ( $args{added_comment} =~ /dear\s+webmaster\s+i\s+like\s+your\s+site/is){
+            $class->notify_admins( %args, reason => "dear webmaster i like your site" );
+            return 1;
+        }
+
         if ( $username =~ /^[a-z]+\s[a-z]+$/ ) {
             my $text = "$username $args{added_comment}";
             if ( $text =~ /q[a-tv-z].*q[a-tv-z]/ ) {

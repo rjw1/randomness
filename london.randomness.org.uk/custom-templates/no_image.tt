@@ -60,6 +60,9 @@ function clearAllCriteria() {
   <p>Restrict results to within [% os_dist_box %] metres of
      OS X [% os_x_box %], OS Y [% os_y_box %]</p>
 
+  <p>Restrict results to within [% origin_dist_box %] metres of
+     [% origin_list %]</p>
+
   <p>
     [% exclude_locales_box %] Exclude locale pages.<br />
     [% exclude_categories_box %] Exclude category pages.

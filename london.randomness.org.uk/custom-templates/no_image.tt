@@ -67,8 +67,8 @@ function clearAllCriteria() {
     [% exclude_locales_box %] Exclude locale pages.<br />
     [% exclude_categories_box %] Exclude category pages.
   </p>
-  <span id="clear_criteria"></span>
   <input type="submit" name="Search" value="Search" />
+  <span id="clear_criteria"></span>
 </form>
 
 [% IF lacking.size %]

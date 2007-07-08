@@ -1,3 +1,4 @@
+[% USE CGI %]
 [% INCLUDE addons_header.tt %]
 
 <script type="text/javascript" language="javascript">
@@ -67,20 +68,70 @@ function clearAllCriteria() {
     [% exclude_locales_box %] Exclude locale pages.<br />
     [% exclude_categories_box %] Exclude category pages.
   </p>
+
+  <p>
+    [% show_map_box %] Show results on map as well as list (may be slow for large result sets).
+  </p>
   <input type="submit" name="Search" value="Search" />
   <span id="clear_criteria"></span>
 </form>
 
 [% IF lacking.size %]
   <p>Number of pages without a photo: [% lacking.size %]</p>
+  [% IF show_map %]
+    <ul style="height:400px; overflow:auto; float:right; width:30%">
+      [% i = 0 %]
+      [% FOREACH node = lacking %]
+        [% i = i + 1 %]
+        <li>
+          <a href='#' onclick="marker[% i %].openInfoWindowHtml(htmlString[% i %]); return false;">[% CGI.escapeHTML( node.name ) %]</a>
+        </li>
+      [% END %]
+    </ul>
+
+    <table width="100%" height="100%">
+      <tr>
+        <td><div id="map" style=" width: 65%; height: 450px"></div></td>
+      </tr>
+    </table>
+
+    <script defer="defer" type="text/javascript">
+      //<![CDATA[ 
+        var map = new GMap( document.getElementById( "map" ) );
+        map.addControl( new GLargeMapControl() );
+        map.addControl( new GMapTypeControl() );
+        map.centerAndZoom( new GPoint( [% long %], [% lat %] ), [% zoom %] );
+
+        [% IF map_type == "satellite" %]
+          map.setMapType( G_SATELLITE_TYPE );
+        [% ELSIF map_type == "hybrid" %]
+          map.setMapType( G_HYBRID_TYPE );
+        [% END %]
+
+        [% i = 0 %]
+        [% FOREACH node = lacking %]
+          [% i = i + 1 %]
+          var point[% i %] = new GPoint( [% node.long %], [% node.lat %] );
+          var marker[% i %] = new GMarker( point[% i %], baseIcon );
+          var htmlString[% i %] = "<a href=\"[% node.url %]\">[% CGI.escapeHTML( node.name ) %]</a><br />[% node.address %]";
+          GEvent.addListener( marker[% i %], "click",
+            function() { 
+              marker[% i %].openInfoWindowHtml( htmlString[% i %] );
+            }
+          ); 
+          map.addOverlay(marker[% i %]); 
+        [% END %]
+      //]]>
+    </script>
+  [% ELSE %]
+    <ul>
+      [% FOREACH lack = lacking %]
+        <li><a href="[% lack.url %]">[% lack.name %]</a></li>
+      [% END %]
+    </ul>
+  [% END %]
 [% ELSE %]
   <p>No pages found matching your criteria.</p>
 [% END %]
-
-<ul>
-  [% FOREACH lack = lacking %]
-    <li><a href="[% lack.url %]">[% lack.name %]</a></li>
-  [% END %]
-</ul>
 
 [% INCLUDE addons_footer.tt %]

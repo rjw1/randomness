@@ -7,6 +7,7 @@ use lib "lib";
 
 use CGI qw( :standard );
 use CGI::Carp qw( fatalsToBrowser );
+use Geo::HelmertTransform;
 use OpenGuides;
 use RGL::Addons;
 use OpenGuides::Config;
@@ -108,6 +109,9 @@ my %locales;
 my %categories;
 my %lacking;
 my $base_url = $config->script_url . $config->script_name . "?";
+my $airy  = Geo::HelmertTransform::Datum->new( Name => "Airy1830" );
+my $wgs84 = Geo::HelmertTransform::Datum->new( Name => "WGS84" );
+
 while ( my ($name, $this_locale, $this_category, $content, $x, $y, $lat, $long)
                                                      = $sth->fetchrow_array ) {
     # If this is a redirect it doesn't count at all.
@@ -161,6 +165,8 @@ while ( my ($name, $this_locale, $this_category, $content, $x, $y, $lat, $long)
                  url  => $base_url . $param,
                };
     if ( defined $lat && defined $long ) {
+        ( $lat, $long ) =
+         Geo::HelmertTransform::convert_datum( $airy, $wgs84, $lat, $long, 0 );
         $this->{lat} = $lat;
         $this->{long} = $long;
     }

@@ -6,9 +6,10 @@ body {
 }
 
 a {
-  color: #000000;
+  color: #ac5519;
   font-family: lucida, verdana, arial, sans-serif;
 }
+a:visited { color: #734f37; }
 a:active  { text-decoration: underline; }
 a:hover   { text-decoration: underline; }
 
@@ -111,6 +112,7 @@ div.summary_bar_link {
 
 #navbar a {
   text-decoration: none;
+  color: #000000;
 }
 
 #navbar a:hover { text-decoration: underline; }
@@ -215,6 +217,10 @@ div#node_image_box img {
 div#node_image_copyright {
   text-align: right;
   margin-bottom: 0.2em;
+}
+
+div#node_image_copyright a {
+  color: black;
 }
 
 /* The Recent Changes listing on the home page */

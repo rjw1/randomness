@@ -240,5 +240,5 @@ if ( $show_map ) {
            );
 
 print $q->header;
-$tt->process( "no_image.tt", \%tt_vars );
+$tt->process( "no_image.tt", \%tt_vars ) or die $tt->error;
 

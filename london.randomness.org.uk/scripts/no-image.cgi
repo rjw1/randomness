@@ -54,7 +54,7 @@ my $sql = "
 SELECT DISTINCT
        node.name, locale.metadata_value, category.metadata_value, node.text,
        x.metadata_value, y.metadata_value,
-       lat.metadata_value, long.metadata_value
+       latit.metadata_value, longit.metadata_value
 FROM node
 LEFT JOIN metadata as img
   ON ( node.id = img.node_id
@@ -81,15 +81,15 @@ LEFT JOIN metadata as y
        AND node.version = y.version
        AND lower( y.metadata_type ) = 'os_y'
      )
-LEFT JOIN metadata as lat
-  ON ( node.id = lat.node_id
-       AND node.version = lat.version
-       AND lower( lat.metadata_type ) = 'latitude'
+LEFT JOIN metadata as latit
+  ON ( node.id = latit.node_id
+       AND node.version = latit.version
+       AND lower( latit.metadata_type ) = 'latitude'
      )
-LEFT JOIN metadata as long
-  ON ( node.id = long.node_id
-       AND node.version = long.version
-       AND lower( long.metadata_type ) = 'longitude'
+LEFT JOIN metadata as longit
+  ON ( node.id = longit.node_id
+       AND node.version = longit.version
+       AND lower( longit.metadata_type ) = 'longitude'
      )
 WHERE img.metadata_value IS NULL
 ";

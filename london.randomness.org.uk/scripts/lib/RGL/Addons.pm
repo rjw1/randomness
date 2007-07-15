@@ -51,9 +51,11 @@ sub get_tt_vars {
 
 =item B<get_nodes_with_geodata>
 
-  my @nodes = RGL::Addons->get_nodes_with_geodata( wiki => $wiki );
+  my @nodes = RGL::Addons->get_nodes_with_geodata( wiki => $wiki,
+                                                   config => $config );
 
-Find all nodes which have geodata set (OS x and y plus lat and long).
+Find all nodes which have geodata set (x and y plus lat and long).
+x and y may be OS coords, or UTM eastings and northings.
 Returns an array of hashrefs.  Each hashref currently only contains one
 key/value pair; the key is C<name> and the value is the name of the node.
 
@@ -63,6 +65,17 @@ sub get_nodes_with_geodata {
   my ( $class, %args ) = @_;
 
   my $wiki = $args{wiki};
+  my $config = $args{config};
+  my $geo_handler = $config->geo_handler;
+  my ( $x_name, $y_name );
+
+  if ( $geo_handler == 1 ) {
+      $x_name = "os_x";
+      $y_name = "os_y";
+  } elsif ( $geo_handler == 3 ) {
+      $x_name = "easting";
+      $y_name = "northing";
+  }
 
   my $dbh = $wiki->store->dbh;
   my $sql = "
@@ -71,11 +84,11 @@ sub get_nodes_with_geodata {
     INNER JOIN metadata as mx
       ON ( node.id=mx.node_id
            AND node.version=mx.version
-           AND lower(mx.metadata_type)='os_x' )
+           AND lower(mx.metadata_type)='$x_name' )
     INNER JOIN metadata as my
       ON ( node.id=my.node_id
            AND node.version=my.version
-           AND lower(my.metadata_type)='os_y' )
+           AND lower(my.metadata_type)='$y_name' )
     INNER JOIN metadata as mlat
       ON ( node.id=mlat.node_id
            AND node.version=mlat.version

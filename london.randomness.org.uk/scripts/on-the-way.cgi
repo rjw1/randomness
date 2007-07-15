@@ -41,7 +41,8 @@ $tt_vars{os_x_destin_box} = $q->textfield( -name =>"x2",
 $tt_vars{os_y_destin_box} = $q->textfield( -name =>"y2",
                                            -size => 6, -maxlength => 6 );
 
-my @all_nodes = RGL::Addons->get_nodes_with_geodata( wiki => $wiki );
+my @all_nodes = RGL::Addons->get_nodes_with_geodata( wiki => $wiki,
+                                                     config => $config );
 my %choices = map { $_->{name} => $_->{name} } @all_nodes;
 $tt_vars{origin_list} = $q->popup_menu( -name   => "origin",
                                         -values => [ "", sort keys %choices ],

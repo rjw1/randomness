@@ -11,6 +11,7 @@ use Geo::HelmertTransform;
 use OpenGuides;
 use RGL::Addons;
 use OpenGuides::Config;
+use OpenGuides::Utils;
 use Template;
 
 my $config_file = $ENV{OPENGUIDES_CONFIG_FILE} || "../wiki.conf";
@@ -109,8 +110,6 @@ my %locales;
 my %categories;
 my %lacking;
 my $base_url = $config->script_url . $config->script_name . "?";
-my $airy  = Geo::HelmertTransform::Datum->new( Name => "Airy1830" );
-my $wgs84 = Geo::HelmertTransform::Datum->new( Name => "WGS84" );
 
 while ( my ($name, $this_locale, $this_category, $content, $x, $y, $lat, $long)
                                                      = $sth->fetchrow_array ) {
@@ -165,8 +164,10 @@ while ( my ($name, $this_locale, $this_category, $content, $x, $y, $lat, $long)
                  url  => $base_url . $param,
                };
     if ( defined $lat && defined $long ) {
-        ( $lat, $long ) =
-         Geo::HelmertTransform::convert_datum( $airy, $wgs84, $lat, $long, 0 );
+        ( $long, $lat ) = OpenGuides::Utils->get_wgs84_coords(
+                              latitude  => $lat,
+                              longitude => $long,
+                              config    => $config );
         $this->{lat} = $lat;
         $this->{long} = $long;
     }

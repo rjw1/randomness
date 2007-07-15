@@ -58,8 +58,14 @@ function clearAllCriteria() {
      </small>
   </p>
 
-  <p>Restrict results to within [% os_dist_box %] metres of
-     OS X [% os_x_box %], OS Y [% os_y_box %]</p>
+  [% IF geo_handler == 1 %]
+    <p>Restrict results to within [% os_dist_box %] metres of
+       OS X [% os_x_box %], OS Y [% os_y_box %]</p>
+  [% ELSIF geo_handler == 3 %]
+    <p>Restrict results to within [% latlong_dist_box %] metres of
+       latitude [% latitude_box %], longitude [% longitude_box %]
+       <small>(decimal, WGS-84)</small></p>
+  [% END %]
 
   <p>Restrict results to within [% origin_dist_box %] metres of
      [% origin_list %]</p>
@@ -77,8 +83,16 @@ function clearAllCriteria() {
 </form>
 
 [% IF lacking.size %]
-  <p>Number of pages without a photo: [% lacking.size %]</p>
   [% IF show_map %]
+    <p>
+      Number of pages without a photo: [% total_count %]
+      [% IF lacking.size < total_count %]
+        ([% lacking.size %] shown on map - untick the map box to see pages
+         without geodata as well)
+      [% ELSE %]
+        (all shown on map)
+      [% END %]
+    </p>
     <ul style="height:400px; overflow:auto; float:right; width:30%">
       [% i = 0 %]
       [% FOREACH node = lacking %]
@@ -124,6 +138,7 @@ function clearAllCriteria() {
       //]]>
     </script>
   [% ELSE %]
+    <p>Number of pages without a photo: [% lacking.size %]</p>
     <ul>
       [% FOREACH lack = lacking %]
         <li><a href="[% lack.url %]">[% lack.name %]</a></li>

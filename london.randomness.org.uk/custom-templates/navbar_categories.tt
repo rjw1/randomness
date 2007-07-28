@@ -3,7 +3,7 @@
     <div class="navbar_group_title">Categories:</div>
     <ul class="navbar_group">
       [% FOREACH cat = [ 'Pubs', 'Restaurants', 'Travel' ] %]
-        <li><a href="[% config.script_url _ config.script_name %]?id=Category_[% cat %]">[% cat %]</a></li>
+        <li><a href="[% config.script_url _ config.script_name %]?id=Category_[% cat %]">[% cat %]</a> [% UNLESS cat == 'Travel' %](<a href="[% config.script_url _ config.script_name %]?action=index;format=map;index_type=category;index_value=[% cat %]" rel="nofollow">map</a>)[% END %]</li>
       [% END %]
       <li><a href="[% config.script_url _ config.script_name %]?id=Category_Category">All Categories</a></li>
     </ul>

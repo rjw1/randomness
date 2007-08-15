@@ -47,6 +47,8 @@ function clearAllCriteria() {
 
 <h2>[% addon_title %]</h2>
 
+<div id="total_photo_count_message">A total of <b>[% num_photos %]</b> pages already have photos!</div>
+
 <form id="criteria_form" action="[% self_url %]" method="get">
   <p>Restrict results to locale [% locale_box %]
      <small>(Locales not listed have no pages with missing images.)
@@ -85,7 +87,7 @@ function clearAllCriteria() {
 [% IF lacking.size %]
   [% IF show_map %]
     <p>
-      Number of pages without a photo: [% total_count %]
+      Number of photo-less pages satisfying these criteria: [% total_count %]
       [% IF lacking.size < total_count %]
         ([% lacking.size %] shown on map - untick the map box to see pages
          without geodata as well)
@@ -138,7 +140,8 @@ function clearAllCriteria() {
       //]]>
     </script>
   [% ELSE %]
-    <p>Number of pages without a photo: [% lacking.size %]</p>
+    <p>Number of photo-less pages satisfying these criteria:
+    [% lacking.size %]</p>
     <ul>
       [% FOREACH lack = lacking %]
         <li><a href="[% lack.url %]">[% lack.name %]</a></li>

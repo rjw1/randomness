@@ -725,3 +725,13 @@ div.getting_here {
   font-size: 0.8em;
 }
 
+div#total_photo_count_message {
+  padding: 0.5em;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+  background: #F1C969;
+  float: right;
+  width: 15%;
+  font-size: 0.8em;
+  border: 1px dotted #595A38;
+}

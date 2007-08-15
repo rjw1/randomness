@@ -150,6 +150,36 @@ INNER JOIN metadata as tube
   return $box;
 }
 
+=item B<get_photo_count>
+
+  my $num = RGL::Addons->get_photo_count( wiki => $wiki );
+
+Returns the number of pages that have photos.
+
+=cut
+
+sub get_num_photos {
+  my ( $self, %args ) = @_;
+  my $wiki = $args{wiki};
+
+  my $dbh = $wiki->store->dbh;
+  my $sql = "
+    SELECT count(*)
+    FROM node
+    INNER JOIN metadata as mp
+      ON node.id = mp.node_id
+        AND node.version = mp.version
+        AND mp.metadata_type = 'node_image'
+  ";
+
+  my $sth = $dbh->prepare( $sql );
+  $sth->execute;
+
+  my ( $count ) = $sth->fetchrow_array;
+
+  return $count;
+}
+
 =back
 
 =cut

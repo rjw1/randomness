@@ -292,6 +292,9 @@ if ( $show_map ) {
                );
 }
 
+# Grab the total number of photos.
+$tt_vars{num_photos} = RGL::Addons->get_num_photos( wiki => $wiki );
+
 %tt_vars = (
              %tt_vars,
              addon_title => "Pages without a photo",

@@ -47,7 +47,8 @@ function clearAllCriteria() {
 
 <h2>[% addon_title %]</h2>
 
-<div id="total_photo_count_message">A total of <b>[% num_photos %]</b> pages already have photos!</div>
+<div id="total_photo_count_message">A total of <b>[% num_photos %]</b> pages
+([% percent_photos %]%) already have photos!</div>
 
 <form id="criteria_form" action="[% self_url %]" method="get">
   <p>Restrict results to locale [% locale_box %]

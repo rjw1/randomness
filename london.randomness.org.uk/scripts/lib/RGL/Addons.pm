@@ -150,6 +150,33 @@ INNER JOIN metadata as tube
   return $box;
 }
 
+=item B<get_page_count>
+
+  my $num = RGL::Addons->get_page_count( wiki => $wiki );
+
+Returns the total number of pages.  Note that this includes redirects,
+locale pages, category pages.
+
+=cut
+
+sub get_page_count {
+  my ( $self, %args ) = @_;
+  my $wiki = $args{wiki};
+
+  my $dbh = $wiki->store->dbh;
+  my $sql = "
+    SELECT count(*)
+    FROM node
+  ";
+
+  my $sth = $dbh->prepare( $sql );
+  $sth->execute;
+
+  my ( $count ) = $sth->fetchrow_array;
+
+  return $count;
+}
+
 =item B<get_photo_count>
 
   my $num = RGL::Addons->get_photo_count( wiki => $wiki );

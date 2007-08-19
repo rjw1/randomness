@@ -9,6 +9,7 @@ use CGI qw( :standard );
 use CGI::Carp qw( fatalsToBrowser );
 use Geo::HelmertTransform;
 use OpenGuides;
+use POSIX;
 use RGL::Addons;
 use OpenGuides::Config;
 use OpenGuides::Utils;
@@ -292,8 +293,11 @@ if ( $show_map ) {
                );
 }
 
-# Grab the total number of photos.
-$tt_vars{num_photos} = RGL::Addons->get_num_photos( wiki => $wiki );
+# Grab the total number of photos and pages.
+my $num_photos = RGL::Addons->get_num_photos( wiki => $wiki );
+$tt_vars{num_photos} = $num_photos;
+my $num_pages = RGL::Addons->get_page_count( wiki => $wiki );
+$tt_vars{percent_photos} = floor( 100 * $num_photos / $num_pages );
 
 %tt_vars = (
              %tt_vars,

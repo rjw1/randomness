@@ -40,7 +40,8 @@ sub looks_like_spam {
 
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
-        if ( $args{added_comment} =~ /http:\/\/.*http:\/\//s ) {
+        if ( ( $args{added_comment} =~ /http:\/\/.*http:\/\//s )
+             || ( $args{added_comment} =~ /a\s+href=.*a\s+href=/s ) ) {
             $class->notify_admins( %args, reason => "comment with more than one URL in" );
             return 1;
         }

@@ -47,7 +47,8 @@
     [% choose_how_buttons.name %]
       [% origin_list %]
       to
-      [% destin_list %]
+      [% destin_list %]<br />
+    Fudge factor (metres): [% fudge_box %]
   </p>
 
   <input type="hidden" name="do_search" value="1">

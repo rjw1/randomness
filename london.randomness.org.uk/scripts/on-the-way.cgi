@@ -25,7 +25,7 @@ my $locator = Wiki::Toolkit::Plugin::Locator::Grid->new( x => "os_x",
 $wiki->register_plugin( plugin => $locator );
 my $formatter = $wiki->formatter;
 
-my $fudge = 300;
+my $default_fudge = 300;
 
 my $q = CGI->new;
 
@@ -40,6 +40,8 @@ $tt_vars{os_x_destin_box} = $q->textfield( -name =>"x2",
                                            -size => 6, -maxlength => 6 );
 $tt_vars{os_y_destin_box} = $q->textfield( -name =>"y2",
                                            -size => 6, -maxlength => 6 );
+$tt_vars{fudge_box} = $q->textfield( -name => "fudge", -size => 6,
+                                     -maxlength => 6 );
 
 my @all_nodes = RGL::Addons->get_nodes_with_geodata( wiki => $wiki,
                                                      config => $config );
@@ -85,6 +87,7 @@ sub do_search {
   my $y1 = $q->param( "y1" ) || "";
   my $x2 = $q->param( "x2" ) || "";
   my $y2 = $q->param( "y2" ) || "";
+  my $fudge = $q->param( "fudge" ) || $default_fudge;
   my $choose_how = $q->param( "choose_how" ) || "os";
   my $origin = $q->param( "origin" ) || "";
   my $dest = $q->param( "dest" ) || "";

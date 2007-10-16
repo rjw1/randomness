@@ -3,10 +3,14 @@
 use strict;
 use warnings;
 
+use lib "lib";
+
 use CGI qw( :standard );
 use CGI::Carp qw( fatalsToBrowser );
 use OpenGuides;
 use OpenGuides::Config;
+use OpenGuides::Utils;
+use RGL::Addons;
 use Template;
 use Wiki::Toolkit::Plugin::Locator::Grid;
 
@@ -19,41 +23,23 @@ my $locator = Wiki::Toolkit::Plugin::Locator::Grid->new( x => "os_x", y => "os_y
 $wiki->register_plugin( plugin => $locator );
 my $formatter = $wiki->formatter;
 
+my %tt_vars = RGL::Addons->get_tt_vars( config => $config );
+my $geo_handler = $config->geo_handler;
+
 my $q = CGI->new;
 
-print $q->header;
-my $self_url = $q->url( -relative );
-
-my %tt_vars = (
-                stylesheet => $config->stylesheet_url,
-                site_name  => $config->site_name,
-                script_url => $config->script_url,
-                site_url   => $config->script_url . $config->script_name,
-                full_cgi_url => $config->script_url . $config->script_name,
-                common_categories => $config->enable_common_categories,
-                common_locales => $config->enable_common_locales,
-                catloc_link => $config->script_url . $config->script_name . "?id=",
-                not_editable => 1,
-              );
-my $custom_template_path = $config->custom_template_path || "";
-my $template_path = $config->template_path;
-my $tt = Template->new( { INCLUDE_PATH => ".:$custom_template_path:$template_path"  } );
-$tt->process( "find_header.tt", \%tt_vars );
-
-print_form();
-
 if ( !$q->param( "do_search" ) ) {
-print <<EOHTML;
-    <div class="category_search_example">
-      Example search: <a href="$self_url?cat1=Circle+Line&distance=650&cat2=Good+Beer+Guide&do_search=1">Good Beer Guide pubs within 650m of Circle Line stations</>
-    </div>
-EOHTML
+    $tt_vars{show_search_example} = 1;
 }
+$tt_vars{self_url} = $q->url( -relative );
+setup_form_fields();
 
 if ( $q->param( "do_search" ) ) {
   my $cat1 = $q->param( "cat1" );
   my $cat2 = $q->param( "cat2" );
   my $dist = $q->param( "distance" );
+
+  my $show_map = $q->param( "show_map" );
 
   $dist ||= 0;
   $dist =~ s/[^0-9]//g;
@@ -61,14 +47,22 @@ if ( $q->param( "do_search" ) ) {
   if ( !$dist || !$cat1 ) {
     # Yes, the categories are displayed the wrong way around.  Don't want to
     # break URLs, so don't change it.
-    print "<p>Must supply at least the second category, and a distance.</p>";
+    $tt_vars{error_message} =
+                  "Must supply at least the second category, and a distance.";
   } else {
+    $tt_vars{do_search} = 1;
+    $tt_vars{cat1} = $cat1;
+    $tt_vars{cat2} = $cat2;
+
+    my $base_url = $config->script_url . $config->script_name;
+
     my $dbh = $wiki->store->dbh;
     my %sql;
     foreach my $key ( qw( cat1 cat2 ) ) {
 	$sql{$key} = "
           SELECT DISTINCT node.id, node.name, mx.metadata_value as x,
-                 my.metadata_value as y
+                 my.metadata_value as y, mlat.metadata_value as lat,
+                 mlong.metadata_value as long
           FROM node
           INNER JOIN metadata as mc
             ON ( node.id=mc.node_id
@@ -87,6 +81,14 @@ if ( $q->param( "do_search" ) ) {
             ON ( node.id=my.node_id
                  AND node.version=my.version
                  AND lower(my.metadata_type)='os_y' )
+          INNER JOIN metadata as mlat
+            ON ( node.id=mlat.node_id
+                 AND node.version=mlat.version
+                 AND lower(mlat.metadata_type)='latitude' )
+          INNER JOIN metadata as mlong
+            ON ( node.id=mlong.node_id
+                 AND node.version=mlong.version
+                 AND lower(mlong.metadata_type)='longitude' )
           ORDER BY node.name";
     }
 
@@ -94,8 +96,10 @@ if ( $q->param( "do_search" ) ) {
     my @cat2stuff;
     my $sth = $dbh->prepare( $sql{cat1} );
     $sth->execute( lc( $cat1 ) ) or die $dbh->errstr;
-    while ( my ( $id, $name, $x, $y ) = $sth->fetchrow_array ) {
-      push @cat1stuff, { id => $id, name => $name, x => $x, y => $y };
+    while ( my ( $id, $name, $x, $y, $lat, $long ) = $sth->fetchrow_array ) {
+      my $url = $base_url . "?" . $formatter->node_name_to_node_param( $name );
+      push @cat1stuff, { id => $id, name => $name, url => $url,
+                         x => $x, y => $y, lat => $lat, long => $long };
     }
     $sth = $dbh->prepare( $sql{cat2} );
     if ( $cat2 ) {
@@ -103,64 +107,95 @@ if ( $q->param( "do_search" ) ) {
     } else {
       $sth->execute or die $dbh->errstr;
     }
-    while ( my ( $id, $name, $x, $y ) = $sth->fetchrow_array ) {
-      push @cat2stuff, { id => $id, name => $name, x => $x, y => $y };
+    while ( my ( $id, $name, $x, $y, $lat, $long ) = $sth->fetchrow_array ) {
+      my $url = $base_url . "?" . $formatter->node_name_to_node_param( $name );
+      push @cat2stuff, { id => $id, name => $name, url => $url,
+                         x => $x, y => $y, lat => $lat, long => $long };
     }
 
-    my @results;
-    foreach my $origin ( @cat1stuff ) {
-      my @thisres;
-      foreach my $end ( @cat2stuff ) {
-        if ( $origin->{name} eq $end->{name} ) {
-          next;
-        }
-        my $thisdist = int( sqrt(   ( $origin->{x} - $end->{x} )**2
-                                  + ( $origin->{y} - $end->{y} )**2
-                                ) + 0.5 );
-        if ( $thisdist <= $dist ) {
-          push @thisres, { origin => $origin, end => $end, dist => $thisdist };
+    if ( $show_map ) {
+      %tt_vars = (
+                   %tt_vars,
+                   exclude_navbar      => 1,
+                   enable_gmaps        => 1,
+                   display_google_maps => 1,
+                   show_map            => 1,
+                   lat                 => $config->centre_lat,
+                   long                => $config->centre_long,
+                   zoom                => $config->default_gmaps_zoom,
+                 );
+      my ( %origin_results, %end_results );
+      foreach my $origin ( @cat1stuff ) {
+        foreach my $end ( @cat2stuff ) {
+          my $thisdist = int( sqrt(   ( $origin->{x} - $end->{x} )**2
+                                    + ( $origin->{y} - $end->{y} )**2
+                                  ) + 0.5 );
+          if ( $thisdist <= $dist ) {
+            $origin_results{ $origin->{name} } = $origin;
+            $end_results{ $end->{name} } = $end;
+          }
         }
       }
-      @thisres = sort { $a->{dist} <=> $b->{dist} } @thisres;
-      push @results, @thisres;
-    }
 
-    if ( @results == 0 ) {
-      print "<p>No results, sorry.</p>";
+      if ( $q->param( "include_all_origins" ) ) {
+        %origin_results = map { $_->{name} => $_ } @cat1stuff;
+      }
+
+      my @results;
+      foreach my $res ( sort { $a->{name} cmp $b->{name} } values %origin_results ) {
+        push @results, { %$res, type => "origin" };
+      }
+      foreach my $res ( sort { $a->{name} cmp $b->{name} } values %end_results ) {
+        push @results, { %$res, type => "end" };
+      }
+
+      # I hate that I have to do this.  Hate it, hate it.
+      foreach my $res ( @results ) {
+        my ( $long, $lat ) = OpenGuides::Utils->get_wgs84_coords(
+                                        latitude  => $res->{lat},
+                                        longitude => $res->{long},
+                                        config    => $config );
+        $res->{lat} = $lat;
+        $res->{long} = $long;
+      }
+      $tt_vars{results} = \@results;
     } else {
-      my $base_url = $config->script_url . $config->script_name . "?";
-      my $last_origin = "";
-      print "<table border=\"1\" class=\"category_search_results\">\n"
-            . "<tr><th><b>$cat1</b></th><th><b>"
-            . ( $cat2 ? $cat2 : "&nbsp;" )
-            . "</b></th>"
-            . "<th><b>Distance (metres)</b></th></tr>\n";
-      foreach my $set ( @results ) {
-        my $origin_name = $set->{origin}->{name};
-        my $end_name = $set->{end}->{name};
-        my $origin_url = $base_url
-                       . $formatter->node_name_to_node_param( $origin_name );
-        my $end_url    = $base_url
-                       . $formatter->node_name_to_node_param( $end_name );
-        print "<tr>\n";
-        if ( $last_origin ne $origin_name ) {
-          print "<td><a href=\"$origin_url\">$origin_name</a></td>\n";
-        } else {
-          print "<td>&nbsp;</td>\n";
+      my @results;
+      foreach my $origin ( @cat1stuff ) {
+        my @thisres;
+        foreach my $end ( @cat2stuff ) {
+          if ( $origin->{name} eq $end->{name} ) {
+            next;
+          }
+          my $thisdist = int( sqrt(   ( $origin->{x} - $end->{x} )**2
+                                    + ( $origin->{y} - $end->{y} )**2
+                                  ) + 0.5 );
+          if ( $thisdist <= $dist ) {
+            push @thisres, { origin => $origin, end => $end,
+                             dist => $thisdist };
+          }
         }
-        print "<td valign=\"top\"><a href=\"$end_url\">$end_name</a></td>\n"
-              . "<td>" . $set->{dist}   . "</td>\n"
-              . "</tr>\n";
-        $last_origin = $origin_name;
+        @thisres = sort { $a->{dist} <=> $b->{dist} } @thisres;
+        push @results, @thisres;
       }
-      print "</table>\n";
+      $tt_vars{results} = \@results;
     }
+
   }
 }
 
-$tt->process( "find_footer.tt", \%tt_vars );
+%tt_vars = (
+             %tt_vars,
+             addon_title => "Category Search",
+           );
 
-sub print_form {
+print $q->header;
+my $custom_template_path = $config->custom_template_path || "";
+my $template_path = $config->template_path;
+my $tt = Template->new( { INCLUDE_PATH => ".:$custom_template_path:$template_path"  } );
+$tt->process( "find.tt", \%tt_vars );
+
+sub setup_form_fields {
   my $any_string = " -- any -- ";
   my @categories = $wiki->list_nodes_by_metadata(
     metadata_type  => "category",
@@ -170,12 +205,12 @@ sub print_form {
   @categories = map { s/^Category //; $_; } @categories;
   @categories = sort( @categories );
 
-  my $catbox1 = $q->popup_menu( -name   => "cat1",
+  $tt_vars{catbox1} = $q->popup_menu( -name   => "cat1",
                                 -values => [ "", @categories ],
                                 -labels => { "" => $any_string,
                                              map { $_ => $_ } @categories }
                               );
-  my $catbox2 = $q->popup_menu( -name   => "cat2",
+  $tt_vars{catbox2} = $q->popup_menu( -name   => "cat2",
                                 -values => [ "", @categories ],
                                 -labels => { "" => $any_string,
                                              map { $_ => $_ } @categories }
@@ -185,13 +220,10 @@ sub print_form {
     $distbox .= "value=\"" . $q->param( "distance" ) . "\"";
   }
   $distbox .= "> metres ";
+  $tt_vars{distbox} = $distbox;
 
-  print <<EOHTML;
-    <form action="$self_url" method="GET">
-      <p>Find me things in category $catbox2 within $distbox of things in
-      category $catbox1.</p>
-      <input type="hidden" name="do_search" value="1">
-      <input type="submit" name="Search" value="Search" class="form_button">
-    </form>
-EOHTML
+  $tt_vars{show_map_box} = $q->checkbox( -name => "show_map",
+                                                 -value => 1, label => "" );
+  $tt_vars{include_all_origins_box} = $q->checkbox( -name => "include_all_origins",
+                                                 -value => 1, label => "" );
 }

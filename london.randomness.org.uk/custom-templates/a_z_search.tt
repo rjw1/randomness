@@ -46,7 +46,7 @@
           [% i = i + 1 %]
           var point[% i %] = new GPoint( [% node.wgs84_long %], [% node.wgs84_lat %] );
           var marker[% i %] = new GMarker( point[% i %], baseIcon );
-          var htmlString[% i %] = "<a href=\"[% node.url %]\">[% CGI.escapeHTML( node.name ) %]</a><br />[% CGI.escapeHTML( node.address ) %]";
+          var htmlString[% i %] = "<a href=\"[% full_cgi_url %]?[% node.param %]\">[% CGI.escapeHTML( node.name ) %]</a><br />[% CGI.escapeHTML( node.address ) %]";
           GEvent.addListener( marker[% i %], "click",
             function() { 
               marker[% i %].openInfoWindowHtml( htmlString[% i %] );

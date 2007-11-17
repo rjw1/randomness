@@ -1,0 +1,60 @@
+[% USE CGI %]
+[% INCLUDE addons_header.tt %]
+
+<div class="see_other_searches">
+  See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
+</div>
+
+<h2>[% addon_title %]</h2>
+
+<form id="criteria_form" action="[% self_url %]" method="get">
+  <p>Find everything on page [% page_no_box %] of the A-Z.</p>
+  <input type="submit" name="Search" value="Search" />
+</form>
+
+    <ul style="height:400px; overflow:auto; float:right; width:30%">
+      [% i = 0 %]
+      [% FOREACH node = results %]
+        [% i = i + 1 %]
+        <li>
+          <a href='#' onclick="marker[% i %].openInfoWindowHtml(htmlString[% i %]); return false;">[% CGI.escapeHTML( node.name ) %]</a>
+        </li>
+      [% END %]
+    </ul>
+
+    <table width="100%" height="100%">
+      <tr>
+        <td><div id="map" style=" width: 65%; height: 450px"></div></td>
+      </tr>
+    </table>
+
+    <script defer="defer" type="text/javascript">
+      //<![CDATA[ 
+        var map = new GMap( document.getElementById( "map" ) );
+        map.addControl( new GLargeMapControl() );
+        map.addControl( new GMapTypeControl() );
+        map.centerAndZoom( new GPoint( [% long %], [% lat %] ), [% zoom %] );
+
+        [% IF map_type == "satellite" %]
+          map.setMapType( G_SATELLITE_TYPE );
+        [% ELSIF map_type == "hybrid" %]
+          map.setMapType( G_HYBRID_TYPE );
+        [% END %]
+
+        [% i = 0 %]
+        [% FOREACH node = results %]
+          [% i = i + 1 %]
+          var point[% i %] = new GPoint( [% node.wgs84_long %], [% node.wgs84_lat %] );
+          var marker[% i %] = new GMarker( point[% i %], baseIcon );
+          var htmlString[% i %] = "<a href=\"[% node.url %]\">[% CGI.escapeHTML( node.name ) %]</a><br />[% CGI.escapeHTML( node.address ) %]";
+          GEvent.addListener( marker[% i %], "click",
+            function() { 
+              marker[% i %].openInfoWindowHtml( htmlString[% i %] );
+            }
+          ); 
+          map.addOverlay(marker[% i %]); 
+        [% END %]
+      //]]>
+    </script>
+
+[% INCLUDE addons_footer.tt %]

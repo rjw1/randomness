@@ -28,12 +28,22 @@ sub looks_like_spam {
             $class->notify_admins( %args, reason => "URL in category field" );
             return 1;
         }
+        if ( $cat =~ m'\n'i ) {
+            $class->notify_admins( %args,
+                                   reason => "Bare newline in category" );
+            return 1;
+        }
     }
 
     my @locs = @{ $args{metadata}{locale} };
     foreach my $loc ( @locs ) {
         if ( $loc =~ m'http://'i ) {
             $class->notify_admins( %args, reason => "URL in locales field" );
+            return 1;
+        }
+        if ( $loc =~ m'\n'i ) {
+            $class->notify_admins( %args,
+                                   reason => "Bare newline in locale" );
             return 1;
         }
     }

@@ -96,6 +96,7 @@ my $tt = Template->new( { INCLUDE_PATH =>
 %tt_vars = (
              %tt_vars,
              addon_title => "A-Z search",
+             exclude_navbar      => 1,
              enable_gmaps        => 1,
              display_google_maps => 1,
              lat                 => $config->centre_lat,

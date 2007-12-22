@@ -88,6 +88,9 @@ sub find_stations {
                     @thiscats = grep { /^Tube$/ } @thiscats;
                     if ( scalar @thiscats ) {
                         $line =~ s/ Line$//;
+                        if ( $line eq "East London" ) {
+                            $line .= " - line closed until 2010";
+                        }
                         push @tubelines, $line;
                     }
                 }

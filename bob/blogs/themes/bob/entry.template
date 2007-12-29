@@ -11,7 +11,7 @@
 <TMPL_INCLUDE NAME="sidebar.template">
 <div id="content">
  <div class="entry">
-  <div class="title"><!-- tmpl_var name='title' --></div>
+  <div class="title"><h1><!-- tmpl_var name='title' --></h1></div>
   <div class="date"><!-- tmpl_var name='date' --></div>
   <div class="body"><!-- tmpl_var name='body' --></div>
   <!-- tmpl_if name='tags' -->

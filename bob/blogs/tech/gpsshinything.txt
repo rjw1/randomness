@@ -1,28 +1,13 @@
 Title: GPS Shiny Thing
 Tags: free, geodata, google, gps, kml, mapping, nokia, openguides, rgl
 Date: 14 April 2007
-<p>So recently <a href="http://london.randomness.org.u
-k/wiki.cgi?Kake">Kake</a> and <a href="http://london.randomnes
-s.org.uk/wiki.cgi?Bob">I</a> have been adding <a href="http://
-london.randomness.org.uk/wiki.cgi?Category_Free_Geodata">Public Domain Geodata</a> to our <a href="http:
-//web.archive.org/web/20070429141420/http://london.randomness.org.uk/">Guide to London</a>
+<p>So recently <a href="http://london.randomness.org.uk/wiki.cgi?Kake">Kake</a> and <a href="http://london.randomness.org.uk/wiki.cgi?Bob">I</a> have been adding <a href="http://london.randomness.org.uk/wiki.cgi?Category_Free_Geodata">Public Domain Geodata</a> to our <a href="http://london.randomness.org.uk/">Guide to London</a>
 using a Garmin Etrex she has been borrowing from a friend. However, it
 possibly has one of the one most annoying interfaces i've used for a
 while and we only have one.</p>
-<p>So, I succumbed and bought the <a href="http://europe.nokia
-.com/accessorieslink?s=LD-3W">Nokia LD-3W</a> which works with my <a href="http://web.archive.org/web/20
-070429141420/http://europe.nokia.com/A4142101">phone</a>.
+<p>So, I succumbed and bought the <a href="http://europe.nokia.com/accessorieslink?s=LD-3W">Nokia LD-3W</a> which works with my <a href="http://europe.nokia.com/A4142101">phone</a>.
 I can get location data with applications which came as standard and
 indeed save landmarks which I can then export as an xml file. I cant
-get any routes though. However, I did find an <a href="http://
-research.nokia.com/research/projects/SportsTracker/">application</a> from nokia research which almost gi
-ves me what i want. It can export trip data as kml. So for your viewing pleasure <a href="http://web.arc
-hive.org/web/20070429141420/http://maps.google.co.uk/maps?f=q&amp;hl=en&amp;q=http://randomness.org.uk/S
-hopgoo.kml">My trip to the butchers</a> this morning. It jumps around quite a bit. </p>
-<p>One problem is that I can only get Lat/Long out when we are using OSGB for the guide. Thankfully, the
- windows <a href="http://www.ordnancesurvey.co.uk/oswebsite/gp
-s/osnetfreeservices/furtherinfo/questsoftware.html">program</a> the <a href="http://web.archive.org/web/
-20070429141420/http://www.ordnancesurvey.co.uk/">Ordnance Survey</a> provide to <a href="http://web.arch
-ive.org/web/20070429141420/http://gps.ordnancesurvey.co.uk/convert.asp">convert</a> between them can run
- under <a href="http://www.winehq.com/">Wine</a>. This will ma
-ke mass conversions easier. </p>
+get any routes though. However, I did find an <a href="http://research.nokia.com/research/projects/SportsTracker/">application</a> from nokia research which almost gives me what i want. It can export trip data as kml. So for your viewing pleasure <a href="http://maps.google.co.uk/maps?f=q&amp;hl=en&amp;q=http://randomness.org.uk/Shopgoo.kml">My trip to the butchers</a> this morning. It jumps around quite a bit. </p>
+<p>One problem is that I can only get Lat/Long out when we are using OSGB for the guide. Thankfully, the windows <a href="http://www.ordnancesurvey.co.uk/oswebsite/gps/osnetfreeservices/furtherinfo/questsoftware.html">program</a> the <a href="http://www.ordnancesurvey.co.uk/">Ordnance Survey</a> provide to <a href="/http://gps.ordnancesurvey.co.uk/convert.asp">convert</a> between them can run
+ under <a href="http://www.winehq.com/">Wine</a>. This will make mass conversions easier. </p>

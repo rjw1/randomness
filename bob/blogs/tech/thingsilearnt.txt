@@ -1,0 +1,23 @@
+Title: Things I have learnt this week
+Tags: backups, humans, openguides, raid, rgl, stupid, svn
+Date: 07 April 2007
+<p>Things I have learnt this week.
+</p><ul>
+<li class="u">Backups are good.<ul>
+<li class="uu">If for instance your colo box breaks.</li></ul></li>
+<li class="u">Tested backups are better.<ul>
+<li class="uu">Best to test them before your box breaks.</li></ul></li>
+<li class="u">Automated backups are better still.<ul>
+<li class="uu">Humans forget to do things. Machines rarely do. So your backup may not be as recent as yo
+u think.</li></ul></li>
+<li class="u">How to backup svn<ul>
+<li class="uu"><code> svnadmin dump $repo | bzip2 &gt; svndump.bz2 </code></li></ul></li>
+<li class="u">Checking which disk you are replacing in a degraded mirrored pair is a good thing<ul>
+<li class="uu">Your filesystem dieing or going back in time is not fun. See previous points</li></ul></l
+i></ul>
+<p>Having learnt these things I have made my backup regime <a href="http://morerandomness.org.uk/svn/tru
+nk/bob/scripts/backup.sh">better</a> and have made sure its croned and does backup the stuff I need. I s
+hould also start putting more stuff in my svn <a href="http://morerandomness.org.uk/svn/">repo</a>.</p>
+<p>This clusterfuck did annoyingly lead to losing about a weeks worth of data on the  <a href="http://lo
+ndon.randomness.org.uk/">Randomness Guide to London</a> which was particularly galling since one of the
+reason for doing it was I trusted myself more with the data. bah</p>

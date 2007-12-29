@@ -1,0 +1,7 @@
+Title: Nagios Setups
+Tags: nagios
+Date: 19 July 2006
+<p>In my time I've set up <a href="http://nagios.org">nagios</a> several times. If you find yourself setting up nagios you need to read the time saving tricks page(<a href="http://nagios.sourceforge.net/docs/1_0/templatetricks.html">v1</a>,<a href="http://nagios.sourceforge.net/docs/2_0/templatetricks.html">v2</a>).  One thing that page doesnt mention and isn't obvious elsewhere in the documentation is that in service definitions you can have hostgroup_name and host_name defined.</p>
+
+
+

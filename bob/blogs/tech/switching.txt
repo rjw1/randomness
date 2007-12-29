@@ -1,0 +1,8 @@
+Title: Switching.
+Tags: apple, linux, macosx, openbsd, solaris, switching, ubuntu
+Date: 04 July 2006
+<p>No, Not that <a href="http://www.apple.com/getamac/">one</a> or indeed that <a href="http://www.mozilla.com/firefox/switch.html">one</a> (thinking about it I stopped using IE at least 7 years ago). I've finally succumbed and installed <a href="http://www.ubuntu.com/">Ubuntu</a> on my laptop.</p>
+<p> After several years of having <a href="http://openbsd.org">OpenBSD</a> as my desktop OS of choice I've decided to try something new. My work laptop has been<a href="http://www.sun.com/software/solaris/" >Solaris 10</a> for several months now given my previous incarnation as a Solaris Admin. However $work are a <a href="http://www.debian.org/">debian</a> shop. So ive become more accustomed to linux and its annoyances and even started to like some of the features (<a href="http://linux-net.osdl.org/index.php/Iproute2">iproute</a>,<a href="http://www.debian.org/doc/manuals/apt-howto/">apt</a>). Also it was time for a reinstall anyway.</p>
+<p> So I downloaded an iso and did the install dance. It all went smoothly. INstalling windowmaker and making it my session default was also easy. the choice of programs is overwhelming compared to what was in the openbsd ports collections. Then a bad thing happened. It ate my X config. I dont know why but it just did.Thankfully a reinstall fixed. Which was good thing since I had installed lots of crap anyway.</p>
+<p> Im seriously tempted to install it on my work laptop to.</p>  
+

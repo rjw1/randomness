@@ -1,0 +1,43 @@
+Title: Function and Alias use in bash
+Tags: bash, hints, ssh, tricks
+Date: 01 October 2006
+<p>For a while now ive been using aliases to connect to machines. I alias a $hostname to <code>xterm -T $hostname -e ssh $hostname &</code>. This means each connection gets a new fresh xterm. Of course doing an alias command for each host woudl be tedious so i have some magic in bash startup stuff.</p>
+<pre>
+bob@betty:~ >cat .bashrc 
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+PS1="\u@\h:\w >"
+PATH=$PATH:/usr/sbin:/usr/local/sbin:/sbin
+bob@betty:~ >cat .bash_aliases 
+for MACHINE in `cat ~/.machines`
+do
+alias $MACHINE="xterm -T $MACHINE -e ssh $MACHINE &"
+done
+</pre>
+<p> Where <code>.machines</code> is a list of machines one per line</p>
+<p> Recently I have been connecting to machines which arnt in this list with ssh directly. This has the disadvantage that they dont get their own xterm and I have to start another xterm manually if I need another one. So I started to looking into aliasing ssh to the same thing. However, aliases arnt clever enough for this you need to use functions instead. </p>
+<p>So I wrote a function to do what i wanted.</p>
+<pre>
+function ssh {
+xterm -T $1 -e ssh $1 &
+}
+</pre>
+<p> It then occured to me since this is just programming perhaps I can expand this to check to see if host is mentioned in <code>.machines</code> and if it isnt add it. So I wrote a function</p>
+<pre>
+function testmachine {
+machine=`grep $1 ~/.machines`
+if [ "x$machine" = "x" ]
+then
+        echo "not in ~/.machines adding"
+        echo $1 >> ~/.machines
+        source ~/.bash_aliases
+fi
+}
+</pre>
+<p> As you can see it also then sources <code>~/.bash_aliases</code> this makes sure that the current shell gets the new alias. I then added more to the ssh fucntion</p>
+<pre>
+function ssh {
+xterm -T $1 -e ssh $1 &
+testmachine $1
+}
+</pre>
+<p>I then told my <code>.bashrc</code> to source a new file called <code>.bash_functions</code> which contains the two fucntions from above. And everything is now good.</p>

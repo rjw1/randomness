@@ -11,6 +11,7 @@
 
 <TMPL_INCLUDE NAME="title.template">
 <TMPL_INCLUDE NAME="sidebar.template">
+<div id="content">
  <p>Entries from <!-- tmpl_var name='month_name' escape='html' --> <!-- tmpl_var name='year' escape='html' -->.</p>
 
 <!-- tmpl_loop name='entries' -->
@@ -41,9 +42,7 @@
 </div>
  <div class="padding"></div>
 <!-- /tmpl_loop -->
- <p style="text-align: right;"><a href="<!-- tmpl_var name='month' escape='html' -->.rss"><img src="<!-- tmpl_var name='top' -->xml.gif" alt="RSS Feed" width="36" height="14"></a></p>
-
-
+</div>
 
 </body>
 </html>

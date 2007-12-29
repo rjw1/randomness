@@ -9,7 +9,7 @@
 
 <TMPL_INCLUDE NAME="title.template">
 <TMPL_INCLUDE NAME="sidebar.template">
-
+<div id="content">
  <div class="entry">
   <div class="title"><!-- tmpl_var name='title' --></div>
   <div class="date"><!-- tmpl_var name='date' --></div>
@@ -21,6 +21,6 @@
 
 <!-- tmpl_include name="comment-loop.inc" -->
 <!-- tmpl_include name="comment-form.inc" -->
-
+</div>
  </body>
 </html>

@@ -11,7 +11,7 @@
 
 <TMPL_INCLUDE NAME="title.template">
 <TMPL_INCLUDE NAME="sidebar.template">
-
+<div id="content">
  <!-- tmpl_loop name='entries' -->
  <div class="entry">
   <div class="title"><a href="<!-- tmpl_var name='top' --><!-- tmpl_var name='link' escape='html' -->"><!-- tmpl_var name='title' --></a></div>
@@ -33,11 +33,8 @@
  </div>
  <div class="padding"></div>
  <!-- /tmpl_loop -->
- <p style="text-align: right;"><a href="index.rss"><img src="<!-- tmpl_var name='top' -->xml.gif" alt="RSS feed" width="36" height="14"></a></p>
+</div>
 
 
-<p style="text-align: right">
-Created by <a href="http://steve.org.uk/Software/chronicle">Chronicle v<!-- tmpl_var name='release' --></a>
-</p>
 </body>
 </html>

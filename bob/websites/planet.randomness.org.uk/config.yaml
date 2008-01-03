@@ -1,0 +1,27 @@
+global:
+  log:
+    level: error
+  assets_path: /export/home/bob/web/vhosts/planet.randomness.org.uk/assets
+
+plugins:
+  - module: Subscription::Config
+    config:
+      feed:
+        - url: http://del.icio.us/rss/rjw1
+        - url: 'http://api.flickr.com/services/feeds/photos_public.gne?id=48524258@N00&lang=en-us&format=atom'
+        - url: http://tech.randomness.org.uk/index.rss
+        - url: http://rjw1.livejournal.com/data/atom
+        - url: http://london.randomness.org.uk/wiki.cgi?action=rc;format=rss;username=bob;items=20
+
+
+  - module: Bundle::Planet
+    config:
+      url: http://planet.randomness.org.uk/
+      title: Planet Randomness
+      description: all bob all the time!
+      theme: randomness
+      dir: /export/home/bob/web/vhosts/planet.randomness.org.uk/
+      stylesheet: http://randomness.org.uk/randomness.css
+      template:
+        members_list: 1
+        style_url: http://randomness.org.uk/randomness.css

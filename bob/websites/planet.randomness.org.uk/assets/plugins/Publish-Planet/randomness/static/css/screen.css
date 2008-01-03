@@ -1,0 +1,45 @@
+.title1	{
+	color:purple;
+	text-align:right;
+	}
+.title2	{
+	color:purple;
+	text-align:left;
+	}
+.cnt	{
+	 position:absolute;
+	left:50%;      
+      top:50%;
+	}
+PRE 	{
+	color:yellow;
+	}
+.indent	{
+	text-indent:5%;
+	}
+body 	{
+	margin:10px 10px 10px 10px;
+	background:black;
+	color:white;
+	font-family: lucinda, verdana, arial,sans-serif; text-decoration: none;
+	padding:10px 10px;
+	}
+A	{ 
+	color:  #bf0ef4;
+	font-family: lucinda, verdana, arial, sans-serif; 
+	text-decoration: none;
+	}
+A:visited       { color: #bf0ef4; text-decoration: none; }
+A:link          { color: #bf0ef4; text-decoration: none; }
+A:active        { color: #bf0ef4;  }
+A:hover         { color: yellow;  }
+
+#sidebar	{
+		float: left;
+	        text-align:left;
+                width:20%;
+                overflow: auto;
+		}
+#content {
+          margin-left: 20%;
+}

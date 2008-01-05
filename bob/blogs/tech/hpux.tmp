@@ -1,0 +1,8 @@
+Title: 3 hours to get a bash prompt
+Tags: hpux, bash, install
+Date: TBD
+<p>The other day <a href="http://unixdaemon.net">Dean</a>and I were seeing if a HP PA-RISC workstation Dean had got off ebay worked. We managed to get it powered on going to serial console. Then jury rigged a cd drive to try an install.</a>
+
+</p>
+<p>It would seem the install cd dean had didnt liek doing the install over serial so we had to connect up a monitor and keyboard. Thnakfully IBM use the same funny DVI connector for their servers.</p>
+<p>We proceed with the install, which was a new and exciting experience for me. We get a failure when it tries to install stuff like mozilla and GTK from the second and third install discs. However the main OS 

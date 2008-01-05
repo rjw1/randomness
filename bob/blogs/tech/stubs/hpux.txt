@@ -1,8 +1,9 @@
 Title: 3 hours to get a bash prompt
 Tags: hpux, bash, install
-Date: TBD
-<p>The other day <a href="http://unixdaemon.net">Dean</a>and I were seeing if a HP PA-RISC workstation Dean had got off ebay worked. We managed to get it powered on going to serial console. Then jury rigged a cd drive to try an install.</a>
+Date: 05/01/2008
+<p>The other day <a href="http://unixdaemon.net">Dean</a>and I were seeing if a HP PA-RISC workstation Dean had got off ebay worked. We managed to get it powered on going to serial console. Then jury rigged a cd drive to try an install of HP-UX.</a></p>
+<p>It would seem the install cd Dean had didnt like doing the install over serial so we had to connect up a monitor and keyboard. Thankfully IBM use the same funny DVI connector for their servers.</p>
+<p>We proceeded with the install, which was a new and exciting experience for me. We got a failure when it tried to install stuff like mozilla and GTK from the second and third install discs. However the main OS install seemed to be fine so we carried on. Even the big FAILURE printed using <a href="http://www.hmug.org/man/6/banner.php">banner</a> didnt put us off. </p>
+<p>So after several reboots we got to a stage where we could login. So we did. Then we found there was no bash and our sh skills are a little rusty. Not having tab completion is pain. Time for some software install using <a href="http://www.docs.hp.com/en/B2355-90681/swinstall.1M.html">swinstall</a>. We hit a problem here. It would seem that swinstall is network aware and wishes to resolve the name of your host before it will install stuff. We then spent 30 minutes scracthing our heads until we realised that while there were 6 or so nsswitch files none of them was actually nsswitch.conf. So the OS really had no idea what was going on.</p>
+<p>After all that we managed to get <a href="http://hpux.connect.org.uk/hppd/hpux/Shells/bash-3.2/">bash</a> installed from a <a href="http://hpux.connect.org.uk/">Porting And Archive Centre for HP-UX</a> package. The relief was great as we could finally tab complete</p>
 
-</p>
-<p>It would seem the install cd dean had didnt liek doing the install over serial so we had to connect up a monitor and keyboard. Thnakfully IBM use the same funny DVI connector for their servers.</p>
-<p>We proceed with the install, which was a new and exciting experience for me. We get a failure when it tries to install stuff like mozilla and GTK from the second and third install discs. However the main OS 

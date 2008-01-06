@@ -1,6 +1,6 @@
 Title: Hostnames as Bash Commands
 Tags: bash, ssh, pub, london.pm
-Date: 06/01/2008
+Date: 01 January 2008
 <p>In the <a href="http://london.randomness.org.uk/wiki.cgi?Edgar_Wallace,_WC2R_3JF">pub</a> the other day for the <a href="http://london.pm.org/">London.pm<a/> <a href="http://london.pm.org/meetings/">Social</a> Smylers brought up the stuff he uses to make <a href="http://london.pm.org/pipermail/london.pm/Week-of-Mon-20071231/011920.html">hostnames a bash command</a>. He also found the time to generate some <a href="http://smylers.hates-software.com/2008/01/04/090399e2.html">hate</a>. </p>
 <p>I do this another way as I have previoulsy <a href="http://tech.randomness.org.uk/Function_and_Alias_use_in_bash.html">blogged</a>. Dominic Mitchell at the time <a href="http://happygiraffe.net/blog/articles/2006/10/05/shell-scripting">pointed out</a> that my scripting sucks. In fact my <a href="http://svn.randomness.org.uk/trunk/bob/dotfiles/.bash_functions">current version</a> takes his suggestions on board.</p>
 

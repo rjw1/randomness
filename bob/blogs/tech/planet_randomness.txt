@@ -1,0 +1,5 @@
+Title: Planet Bob!
+Tags: planet, plagger, feeds, bob
+Date: 06 January 2008
+<p>If you want to keep up with all my feeds you could use my newly setup <a href="http://planet.randomness.org.uk/">Planet</a>. I used <a href="http://search.cpan.org/~miyagawa/Plagger-0.7.17/lib/Plagger.pm">Plagger</a> and yet again made my own <a href="http://svn.randomness.org.uk/trunk/bob/websites/planet.randomness.org.uk/assets/plugins/Publish-Planet/randomness/">theme</a></p>
+<p> It was relatively trivial to set up. Then again I had an <a href="http://planetse16.org.uk/">example</a> to work from</p>

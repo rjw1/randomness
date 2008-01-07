@@ -1,0 +1,6 @@
+Title: Testing makes me feel good!
+Tags: testing, cpan, perl, bash, scripts
+Date: 07 January 2008
+<p>To help people who upload modules to <a href="http://www.cpan.org">CPAN</a> lots of people <a href="http://cpantesters.perl.org/">test</a> them. I have been doing this for while following <a href="http://cpantest.grango.org/wiki/CPANTesting">instructions</a> on the <a href="http://cpantest.grango.org/wiki/HomePage">CPAN Testers Wiki</a>. However the automation instructions are very specific to  <a href="http://www.cantrell.org.uk/david/journal/">dave's</a> set up. So I wrote my own scripts.</p>
+<p><a href="http://svn.randomness.org.uk/trunk/bob/scripts/cpantest.sh">cpantest.sh</a> is my script which fires off cpan for the releases I'm testing. <a href="http://svn.randomness.org.uk/trunk/bob/scripts/autocpantest">autocpantest</a> automates the testing of recent modules. Its not all automated, I still have to approve the sending of failure reports.</p>
+<p>With all this in place I should start shooting up the <a href="http://perl.grango.org/testers.html">leaderboard</a></p> 

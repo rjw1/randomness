@@ -126,6 +126,7 @@ my $tt = Template->new( { INCLUDE_PATH =>
 %tt_vars = (
              %tt_vars,
              addon_title => "Pub search",
+             self_url => $q->url( -full => 1 ),
            );
 
 print $q->header;

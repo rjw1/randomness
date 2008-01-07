@@ -1,0 +1,16 @@
+#!/usr/bin/bash
+# script to automate cpantesting. needs WWW::Mechanize to be installed.
+
+# get all links on the search.cpan.org recent uploads page.
+# output to a file called current.
+mech-dump --links --absolute http://search.cpan.org/recent | grep "~" > /export/home/bob/cpantesting/history/current
+
+# diff against a file called previous to get new modules 
+NEWMOD=`diff /export/home/bob/cpantesting/history/previous /export/home/bob/cpantesting/history/current | grep ">" | awk '{print $2}'`
+for modules in $NEWMOD
+do echo $modules 
+TARBALL=`mech-dump --links --absolute $modules |grep "gz" | head -1`
+# run my cpantest script with 
+~/bin/cpantest.sh $TARBALL
+done
+mv /export/home/bob/cpantesting/history/current /export/home/bob/cpantesting/history/previous

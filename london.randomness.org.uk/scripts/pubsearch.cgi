@@ -36,6 +36,7 @@ my %all_criteria = (
                      lunch     => "food served lunchtimes",
                      dinner    => "food served evenings",
                      thai      => "thai food",
+                     room      => "function room",
                    );
 
 setup_form_variables();

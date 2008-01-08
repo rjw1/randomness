@@ -201,7 +201,7 @@ while ( my ( $name, $this_locale, $this_category, $content,
 
     # But not on the map, if we want a map and it has no coords.
     if ( $show_map ) {
-        if ( !defined $this_lat || !defined $this_long ) {
+        if ( !$this_lat || !$this_long ) {
             next;
         }
     }

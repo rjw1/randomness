@@ -16,6 +16,7 @@ sub looks_like_spam {
 
     my $content = $args{content};
     my $username = $args{metadata}{username};
+    my $host = $args{metadata}{host};
 
     if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine)\b/is ) {
         $class->notify_admins( %args, reason => "Matches $1" );
@@ -50,8 +51,17 @@ sub looks_like_spam {
 
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
+        if ( $username eq "Brin" and $host eq "216.240.129.180" ) {
+            $class->notify_admins( %args, reason => "Brin - 216.240.129.180" );
+            return 1;
+        }
+
         if ( $args{added_comment} =~ m/rpz3zmr75a.com/is ) {
             $class->notify_admins( %args, reason => "rpz3zmr75a.com" );
+            return 1;
+        }
+        if ( $args{added_comment} =~ m/look\s+for\s+some\s+my\s+links/is ) {
+            $class->notify_admins( %args, reason => "look for some my links" );
             return 1;
         }
         if ( ( $args{added_comment} =~ /http:\/\/.*http:\/\//s )
@@ -131,6 +141,8 @@ Subject: Attempted spam edit on RGL
 
 Someone just tried to edit RGL, and I said no because it looked like spam.
 Here follows a dump of the details:
+
+Reason: $args{reason}
 
 EOM
     $message .= Dumper( \%args );

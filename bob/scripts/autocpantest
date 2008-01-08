@@ -3,7 +3,7 @@
 
 # get all links on the search.cpan.org recent uploads page.
 # output to a file called current.
-mech-dump --links --absolute http://search.cpan.org/recent | grep "~" > /export/home/bob/cpantesting/history/current
+mech-dump --links --absolute http://search.cpan.org/recent | grep "~" | grep -v "kurila" > /export/home/bob/cpantesting/history/current
 
 # diff against a file called previous to get new modules 
 NEWMOD=`diff /export/home/bob/cpantesting/history/previous /export/home/bob/cpantesting/history/current | grep ">" | awk '{print $2}'`

@@ -3,6 +3,8 @@
 
 # accept defaut modules for Module::Autoinstall modules.
 export PERL_AUTOINSTALL='--defaultdeps'
+export PERL_MM_USE_DEFAULT=1
+export AUTOMATED_TESTING=1
 
 #ensure the sun compiler is my path before anything else
 PATH=/opt/SUNWspro/bin:$PATH

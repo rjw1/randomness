@@ -35,6 +35,12 @@
     </div>
     <label for="garden">Has a beer garden</label>
   </div>
+  <div class="criteria_search_checkbox_group" id="room_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.room %]
+    </div>
+    <label for="room">Has a bookable function room</label>
+  </div>
   <div class="criteria_search_checkbox_group">
     <div class="criteria_search_checkbox">
       [% checkboxes.realale %]

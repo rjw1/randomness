@@ -64,6 +64,10 @@ sub looks_like_spam {
             $class->notify_admins( %args, reason => "myoff.forumup.co.za" );
             return 1;
         }
+        if ( $args{added_comment} =~ m/peace.com/is ) {
+            $class->notify_admins( %args, reason => "peace.com" );
+            return 1;
+        }
         if ( $args{added_comment} =~ m/look\s+for\s+some\s+my\s+links/is ) {
             $class->notify_admins( %args, reason => "look for some my links" );
             return 1;

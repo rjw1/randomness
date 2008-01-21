@@ -1,0 +1,5 @@
+Title: Patch accepted to chronicle
+Tags: chronicle, patch, rss
+Date: 21 January 2008
+<p>When I was setting up my <a href="http://planet.randomness.org.uk/">Planet</a> I noticed that <a href="http://www.steve.org.uk/Software/chronicle/">Chronicle</a> was outputting less that useful titles for the rss feed. Instead of whining I provided a <a href="http://chronicle.repository.steve.org.uk/?rev/89eef19064e8">patch</a> which <a href="http://www.steve.org.uk/">Steve</a> <a href="http://chronicle.repository.steve.org.uk/?rev/3f0bf6fe2825">accpeted</a>.</p>
+

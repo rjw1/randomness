@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <rss version='2.0' xmlns:lj='http://www.livejournal.org/rss/lj/1.0/'>
 	<channel>
-		<title>Entries from <!-- tmpl_var name='month_name' --> <!-- tmpl_var name='year' --></title>
+		<title><!-- tmpl_var name='blog_title' --> - Entries from <!-- tmpl_var name='month_name' --> <!-- tmpl_var name='year' --></title>
 		<description>Entries from <!-- tmpl_var name='month_name' --> <!-- tmpl_var name='year' --></description>
                 <link><!-- tmpl_var name='top' --></link>
 

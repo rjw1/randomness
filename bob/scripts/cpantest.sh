@@ -14,18 +14,24 @@ PATH=/opt/SUNWspro/bin:$PATH
 # normal input should be a download link for the module.
 MODULE=`echo $1 | sed -e 's#http://search.cpan.org/CPAN/authors/id/##'`
 echo "Started $MODULE $STARTDATE"
-echo "Started $MODULE $STARTDATE" >> /export/home/bob/cpantesting/history/tested
+echo "Started $MODULE $STARTDATE" >> $HOME/cpantesting/history/tested
+# Perl versions available
+PERLVERS="5.8.8 5.10.0"
 
-# test against perl 5.8.8
-# remove the old tree
-rm -rf /export/home/bob/cpantesting/perl-5.8.8
-# untar to get a new tree
-gtar -zxf /export/home/bob/cpantesting/perl-5.8.8.tar.gz -C /export/home/bob/cpantesting/
-/export/home/bob/cpantesting/perl-5.8.8/bin/cpan $MODULE
-# test against perl 5.10.0
-rm -rf /export/home/bob/cpantesting/perl-5.10.0
-gtar -zxf /export/home/bob/cpantesting/perl-5.10.0.tar.gz -C /export/home/bob/cpantesting/
-/export/home/bob/cpantesting/perl-5.10.0/bin/cpan $MODULE
+
+#Do testing
+
+for PERL in $PERLVERS
+do
+echo $PERL
+# remove current tree if it exists
+rm -rf $HOME/cpantesting/perl-$PERL
+# untar the clean tree
+gtar -zxf $HOME/cpantesting/perl-${PERL}.tar.gz -C $HOME/cpantesting/
+# actually install the module.
+$HOME/cpantesting/perl-${PERL}/bin/cpan $MODULE
+done
+
 FINISHDATE=`date`
 echo "Finished $MODULE $FINISHDATE"
-echo "Finished $MODULE $FINISHDATE" >> /export/home/bob/cpantesting/history/tested
+echo "Finished $MODULE $FINISHDATE" >> $HOME/cpantesting/history/tested

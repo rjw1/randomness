@@ -5,15 +5,16 @@
 export PERL_AUTOINSTALL='--defaultdeps'
 export PERL_MM_USE_DEFAULT=1
 export AUTOMATED_TESTING=1
-DATE=`date`
+# start date
+STARTDATE=`date`
 #ensure the sun compiler is my path before anything else
 PATH=/opt/SUNWspro/bin:$PATH
 #
 # remove search.cpan stuff for input. has the side effect that just a modulename will also work. 
 # normal input should be a download link for the module.
 MODULE=`echo $1 | sed -e 's#http://search.cpan.org/CPAN/authors/id/##'`
-echo "Started $MODULE $DATE"
-echo "Started $MODULE $DATE" >> /export/home/bob/cpantesting/history/tested
+echo "Started $MODULE $STARTDATE"
+echo "Started $MODULE $STARTDATE" >> /export/home/bob/cpantesting/history/tested
 
 # test against perl 5.8.8
 # remove the old tree
@@ -25,5 +26,6 @@ gtar -zxf /export/home/bob/cpantesting/perl-5.8.8.tar.gz -C /export/home/bob/cpa
 rm -rf /export/home/bob/cpantesting/perl-5.10.0
 gtar -zxf /export/home/bob/cpantesting/perl-5.10.0.tar.gz -C /export/home/bob/cpantesting/
 /export/home/bob/cpantesting/perl-5.10.0/bin/cpan $MODULE
-echo "Finished $MODULE $DATE"
-echo "Finished $MODULE $DATE" >> /export/home/bob/cpantesting/history/tested
+FINISHDATE=`date`
+echo "Finished $MODULE $FINISHDATE"
+echo "Finished $MODULE $FINISHDATE" >> /export/home/bob/cpantesting/history/tested

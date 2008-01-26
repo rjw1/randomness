@@ -1,0 +1,11 @@
+#!/bin/bash
+while true
+do
+date
+~/bin/autocpantest 
+date
+~/bin/autocpantest  
+date
+echo "sleeping for 30 minutes"
+sleep 1800
+done

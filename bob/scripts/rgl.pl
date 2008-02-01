@@ -5,14 +5,17 @@ use URI;
 use URI::QueryParam;
 use WWW::Mechanize;
 use YAML::Syck;
+use Getopt::Long;
 
 my $default_username = "Robobob";
-my $default_comment = "Data import for";
-my $datafile = "rgldata-";
+my $default_comment = "an automated bulk upload";
+my $datafile = "rgldata";
 
 my $new_page_url = "http://morerandomness.org.uk/openguides/newpage.cgi";
-#my $new_page_url = "http://london.randomness.org.uk/newpage.cgi";
-#my $new_page_url = "http://cern.openguides.org/newpage.cgi";
+GetOptions ("username=s" => \$default_username,
+			"comment=s" => \$default_comment,
+			"url=s" => \$new_page_url,
+			"file=s" => \$datafile);
 
 if ( $new_page_url ne "http://morerandomness.org.uk/openguides/newpage.cgi" ) {
   print "***** WARNING ***** You seem not to be running on the test guide.\n";

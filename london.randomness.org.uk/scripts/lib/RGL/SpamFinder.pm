@@ -14,6 +14,7 @@ sub looks_like_spam {
         return 1;
     }
 
+    my $name = $args{node};
     my $content = $args{content};
     my $username = $args{metadata}{username};
     my $host = $args{metadata}{host};
@@ -51,8 +52,9 @@ sub looks_like_spam {
 
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
-        if ( $username eq "Brin" and $host eq "216.240.129.180" ) {
-            $class->notify_admins( %args, reason => "Brin - 216.240.129.180" );
+
+        if ( $name eq "Chuen Cheng Ku, W1D 6PN" && $username =~ /@/ ) {
+            $class->notify_admins( %args, reason => "CCK and \@ in username" );
             return 1;
         }
 
@@ -88,23 +90,6 @@ sub looks_like_spam {
                 $class->notify_admins( %args, reason => "'nice site' + URL" );
                 return 1;
             }
-        }
-
-        if ( $args{added_comment} =~
-                             /hello\s+dear\s+webmaster.*via\s+google/is ) {
-            $class->notify_admins( %args,
-                                 reason => "hello dear webmaster via google" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ /you\s+created\s+realy\s+great\s+site/is){
-            $class->notify_admins( %args, reason => "realy great site" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ /dear\s+webmaster\s+i\s+like\s+your\s+site/is){
-            $class->notify_admins( %args, reason => "dear webmaster i like your site" );
-            return 1;
         }
 
         if ( $username =~ /^[a-z]+\s[a-z]+$/ ) {

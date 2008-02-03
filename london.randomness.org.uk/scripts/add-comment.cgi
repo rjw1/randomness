@@ -69,7 +69,7 @@ if ( $node && $comment ) {
 
     # Don't want blank values in integerifiable fields.
     foreach my $param ( qw( osie_x osie_y os_x os_y ) ) {
-        if ( $new_metadata{$param} eq "" ) {
+        if ( defined $new_metadata{$param} && $new_metadata{$param} eq "" ) {
             delete $new_metadata{$param};
         }
     }

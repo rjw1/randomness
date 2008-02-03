@@ -82,6 +82,10 @@ sub find_stations {
                 my @lines = grep { /Line$/ } @cats;
                 my @tubelines;
                 foreach my $line ( @lines ) {
+                    # Hack around bug.
+                    if ( $line =~ /hammersmith and city line/i ) {
+                        $line = "Hammersmith And City Line";
+                    }
                     # Pull out just the Tube lines.
                     my @thiscats = $categoriser->categories( node =>
                                                             "Category $line" );

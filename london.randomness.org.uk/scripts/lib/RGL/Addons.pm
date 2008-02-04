@@ -167,7 +167,13 @@ INNER JOIN metadata as tube
   my $num = RGL::Addons->get_page_count( wiki => $wiki );
 
 Returns the total number of pages.  Note that this includes locale and
-category pages, but not redirects.
+category pages, but not redirects.  You can also pass optional arguments
+like so:
+
+  my $num = RGL::Addons->get_page_count( wiki => $wiki,
+                                         ignore_categories => 1,
+                                         ignore_locales => 1,
+                                       );
 
 =cut
 
@@ -181,6 +187,14 @@ sub get_page_count {
     FROM node
     WHERE text NOT LIKE '%#REDIRECT%'
   ";
+
+  if ( $args{ignore_categories} ) {
+    $sql .= " AND name NOT LIKE 'Category %'"
+  }
+
+  if ( $args{ignore_locales} ) {
+    $sql .= " AND name NOT LIKE 'Locale %'"
+  }
 
   my $sth = $dbh->prepare( $sql );
   $sth->execute;

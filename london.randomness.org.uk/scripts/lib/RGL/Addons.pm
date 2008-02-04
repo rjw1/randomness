@@ -173,7 +173,11 @@ like so:
   my $num = RGL::Addons->get_page_count( wiki => $wiki,
                                          ignore_categories => 1,
                                          ignore_locales => 1,
+                                         added_last_month => 1,
                                        );
+
+Note that C<added_last_month> means added in the last complete calendar month,
+e.g. if it's 3 February 2008 today then it means added in January 2008.
 
 =cut
 
@@ -194,6 +198,13 @@ sub get_page_count {
 
   if ( $args{ignore_locales} ) {
     $sql .= " AND name NOT LIKE 'Locale %'"
+  }
+
+  if ( $args{added_last_month} ) {
+    $sql .= " AND modified >= date_trunc( 'month', current_date )
+                                   - interval '1 month'
+              AND modified < date_trunc( 'month', current_date)
+              AND version = 1";
   }
 
   my $sth = $dbh->prepare( $sql );

@@ -42,6 +42,7 @@ sub get_tt_vars {
                   formatting_rules_node => $config->formatting_rules_node,
                   gmaps_api_key => $config->gmaps_api_key,
                   not_editable => 1,
+                  config => $config,
                 );
 
   my %cookie_data = OpenGuides::CGI->get_prefs_from_cookie(config=>$config); 

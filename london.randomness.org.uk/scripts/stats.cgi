@@ -26,6 +26,18 @@ my $q = CGI->new;
 
 my $dbh = $wiki->store->dbh;
 
+my ($min_date, $max_date);
+
+if ( $config->dbtype eq "mysql" ) {
+  $min_date = "current_date() - interval 1 month
+                         - interval dayofmonth(now() - interval 1 month) day
+                         + interval 1 day";
+  $max_date = "current_date() - interval dayofmonth(now()) day";
+} else {
+  $min_date = "date_trunc( 'month', current_date ) - interval '1 month'";
+  $max_date = "date_trunc( 'month', current_date)";
+}
+
 my %sql = (
   edit_count     => "
     SELECT count(*)
@@ -39,29 +51,29 @@ my %sql = (
   month_edit_count => "
     SELECT count(*)
     FROM content
-    WHERE modified >= date_trunc( 'month', current_date ) - interval '1 month'
-      AND modified < date_trunc( 'month', current_date)
+    WHERE modified >= $min_date
+      AND modified < $max_date
                       ",
   month_username_count => "
     SELECT count( distinct lower(metadata_value) )
     FROM metadata
       INNER JOIN node ON node.id=metadata.node_id
                       AND node.version=metadata.version
-    WHERE modified >= date_trunc( 'month', current_date ) - interval '1 month'
-      AND modified < date_trunc( 'month', current_date)
+    WHERE modified >= $min_date
+      AND modified < $max_date
       AND metadata_type='username'
                           ",
   month_image_count => "
     SELECT count(*)
-    FROM ( SELECT content.node_id, min(content.modified)
+    FROM ( SELECT content.node_id, min(content.modified) AS date_added
            FROM content
              INNER JOIN metadata ON content.node_id=metadata.node_id
                                  AND content.version=metadata.version
            WHERE metadata.metadata_type='node_image'
            GROUP BY content.node_id
-         ) AS d
-    WHERE d.min >= date_trunc( 'month', current_date ) - interval '1 month'
-      AND d.min < date_trunc( 'month', current_date )
+         ) AS img
+    WHERE img.date_added >= $min_date
+      AND img.date_added < $max_date
                        ",
 );
 

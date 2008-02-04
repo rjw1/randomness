@@ -202,10 +202,18 @@ sub get_page_count {
   }
 
   if ( $args{added_last_month} ) {
-    $sql .= " AND modified >= date_trunc( 'month', current_date )
-                                   - interval '1 month'
-              AND modified < date_trunc( 'month', current_date)
-              AND version = 1";
+    if ( $wiki->store->isa( "Wiki::Toolkit::Store::MySQL" ) ) {
+      $sql .= " AND modified >= current_date() - interval 1 month
+                         - interval dayofmonth(now() - interval 1 month) day
+                         + interval 1 day
+                AND modified < current_date()
+                         - interval dayofmonth(now()) day";
+    } else {
+      $sql .= " AND modified >= date_trunc( 'month', current_date )
+                                     - interval '1 month'
+                AND modified < date_trunc( 'month', current_date)
+                AND version = 1";
+    }
   }
 
   my $sth = $dbh->prepare( $sql );

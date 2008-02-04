@@ -167,7 +167,7 @@ INNER JOIN metadata as tube
   my $num = RGL::Addons->get_page_count( wiki => $wiki );
 
 Returns the total number of pages.  Note that this includes locale and
-category pages.
+category pages, but not redirects.
 
 =cut
 

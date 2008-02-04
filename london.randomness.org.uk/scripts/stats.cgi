@@ -51,6 +51,18 @@ my %sql = (
       AND modified < date_trunc( 'month', current_date)
       AND metadata_type='username'
                           ",
+  month_image_count => "
+    SELECT count(*)
+    FROM ( SELECT content.node_id, min(content.modified)
+           FROM content
+             INNER JOIN metadata ON content.node_id=metadata.node_id
+                                 AND content.version=metadata.version
+           WHERE metadata.metadata_type='node_image'
+           GROUP BY content.node_id
+         ) AS d
+    WHERE d.min >= date_trunc( 'month', current_date ) - interval '1 month'
+      AND d.min < date_trunc( 'month', current_date )
+                       ",
 );
 
 my %data;

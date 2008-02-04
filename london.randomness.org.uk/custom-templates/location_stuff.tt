@@ -1,3 +1,5 @@
+[% USE CGI %]
+
 <div id="location_stuff">
   [% IF coord_field_1_value AND coord_field_2_value %]
     <div id="nearby_tubes">
@@ -9,7 +11,7 @@
 
     <div id="find_within_distance">
       <form action="search.cgi">
-        <label for="distance">Find all things within</label>
+        <label for="distance">Find all things on RGL within</label>
         <select name="[% dist_field %]" id="distance">
           <option value="500">500 metres</option>
           <option value="1000">1 kilometre</option>
@@ -35,6 +37,12 @@
       <div id="walkit_link"></div>
       <div id="journeyplanner_link"></div>
       <div id="gmaps_link"></div>
+    </div>
+
+    <div id="search_your_london">
+      Search YourLondon.gov.uk for nearby
+      <a href="http://yourlondon.gov.uk/maps/fyn.jsp?postcode=[% CGI.escape(postcode) %]&classification=06340461">public toilets</a> or
+      <a href="http://yourlondon.gov.uk/maps/fyn.jsp?postcode=[% CGI.escape(postcode) %]&classification=02090141">cash machines</a>.
     </div>
   [% END %]
 

@@ -1,0 +1,48 @@
+[% INCLUDE addons_header.tt %]
+
+<div class="see_other_searches">
+  See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
+</div>
+
+<h2>[% addon_title %]</h2>
+
+<p>Note: some category and locale pages are real articles; others are
+currently just lists of links to other RGL pages.  Our goal is to have
+all locale pages, and many/most category pages, be worth reading in
+their own right.</p>
+
+<h4>Statistics for all time</h4>
+
+<ul>
+<li>Number of pages (including category and locale pages, excluding redirects):
+[% data.total_count %]</li>
+<li>Number of pages (excluding category pages, locale pages, and redirects):
+[% data.real_count %]</li>
+<li>Number of edits: [% data.edit_count %]</li>
+<li>Number of unique usernames used for at least one edit: [% data.username_count %]</li>
+<li>Number of images: [% data.image_count %]</li>
+</ul>
+
+<h4>Statistics for the last complete month</h4>
+<ul>
+<li>Number of new pages added (including category and locale pages, excluding redirects):
+[% data.month_total_count %]</li>
+<li>Number of new pages added (excluding category pages, locale pages, and redirects):
+[% data.month_real_count %]</li>
+<li>Number of edits: [% data.month_edit_count %]</li>
+<li>Number of unique usernames used for at least one edit: [% data.month_username_count %]</li>
+</ul>
+
+<h4>Other interesting trivia</h4>
+
+<p>The first ever edit to the RGL home page was made on 9 December
+2006 at 20:42:33 London time, by <a
+href="http://london.randomness.org.uk/wiki.cgi?Bob">Bob</a>.  It was
+<a href="http://london.randomness.org.uk/wiki.cgi?id=Home&version=1"
+rel="nofollow">not very exciting</a>.</p>
+
+<p>You can also view <a
+href="http://london.randomness.org.uk/static/uptime.html">our uptime
+stats</a>.</p>
+
+[% INCLUDE addons_footer.tt %]

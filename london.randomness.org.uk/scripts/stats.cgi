@@ -32,7 +32,7 @@ my %sql = (
     FROM content
                     ",
   username_count => "
-    SELECT count(distinct metadata_value)
+    SELECT count(distinct lower(metadata_value))
     FROM metadata
     WHERE metadata_type='username'
                     ",
@@ -43,7 +43,7 @@ my %sql = (
       AND modified < date_trunc( 'month', current_date)
                       ",
   month_username_count => "
-    SELECT count( distinct metadata_value )
+    SELECT count( distinct lower(metadata_value) )
     FROM metadata
       INNER JOIN node ON node.id=metadata.node_id
                       AND node.version=metadata.version

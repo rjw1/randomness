@@ -31,6 +31,7 @@ their own right.</p>
 [% data.month_real_count %]</li>
 <li>Number of edits: [% data.month_edit_count %]</li>
 <li>Number of unique usernames used for at least one edit: [% data.month_username_count %]</li>
+<li>Number of images added: [% data.month_image_count %]</li>
 </ul>
 
 <h4>Other interesting trivia</h4>

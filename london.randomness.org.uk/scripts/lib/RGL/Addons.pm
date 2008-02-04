@@ -179,6 +179,7 @@ sub get_page_count {
   my $sql = "
     SELECT count(*)
     FROM node
+    WHERE text NOT LIKE '%#REDIRECT%'
   ";
 
   my $sth = $dbh->prepare( $sql );

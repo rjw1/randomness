@@ -187,32 +187,35 @@ sub get_page_count {
   my $wiki = $args{wiki};
 
   my $dbh = $wiki->store->dbh;
-  my $sql = "
-    SELECT count(*)
-    FROM node
-    WHERE text NOT LIKE '%#REDIRECT%'
-  ";
+  my $sql = "SELECT count(node.name)";
+  if ( $args{added_last_month} ) {
+    $sql .= " FROM node, content";
+  } else {
+    $sql .= " FROM node";
+  }
+  $sql .= " WHERE node.text NOT LIKE '%#REDIRECT%'";
 
   if ( $args{ignore_categories} ) {
-    $sql .= " AND name NOT LIKE 'Category %'"
+    $sql .= " AND node.name NOT LIKE 'Category %'"
   }
 
   if ( $args{ignore_locales} ) {
-    $sql .= " AND name NOT LIKE 'Locale %'"
+    $sql .= " AND node.name NOT LIKE 'Locale %'"
   }
 
   if ( $args{added_last_month} ) {
+    $sql .= " AND node.id = content.node_id
+              AND content.version = 1";
     if ( $wiki->store->isa( "Wiki::Toolkit::Store::MySQL" ) ) {
-      $sql .= " AND modified >= current_date() - interval 1 month
+      $sql .= " AND content.modified >= current_date() - interval 1 month
                          - interval dayofmonth(now() - interval 1 month) day
                          + interval 1 day
-                AND modified < current_date()
+                AND content.modified < current_date()
                          - interval dayofmonth(now()) day";
     } else {
-      $sql .= " AND modified >= date_trunc( 'month', current_date )
+      $sql .= " AND content.modified >= date_trunc( 'month', current_date )
                                      - interval '1 month'
-                AND modified < date_trunc( 'month', current_date)
-                AND version = 1";
+                AND content.modified < date_trunc( 'month', current_date)";
     }
   }
 

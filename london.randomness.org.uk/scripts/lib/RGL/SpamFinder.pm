@@ -24,6 +24,11 @@ sub looks_like_spam {
         return 1;
     }
 
+    if ( $args{metadata}{comment} =~ /http:\/\/.*http:\/\//s ) {
+        $class->notify_admins( %args, reason => "URLs in change comment" );
+        return 1;
+    }
+
     my @cats = @{ $args{metadata}{category} };
     foreach my $cat ( @cats ) {
         if ( $cat =~ m'http://'i ) {
@@ -52,6 +57,11 @@ sub looks_like_spam {
 
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
+
+        if ( $args{added_comment} =~ m/mozhno\s+schitat\s+na\s+polovinu/ ) {
+            $class->notify_admins( %args, reason => "mozhno schitat na polovinu" );
+            return 1;
+        }
 
         if ( $name eq "Chuen Cheng Ku, W1D 6PN" && $username =~ /@/ ) {
             $class->notify_admins( %args, reason => "CCK and \@ in username" );

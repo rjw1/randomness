@@ -189,15 +189,22 @@ div#map {
   font-size: 0.8em;
 }
 
+div#map_and_photo {
+  float: right;
+  margin-left: 0.5em;
+  margin-bottom: 0.3em;
+}
+
 div#node_image_box
 {
-  float: right;
+  text-align: right;
+  padding-top: 1em;
   padding-left: 0.5em;
   padding-right: 1em;
   padding-bottom: 1em;
   color: black;
   font-size: 0.8em;
-  margin: -1em -0.8em 0em 1em;
+  margin: 0em -0.8em 0em 1em;
 }
 
 div#node_image_box img {
@@ -363,10 +370,6 @@ div#map_index_node_list {
 
 div#map_index_node_list li {
   margin-left: -1em;
-}
-
-div#map {
-  float: left;
 }
 
 /* Create new page stuff */

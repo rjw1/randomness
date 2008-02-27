@@ -57,8 +57,8 @@ my %sql = (
   month_username_count => "
     SELECT count( distinct lower(metadata_value) )
     FROM metadata
-      INNER JOIN node ON node.id=metadata.node_id
-                      AND node.version=metadata.version
+      INNER JOIN content ON content.node_id=metadata.node_id
+                      AND content.version=metadata.version
     WHERE modified >= $min_date
       AND modified < $max_date
       AND metadata_type='username'

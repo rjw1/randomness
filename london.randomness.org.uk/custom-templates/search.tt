@@ -20,11 +20,6 @@
   <h2>Search [% site_name %]</h2>
   [% END %]
 
-  <p><small>
-    Version [% ss_version %].  See the
-    <a href="[% ss_info_url %]">information page</a> for help and more details.
-  </small></p>
-
   <form method="get" action="search.cgi">
     <table border="1">
       <tr>
@@ -35,6 +30,9 @@
            <input type="text" name="search" value="[% IF search_terms %][% search_terms %][% END %]" size="50" maxlength="80" id="search_upper" />
          </td>
        </tr>
+
+    [% IF ( dist AND coord_field_1_value AND coord_field_2_value )
+       OR !search_terms %]
       <tr>
         <th>Location:</th>
         <td>
@@ -45,13 +43,9 @@
             [% coord_field_2_name %] <input type="text" name="[% coord_field_2 %]" value="[% coord_field_2_value %]" size="10" maxlength="10" />
           </p>
         [% END %]
-          <p>
-            within <input type="text" name="latlong_dist" value="[% dist %]" size="5" maxlength="5" /> metres of<br />
-            latitude (decimal) <input type="text" name="latitude" value="[% latitude %]" size="10" maxlength="10" />,<br />
-            longitude (decimal) <input type="text" name="longitude" value="[% longitude %]" size="10" maxlength="10" />
-          </p>
         </td>
       </tr>
+    [% END %]
       <tr>
         <td colspan="2" align="right">
           <input type="submit" name="go" class="form_button" value="Go" />
@@ -103,11 +97,6 @@
       <h2>No Items Matched</h2>
     [% END %]  
 
-  <form method="get" action="search.cgi">
-    <label for="search_lower">Search:</label> 
-    <input type="text" name="search" id="search_lower" value="[% search_terms %]" size="50" maxlength="80" value="Search text" onclick="this.value=''" />
-    <input type="submit" name="go" class="form_button" value="Go" />
-  </form>
   [% END %]
 
 </div>

@@ -7,6 +7,7 @@ use lib "lib";
 
 use CGI qw( :standard );
 use CGI::Carp qw( fatalsToBrowser );
+use DateTime;
 use OpenGuides;
 use POSIX;
 use RGL::Addons;
@@ -102,6 +103,11 @@ $data{month_total_count} = RGL::Addons->get_page_count( wiki => $wiki,
                                                 );
 
 $tt_vars{data} = \%data;
+
+# Get the month.
+my $dt = DateTime->now;
+$dt->subtract( months => 1 );
+$tt_vars{last_month_name} = $dt->month_name . " " . $dt->year;
 
 # Do the template stuff
 my $custom_template_path = $config->custom_template_path || "";

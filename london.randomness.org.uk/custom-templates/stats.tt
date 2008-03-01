@@ -23,7 +23,7 @@ their own right.</p>
 <li>Number of images: [% data.image_count %]</li>
 </ul>
 
-<h4>Statistics for the last complete month</h4>
+<h4>Statistics for the last complete month ([% last_month_name %])</h4>
 <ul>
 <li>Number of new pages added (including category and locale pages, excluding redirects):
 [% data.month_total_count %]</li>

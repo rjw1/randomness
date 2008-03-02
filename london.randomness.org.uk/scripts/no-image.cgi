@@ -149,7 +149,7 @@ $sth->execute or die $dbh->errstr;
 
 my %locales;
 my %categories;
-my %lacking;
+my %results;
 my $base_url = $config->script_url . $config->script_name . "?";
 my $total_count; # Everything with missing photo even if not on map.
 
@@ -172,7 +172,7 @@ while ( my ( $name, $this_locale, $this_category, $content,
 
     # We may have already processed this page, if it has more than one locale
     # or category.
-    if ( $lacking{$name} ) {
+    if ( $results{$name} ) {
         next;
     }
 
@@ -220,7 +220,7 @@ while ( my ( $name, $this_locale, $this_category, $content,
         $this->{lat} = $this_lat;
         $this->{long} = $this_long;
     }
-    $lacking{$name} = $this;
+    $results{$name} = $this;
 }
 
 my $any_string = " -- any -- ";
@@ -303,8 +303,8 @@ $tt_vars{percent_photos} = floor( 100 * $num_photos / $num_pages );
              %tt_vars,
              addon_title => "Pages without a photo",
              geo_handler => $geo_handler,
-             lacking     => [ sort { $a->{name} cmp $b->{name} }
-                                   values %lacking ],
+             results     => [ sort { $a->{name} cmp $b->{name} }
+                                   values %results ],
            );
 
 print $q->header;

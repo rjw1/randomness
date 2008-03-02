@@ -58,8 +58,18 @@ sub looks_like_spam {
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
 
+        if ( $args{added_comment} =~ m/gospoda\s+prisyazhnie\s+zasedateli/i ) {
+            $class->notify_admins( %args, reason => "gospoda prisyazhnie zasedateli" );
+            return 1;
+        }
+
         if ( $args{added_comment} =~ m/mozhno\s+schitat\s+na\s+polovinu/ ) {
             $class->notify_admins( %args, reason => "mozhno schitat na polovinu" );
+            return 1;
+        }
+
+        if ( $args{added_comment} =~ m/Parizh\s+deystwitelno\s+bolshoy\s+gorod/i ) {
+            $class->notify_admins( %args, reason => "Parizh deystwitelno bolshoy gorod" );
             return 1;
         }
 

@@ -85,67 +85,26 @@ function clearAllCriteria() {
   <span id="clear_criteria"></span>
 </form>
 
-[% IF lacking.size %]
+[% IF results.size %]
   [% IF show_map %]
     <p>
       Number of photo-less pages satisfying these criteria: [% total_count %]
-      [% IF lacking.size < total_count %]
-        ([% lacking.size %] shown on map - untick the map box to see pages
+      [% IF results.size < total_count %]
+        ([% results.size %] shown on map - untick the map box to see pages
          without geodata as well)
       [% ELSE %]
         (all shown on map)
       [% END %]
     </p>
-    <ul style="height:400px; overflow:auto; float:right; width:30%">
-      [% i = 0 %]
-      [% FOREACH node = lacking %]
-        [% i = i + 1 %]
-        <li>
-          <a href='#' onclick="marker[% i %].openInfoWindowHtml(htmlString[% i %]); return false;">[% CGI.escapeHTML( node.name ) %]</a>
-        </li>
-      [% END %]
-    </ul>
 
-    <table width="100%" height="100%">
-      <tr>
-        <td><div id="map" style=" width: 65%; height: 450px"></div></td>
-      </tr>
-    </table>
-
-    <script defer="defer" type="text/javascript">
-      //<![CDATA[ 
-        var map = new GMap( document.getElementById( "map" ) );
-        map.addControl( new GLargeMapControl() );
-        map.addControl( new GMapTypeControl() );
-        map.centerAndZoom( new GPoint( [% long %], [% lat %] ), [% zoom %] );
-
-        [% IF map_type == "satellite" %]
-          map.setMapType( G_SATELLITE_TYPE );
-        [% ELSIF map_type == "hybrid" %]
-          map.setMapType( G_HYBRID_TYPE );
-        [% END %]
-
-        [% i = 0 %]
-        [% FOREACH node = lacking %]
-          [% i = i + 1 %]
-          var point[% i %] = new GPoint( [% node.long %], [% node.lat %] );
-          var marker[% i %] = new GMarker( point[% i %], baseIcon );
-          var htmlString[% i %] = "<a href=\"[% node.url %]\">[% CGI.escapeHTML( node.name ) %]</a><br />[% node.address %]";
-          GEvent.addListener( marker[% i %], "click",
-            function() { 
-              marker[% i %].openInfoWindowHtml( htmlString[% i %] );
-            }
-          ); 
-          map.addOverlay(marker[% i %]); 
-        [% END %]
-      //]]>
-    </script>
+    [% INCLUDE search_result_map.tt %]
+ 
   [% ELSE %]
     <p>Number of photo-less pages satisfying these criteria:
-    [% lacking.size %]</p>
+    [% results.size %]</p>
     <ul>
-      [% FOREACH lack = lacking %]
-        <li><a href="[% lack.url %]">[% lack.name %]</a></li>
+      [% FOREACH node = results %]
+        <li><a href="[% node.url %]">[% node.name %]</a></li>
       [% END %]
     </ul>
   [% END %]

@@ -1,33 +1,14 @@
-    <script defer="defer" type="text/javascript">                         
-      //<![CDATA[ 
-        var baseIcon = new GIcon(); 
-        baseIcon.image = "http://www.google.com/mapfiles/marker.png"; 
-        baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png"; 
-        baseIcon.iconSize = new GSize(10, 17); 
-        baseIcon.shadowSize = new GSize(20, 17); 
-        baseIcon.iconAnchor = new GPoint(5, 17); 
-        baseIcon.infoWindowAnchor = new GPoint(9, 2);                      
-        baseIcon.infoShadowAnchor = new GPoint(9, 12);         
-        var endpointIcon = new GIcon(); 
-        endpointIcon.image = "http://the.earth.li/~kake/images/misc/marker-blue.png"; 
-        endpointIcon.shadow = "http://www.google.com/mapfiles/shadow50.png"; 
-        endpointIcon.iconSize = new GSize(10, 17); 
-        endpointIcon.shadowSize = new GSize(20, 17); 
-        endpointIcon.iconAnchor = new GPoint(5, 17); 
-        endpointIcon.infoWindowAnchor = new GPoint(9, 2);                      
-        endpointIcon.infoShadowAnchor = new GPoint(9, 12);         
-      //]]> 
-    </script>
+[% INCLUDE gmap_icon_types.tt %]
 
   <ul style="height:400px; overflow:auto; float:right; width:20%; font-size: 0.8em">
 
     [% i = 0 %]
     [% FOREACH node = results %]
       [% i = i + 1 %]
-      [% IF node.type == "end" %]
-        <li class="endpoint_node">
+      [% IF node.type %]
+        <li class="map_search_result_type_[% node.type %]">
       [% ELSE %]
-        <li class="midpoint_node">
+        <li class="map_search_result">
       [% END %]
         <a href='#' onclick="marker[% i %].openInfoWindowHtml(htmlString[% i %]); return false;">[% CGI.escapeHTML( node.name ) %]</a>
       </li>
@@ -58,10 +39,14 @@
       [% FOREACH node = results %]
         [% i = i + 1 %]
         var point[% i %] = new GPoint( [% node.long %], [% node.lat %] );
-        [% IF node.type == "end" %]
-          var marker[% i %] = new GMarker( point[% i %], endpointIcon );
+        [% IF node.markertype %]
+          if ( gmapIcons[ '[% node.markertype %]' ] ) {
+            var marker[% i %] = new GMarker( point[% i %], gmapIcons.[% node.markertype %] );
+          } else {
+            var marker[% i %] = new GMarker( point[% i %], gmapIcons.default );
+          }
         [% ELSE %]
-          var marker[% i %] = new GMarker( point[% i %], baseIcon );
+          var marker[% i %] = new GMarker( point[% i %], gmapIcons.default );
         [% END %]
         var htmlString[% i %] = "<a href=\"[% node.url %]\">[% CGI.escapeHTML( node.name ) %]</a>";
         GEvent.addListener( marker[% i %], "click",

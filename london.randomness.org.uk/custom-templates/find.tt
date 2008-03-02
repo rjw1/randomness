@@ -29,7 +29,7 @@
 [% IF do_search %]
   [% IF results.size %]
     [% IF show_map %]
-      [% INCLUDE find_withmap.tt %]
+      [% INCLUDE search_result_map.tt %]
     [% ELSE %]
       [% INCLUDE find_nomap.tt %]
     [% END %]

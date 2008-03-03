@@ -53,7 +53,7 @@
           [% IF conflict %]
             Current content:
           [% ELSE %]
-            Content:
+            Content: (see also <a href="http://openguides.org/page/text_formatting">text formatting help</a>)
           [% END %]
         </label>
         <div class="edit_box">

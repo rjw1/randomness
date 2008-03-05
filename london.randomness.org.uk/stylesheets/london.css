@@ -735,3 +735,9 @@ div#total_photo_count_message {
   font-size: 0.8em;
   border: 1px dotted #595A38;
 }
+
+div.old_info {
+  padding: 0.5em;
+  border: 1px dotted #595A38;
+  font-size: 0.8em;
+}

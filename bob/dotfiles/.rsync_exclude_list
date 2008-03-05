@@ -1,0 +1,7 @@
+.gnupg
+.subversion
+.rnd
+@LongLink
+.cpan
+cpantesting
+build

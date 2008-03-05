@@ -1,0 +1,14 @@
+alias theproject="xterm86 -T theproject -e ssh theproject.fierypit.org &"
+alias ping="ping -I 1"
+alias ip="ifconfig"
+alias ipconfig="ifconfig"
+alias ifconfig="ifconfig -a"
+alias hostdbgen="perl -w -I./lib ./bin/hostdb db testdb generate"
+for MACHINE in `cat .machines`
+do
+alias $MACHINE="xterm -T $MACHINE -e ssh $MACHINE &"
+done
+for FISH in `cat .fishmachines`
+do
+alias $FISH="xterm -T $FISH -e ssh -t whelk.zimki.com ssh $FISH &"
+done

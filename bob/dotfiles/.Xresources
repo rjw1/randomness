@@ -1,4 +1,5 @@
 XTerm*Font:  10x20
 XTerm*Foreground: white
 XTerm*Background: black
-XTerm*savelines: 100000
+XTerm*saveLines: 100000
+XTerm*scrollBar: true

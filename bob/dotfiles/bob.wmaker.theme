@@ -1,0 +1,35 @@
+{
+  LargeDisplayFont = "-*-helvetica-medium-r-*-*-24-*-*-*-*-*-*-*,-*-*-medium-r-*--24-*-*-*-*-*-*-*,-*-*-medium-r-normal-*-*-*";
+  HighlightColor = "#ffffff";
+  FTitleColor = "#ffffff";
+  MenuTextFont = "-*-helvetica-medium-r-normal-*-12-*-*-*-*-*-*-*";
+  WorkspaceBack = (
+    tpixmap,
+    "/home/bob/GNUstep/Library/WindowMaker/Backgrounds/demon_of_rock.jpg",
+    gray20
+  );
+  UTitleBack = (hgradient, mediumpurple4, black);
+  IconTitleFont = "-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-*";
+  PTitleBack = (hgradient, mediumpurple3, mediumpurple4);
+  WindowTitleFont = "-*-helvetica-bold-r-normal-*-12-*-*-*-*-*-*-*";
+  UTitleColor = "#bebebe";
+  ClipTitleFont = "-*-helvetica-bold-r-normal-*-10-*-*-*-*-*-*-*";
+  MenuDisabledColor = "#999999";
+  MenuStyle = flat;
+  MenuTextBack = (hgradient, mediumpurple4, black);
+  PTitleColor = "#bebebe";
+  IconBack = (dgradient, "rgb:a6/a6/b6", "rgb:51/55/61");
+  DisplayFont = "-*-helvetica-medium-r-normal-*-12-*-*-*-*-*-*-*";
+  MenuTitleBack = (hgradient, mediumpurple2, "rgb:43/33/64");
+  FTitleBack = (vgradient, "#a212c3", "#a212c3");
+  TitleJustify = center;
+  CClipTitleColor = gray20;
+  ResizebarBack = (hgradient, mediumpurple4, black);
+  MenuTextColor = "#ffffff";
+  ClipTitleColor = white;
+  IconTitleBack = "#7156a9";
+  HighlightTextColor = "#000000";
+  IconTitleColor = white;
+  MenuTitleFont = "-*-helvetica-bold-r-normal-*-12-*-*-*-*-*-*-*";
+  MenuTitleColor = "#ffffff";
+}

@@ -1,0 +1,17 @@
+XTerm*scrollBar: true
+XTerm*saveLines: 4096
+
+XTerm*Font:  10x20
+XTerm*Foreground: white
+XTerm*Background: black
+XTerm*VT100.translations:       #override \n\
+	~Shift<Key>Home:  string(\033[1~)\n\
+	~Shift<Key>End:   string(\033[4~)\n\
+	~Shift<Key>Prior: string(\033[5~)\n\
+	~Shift<Key>Next:  string(\033[6~)\n\
+	Shift<Key>Prior:  scroll-back(1,page) \n\
+	Shift<Key>Next:   scroll-forw(1,page) \n\
+	Shift<Key>Home:   scroll-back(100,page) \n\
+	Shift<Key>End:    scroll-forw(100,page) \n
+
+

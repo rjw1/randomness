@@ -1,0 +1,7 @@
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+[ -f ~/.bash_functions ] && . ~/.bash_functions
+PS1="\u@\h:\w >"
+PATH=/opt/csw/bin:/opt/csw/sbin:$PATH:/usr/local/bin:/usr/sbin:/usr/local/sbin:/sbin:/usr/ucb:/usr/ccs/bin
+TERM=dtterm
+EDITOR=vi
+export EDITOR

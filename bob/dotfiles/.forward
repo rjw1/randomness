@@ -1,0 +1,128 @@
+#Exim Filter
+if $h_X-Spam-Flag: contains "YES" and not delivered
+then
+save $home/Mail/badpeople/caughtspam
+endif
+
+if $sender_helo_name is "randomness.org.uk" and  $sender_host_address is not "217.10.129.148" 
+then
+save $home/Mail/badpeople/spamfakes
+endif
+
+if $h_To: contains "finance@randomness.org.uk"
+then
+save $home/Mail/finance
+endif
+
+if $h_X-mailer: contains "Perl Powered Socket Mailer"
+then 
+	 save $home/Mail/Scrabble
+endif
+if $h_To:,$h_CC: contains "ssenmodnar"
+then
+ save $home/Mail/mailinglists/Randomness
+endif
+if $h_To:,$h_CC: contains "spam@randomness.org.uk" and not delivered
+then
+ save $home/Mail/spam
+endif
+if $h_List-Id: matches "cpan-testers" and $h_Subject: contains "PASS" and not delivered
+then
+seen finish
+endif
+if $h_Subject: contains "*****SPAM*****" and not delivered 
+then 
+ save $home/Mail/spam
+endif
+if $h_Subject: contains "Attempted spam edit on RGL" and not delivered 
+then 
+ save $home/Mail/rglspam
+endif
+if $h_Sender: matches "overlycute.net" and not delivered
+then
+seen finish
+endif
+if $h_From: matches "dermalptch" and not delivered
+then
+seen finish
+endif
+if $h_From: matches "totemmail@mailing1.toteme.com" and not delivered
+then 
+seen finish
+endif
+if $h_From: matches "recessionspecials" and not delivered
+then
+seen finish
+endif
+if $h_From: matches "horfinc" and not delivered
+then
+seen finish
+endif
+
+if $h_Sender: matches "([a-zA-Z-.]*)-admin@" and not delivered
+then 
+ save $home/Mail/mailinglists/$1
+endif
+if $h_Sender: matches "owner-([a-zA-Z-.]*)@" and not delivered
+then
+ save $home/Mail/mailinglists/$1
+endif
+if $h_Sender: matches "([a-zA-Z-.]*)-bounces@" and not delivered
+then
+ save $home/Mail/mailinglists/$1
+endif
+if $h_Mailing-List: matches "list ([a-zA-Z-.]*)@yahoogroups.com" and not delivered
+then
+ save $home/Mail/mailinglists/$1
+endif
+if $h_List-Post: matches "mailto:([a-zA-Z-.]*)@" and not delivered
+then
+save $home/Mail/mailinglists/$1
+endif
+if $h_X-Mailing-List:  matches "([a-zA-Z-.]*)@" and not delivered
+then
+save $home/Mail/mailinglists/$1
+endif
+
+#logfile $home/tmp/testlog
+#logwrite $n9
+if ("${lookup{${lc:$sender_address}} lsearch {/export/home/bob/.whitelist}{yes}{no}}" is "yes") and not delivered
+then
+save $home/Mail/realmail
+endif
+if $h_X-Spam-Score: contains "+++" and not delivered
+then
+save $home/Mail/badpeople/possiblespam
+endif
+if $h_To: matches "nagiosalerts" and not delivered
+then
+ save $home/Mail/nagios
+endif
+if $h_From: matches "acrospace" and not delivered
+then
+ save $home/Mail/macrospace
+endif
+if $h_From: matches "linkedin" and not delivered
+then
+ save $home/Mail/linkedin
+endif
+if $h_From: matches "donotreply@flickr.com" and not delivered
+then
+ save $home/Mail/flickr
+endif
+if not delivered
+then
+ if $h_To:,$h_CC: does not contain "bob@randomness.org.uk"
+ then
+  save $home/Mail/badpeople/$original_local_part
+ endif
+# if personal alias bob@randomness.org.uk
+# then
+#  mail 
+#  to $reply_address
+#  subject "Re: $h_subject:"
+#   file $home/vacation/message
+#   once $home/vacation/once
+#    once_repeat 10d
+#  endif
+endif

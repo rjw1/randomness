@@ -58,6 +58,21 @@ sub looks_like_spam {
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
 
+        if ( $args{added_comment} =~ m/8K3LQ44ZXMC/i ) {
+            $class->notify_admins( %args, reason => "8K3LQ44ZXMC" );
+            return 1;
+        }
+
+        if ( $args{added_comment} =~ m/Hoirn8SFK77/i ) {
+            $class->notify_admins( %args, reason => "Hoirn8SFK77" );
+            return 1;
+        }
+
+        if ( $args{added_comment} =~ m/clmarket.ifrance.com/i ) {
+            $class->notify_admins( %args, reason => "clmarket.ifrance.com" );
+            return 1;
+        }
+
         if ( $args{added_comment} =~ m/happy.yourfreehosting.net/i ) {
             $class->notify_admins( %args, reason => "happy.yourfreehosting.net" );
             return 1;

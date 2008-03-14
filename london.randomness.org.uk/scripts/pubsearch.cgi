@@ -136,6 +136,7 @@ $tt->process( "pubsearch.tt", \%tt_vars );
 sub setup_form_variables {
 
   $tt_vars{tube_distance_box} = $q->popup_menu( -name   => "tube_distance",
+                                                -id     => "tube_distance",
                                          -values => [ 500, 750, 1000, 1500,
                                                       2000 ],
                                          -labels => { 500 => "500m",
@@ -177,7 +178,7 @@ sub setup_form_variables {
 
   my $any_string = " -- any -- ";
   my @localelist = sort keys %locales;
-  $tt_vars{locale_box} = $q->popup_menu( -name   => "locale",
+  $tt_vars{locale_box} = $q->popup_menu( -name   => "locale", -id => "locale",
                                          -values => [ "", @localelist ],
                                          -labels => { "" => $any_string,
                                                       map { $_ => $_ }
@@ -187,6 +188,7 @@ sub setup_form_variables {
   my @postallist = sort keys %postal_districts;
   $tt_vars{postal_district_box} =
                          $q->popup_menu( -name   => "postal_district",
+                                         -id     => "postal_district",
                                          -values => [ "", @postallist ],
                                          -labels => { "" => $any_string,
                                                       map { $_ => $_ }
@@ -196,6 +198,7 @@ sub setup_form_variables {
   my %checkboxes;
   foreach my $criterion ( keys %all_criteria ) {
     $checkboxes{$criterion} = $q->checkbox( -name => $criterion,
+                                            -id => $criterion,
                                             -value => 1, -label => "" );
   }
 

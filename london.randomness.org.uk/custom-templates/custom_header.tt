@@ -6,9 +6,9 @@
       var my_postcode = encodeURIComponent('[% postcode %]');
       var user_postcode_string = document.getElementById( 'user_postcode' ).value.toUpperCase();
       document.getElementById( 'get_directions_label' ).innerHTML='Directions to here: ';
-      document.getElementById( 'walkit_link' ).innerHTML='<a href="http://www.walkit.com/walkit_pipe.php?walkit_from='+user_postcode+'&walkit_to='+my_postcode+'&walkit_city=london">WalkIt</a>';
-      document.getElementById( 'gmaps_link' ).innerHTML='<a href="http://maps.google.co.uk/maps?saddr='+user_postcode+'&daddr='+my_postcode+'">Gmaps</a>';
-      document.getElementById( 'journeyplanner_link' ).innerHTML='<a href="http://www.journeyplanner.org/user/XSLT_TRIP_REQUEST2?type_origin=locator&name_origin='+user_postcode+'&type_destination=locator&name_destination='+my_postcode+'&language=en&sessionID=0">Journeyplanner</a>';
+      document.getElementById( 'walkit_link' ).innerHTML='<a href="http://www.walkit.com/walkit_pipe.php?walkit_from='+user_postcode+'&amp;walkit_to='+my_postcode+'&amp;walkit_city=london">WalkIt</a>';
+      document.getElementById( 'gmaps_link' ).innerHTML='<a href="http://maps.google.co.uk/maps?saddr='+user_postcode+'&amp;daddr='+my_postcode+'">Gmaps</a>';
+      document.getElementById( 'journeyplanner_link' ).innerHTML='<a href="http://www.journeyplanner.org/user/XSLT_TRIP_REQUEST2?type_origin=locator&amp;name_origin='+user_postcode+'&amp;type_destination=locator&amp;name_destination='+my_postcode+'&amp;language=en&amp;sessionID=0">Journeyplanner</a>';
       return false;
     }
   </script>

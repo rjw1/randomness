@@ -154,7 +154,7 @@ INNER JOIN metadata as tube
     push @tubes, $tube;
   }
 
-  my $box = $q->popup_menu( -name   => "tube", -id => "tube",
+  my $box = $q->popup_menu( -name   => "tube", -id => "tube_station",
                             -values => [ "", @tubes ],
                             -labels => { "" => "",
                                          map { $_ => $_ } @tubes },

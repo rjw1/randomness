@@ -5,6 +5,7 @@
 export PERL_AUTOINSTALL='--defaultdeps'
 export PERL_MM_USE_DEFAULT=1
 export AUTOMATED_TESTING=1
+export TMPDIR=$HOME/cpantesting/tmp/
 # start date
 STARTDATE=`date`
 #ensure the sun compiler is my path before anything else

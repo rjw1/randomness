@@ -80,7 +80,7 @@ sub find_stations {
                            );
             } else {
                 my @lines = grep { /Line$/ } @cats;
-                my @tubelines;
+                my %tubelines;
                 foreach my $line ( @lines ) {
                     # Hack around bug.
                     if ( $line =~ /hammersmith and city line/i ) {
@@ -95,13 +95,13 @@ sub find_stations {
                         if ( $line eq "East London" ) {
                             $line .= " - line closed until 2010";
                         }
-                        push @tubelines, $line;
+                        $tubelines{$line} = 1;
                     }
                 }
                 %details = (
                                 name     => $name,
                                 distance => $distance,
-                                lines    => \@tubelines,
+                                lines    => [ sort keys %tubelines],
                                 url      => $url,
                               );
             }

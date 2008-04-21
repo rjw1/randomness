@@ -19,7 +19,7 @@ sub looks_like_spam {
     my $username = $args{metadata}{username};
     my $host = $args{metadata}{host};
 
-    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine)\b/is ) {
+    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine|buyphentermine|adipex|phendimetrazine|ephedrine)\b/is ) {
         $class->notify_admins( %args, reason => "Matches $1" );
         return 1;
     }
@@ -57,6 +57,36 @@ sub looks_like_spam {
 
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
+
+        if ( $args{added_comment} =~ m/xxnx.freehostplace.com/i ) {
+            $class->notify_admins( %args, reason => "xxnx.freehostplace.com" );
+            return 1;
+        }
+
+        if ( $args{added_comment} =~ m/www-youtbe-copm/i ) {
+            $class->notify_admins( %args, reason => "www-youtbe-copm" );
+            return 1;
+        }
+
+        if ( $args{added_comment} =~ m/try-day.*110mb.com/i ) {
+            $class->notify_admins( %args, reason => "try-day[n].110mb.com" );
+            return 1;
+        }
+
+        if ( $args{added_comment} =~ m/outube.das-hosting.de/i ) {
+            $class->notify_admins( %args, reason => "outube.das-hosting.de" );
+            return 1;
+        }
+
+        if ( $args{added_comment} =~ m/collet-chucks.ok.tc/i ) {
+            $class->notify_admins( %args, reason => "collet-chucks.ok.tc" );
+            return 1;
+        }
+
+        if ( $args{added_comment} =~ m|http://.*.0catch.com|is ) {
+            $class->notify_admins( %args, reason => "0catch.com" );
+            return 1;
+        }
 
         if ( $args{added_comment} =~ m/8K3LQ44ZXMC/i ) {
             $class->notify_admins( %args, reason => "8K3LQ44ZXMC" );
@@ -115,6 +145,7 @@ sub looks_like_spam {
             return 1;
         }
         if ( ( $args{added_comment} =~ /http:\/\/.*http:\/\//s )
+             || ( $args{added_comment} =~ /https:\/\/.*https:\/\//s )
              || ( $args{added_comment} =~ /a\s+href=.*a\s+href=/s ) ) {
             $class->notify_admins( %args, reason => "comment with more than one URL in" );
             return 1;

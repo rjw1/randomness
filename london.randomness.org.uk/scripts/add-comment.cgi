@@ -67,9 +67,10 @@ if ( $node && $comment ) {
                       major_change => 1,
                     );
 
-    # Don't want blank values in integerifiable fields.
-    foreach my $param ( qw( osie_x osie_y os_x os_y ) ) {
-        if ( defined $new_metadata{$param} && $new_metadata{$param} eq "" ) {
+    # Don't want blank values in integerifiable fields; OpenGuides::Template
+    # ->extract_metadata_vars gives us undef values for these.
+    foreach my $param ( qw( osie_x osie_y os_x os_y latitude longitude ) ) {
+        if ( !defined $new_metadata{$param} ) {
             delete $new_metadata{$param};
         }
     }

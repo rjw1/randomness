@@ -64,6 +64,9 @@ key/value pair; the key is C<name> and the value is the name of the node.
 If you pass in the C<return_latlong> flag, then the hashref will also
 contain key/value pairs for C<lat> and C<long>.
 
+If you send a C<locale> and/or C<category> parameter then the results will
+be restricted to that particular locale and/or category (case insensitive).
+
 =cut
 
 sub get_nodes_with_geodata {
@@ -102,11 +105,41 @@ sub get_nodes_with_geodata {
     INNER JOIN metadata as mlong
       ON ( node.id=mlong.node_id
            AND node.version=mlong.version
-           AND lower(mlong.metadata_type)='longitude' )
-    ORDER BY node.name";
+           AND lower(mlong.metadata_type)='longitude' )";
+
+  my @where;
+  if ( $args{locale} ) {
+    $sql .= " INNER JOIN metadata as loc
+                 ON ( node.id = loc.node_id
+                      AND node.version = loc.version
+                      AND lower(loc.metadata_type) = 'locale' ) ";
+    push @where, "lower(loc.metadata_value) = lower(?)";
+  }
+
+  if ( $args{category} ) {
+    $sql .= " INNER JOIN metadata as cat
+                 ON ( node.id = cat.node_id
+                      AND node.version = cat.version
+                      AND lower(cat.metadata_type) = 'category' ) ";
+    push @where, "lower(cat.metadata_value) = lower(?)";
+  }
+
+  if ( scalar @where ) {
+    $sql .= " WHERE " . join( " AND ", @where );
+  }
+
+  $sql .= " ORDER BY node.name";
 
   my $sth = $dbh->prepare( $sql );
-  $sth->execute or die $dbh->errstr;
+  if ( $args{locale} && $args{category} ) {
+    $sth->execute( $args{locale}, $args{category} ) or die $dbh->errstr;
+  } elsif ( $args{locale} ) {
+    $sth->execute( $args{locale} ) or die $dbh->errstr;
+  } elsif ( $args{category} ) {
+    $sth->execute( $args{category} ) or die $dbh->errstr;
+  } else {
+    $sth->execute or die $dbh->errstr;
+  }
 
   my @nodes;
   while ( my ( $name, $lat, $long ) = $sth->fetchrow_array ) {

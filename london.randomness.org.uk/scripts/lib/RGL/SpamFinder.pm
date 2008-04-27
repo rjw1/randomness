@@ -58,6 +58,11 @@ sub looks_like_spam {
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
 
+        if ( $args{added_comment} =~ m'http://biker-tive'i ) {
+            $class->notify_admins( %args, reason => "http://biker-tive" );
+            return 1;
+        }
+
         if ( $args{added_comment} =~ m/xxnx.freehostplace.com/i ) {
             $class->notify_admins( %args, reason => "xxnx.freehostplace.com" );
             return 1;

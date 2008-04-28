@@ -83,6 +83,12 @@
     </div>
     <label for="thai">Serves Thai food</label>
   </div>
+  <div class="criteria_search_checkbox_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.pool %]
+    </div>
+    <label for="pool">Has a pool table</label>
+  </div>
   <div class="criteria_search_submit">
     <input type="submit" name="Search" value="Search" class="form_button" />
   </div>

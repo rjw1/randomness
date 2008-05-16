@@ -55,14 +55,19 @@ sub get_tt_vars {
 
   my @nodes = RGL::Addons->get_nodes_with_geodata( wiki => $wiki,
                                                    config => $config,
-                                                   return_latlong => 1 );
+                                                   return_latlong => 1,
+                                                   return_xy => 1,
+                                                 );
 
 Find all nodes which have geodata set (x and y plus lat and long).
 x and y may be OS coords, or UTM eastings and northings.
 Returns an array of hashrefs.  By default, each hashref only contains one
 key/value pair; the key is C<name> and the value is the name of the node.
+
 If you pass in the C<return_latlong> flag, then the hashref will also
-contain key/value pairs for C<lat> and C<long>.
+contain key/value pairs for C<lat> and C<long>.  If you pass in the
+C<return_xy> flag, then the hashref will also contain key/value pairs
+for C<x> and C<y>.
 
 If you send a C<locale> and/or C<category> parameter then the results will
 be restricted to that particular locale and/or category (case insensitive).
@@ -73,6 +78,7 @@ sub get_nodes_with_geodata {
   my ( $class, %args ) = @_;
 
   my $return_latlong = $args{return_latlong};
+  my $return_xy = $args{return_xy};
   my $wiki = $args{wiki};
   my $config = $args{config};
   my $geo_handler = $config->geo_handler;
@@ -88,7 +94,8 @@ sub get_nodes_with_geodata {
 
   my $dbh = $wiki->store->dbh;
   my $sql = "
-    SELECT node.name, mlat.metadata_value, mlong.metadata_value
+    SELECT node.name, mlat.metadata_value, mlong.metadata_value,
+           mx.metadata_value, my.metadata_value
     FROM node
     INNER JOIN metadata as mx
       ON ( node.id=mx.node_id
@@ -142,13 +149,17 @@ sub get_nodes_with_geodata {
   }
 
   my @nodes;
-  while ( my ( $name, $lat, $long ) = $sth->fetchrow_array ) {
+  while ( my ( $name, $lat, $long, $x, $y ) = $sth->fetchrow_array ) {
     my %data = ( name => $name );
     if ( $return_latlong ) {
       my ( $wgs84_long, $wgs84_lat ) = OpenGuides::Utils->get_wgs84_coords(
           longitude => $long, latitude => $lat, config => $config );
       $data{lat} = $wgs84_lat;
       $data{long} = $wgs84_long;
+    }
+    if ( $return_xy ) {
+      $data{x} = $x;
+      $data{y} = $y;
     }
     push @nodes, \%data;
   }

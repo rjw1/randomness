@@ -19,7 +19,7 @@ sub looks_like_spam {
     my $username = $args{metadata}{username};
     my $host = $args{metadata}{host};
 
-    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine|buyphentermine|adipex|phendimetrazine|ephedrine)\b/is ) {
+    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine|buyphentermine|adipex|phendimetrazine|ephedrine|lipitor|hydrocodone|replica-watches)\b/is ) {
         $class->notify_admins( %args, reason => "Matches $1" );
         return 1;
     }
@@ -58,73 +58,13 @@ sub looks_like_spam {
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
 
-        if ( $args{added_comment} =~ m'http://biker-tive'i ) {
-            $class->notify_admins( %args, reason => "http://biker-tive" );
+        if ( $name eq "News" && $username =~ /^(com|football|w|lyrics)$/is ) {
+            $class->notify_admins( %args, reason => "User '$1' editing News");
             return 1;
         }
 
-        if ( $args{added_comment} =~ m/xxnx.freehostplace.com/i ) {
-            $class->notify_admins( %args, reason => "xxnx.freehostplace.com" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/www-youtbe-copm/i ) {
-            $class->notify_admins( %args, reason => "www-youtbe-copm" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/try-day.*110mb.com/i ) {
-            $class->notify_admins( %args, reason => "try-day[n].110mb.com" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/outube.das-hosting.de/i ) {
-            $class->notify_admins( %args, reason => "outube.das-hosting.de" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/collet-chucks.ok.tc/i ) {
-            $class->notify_admins( %args, reason => "collet-chucks.ok.tc" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m|http://.*.0catch.com|is ) {
-            $class->notify_admins( %args, reason => "0catch.com" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/8K3LQ44ZXMC/i ) {
-            $class->notify_admins( %args, reason => "8K3LQ44ZXMC" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/Hoirn8SFK77/i ) {
-            $class->notify_admins( %args, reason => "Hoirn8SFK77" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/clmarket.ifrance.com/i ) {
-            $class->notify_admins( %args, reason => "clmarket.ifrance.com" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/happy.yourfreehosting.net/i ) {
-            $class->notify_admins( %args, reason => "happy.yourfreehosting.net" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/gospoda\s+prisyazhnie\s+zasedateli/i ) {
-            $class->notify_admins( %args, reason => "gospoda prisyazhnie zasedateli" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/mozhno\s+schitat\s+na\s+polovinu/ ) {
-            $class->notify_admins( %args, reason => "mozhno schitat na polovinu" );
-            return 1;
-        }
-
-        if ( $args{added_comment} =~ m/Parizh\s+deystwitelno\s+bolshoy\s+gorod/i ) {
-            $class->notify_admins( %args, reason => "Parizh deystwitelno bolshoy gorod" );
+        if ( $args{added_comment} =~ m/(bibi-nibe|akir-nime|niva-tope|mila-yela|lopi-niza|madu-lika|aiva-nima|hite-buri|rews-kimd|kile-bibi|terveron|rexi-vild|reza-blat|lize-vida|dive-luni|lize111|bestgreatworld\.info|greatworldbank\.info)/i ) {
+            $class->notify_admins( %args, reason => "$1" );
             return 1;
         }
 
@@ -133,22 +73,6 @@ sub looks_like_spam {
             return 1;
         }
 
-        if ( $args{added_comment} =~ m/rpz3zmr75a.com/is ) {
-            $class->notify_admins( %args, reason => "rpz3zmr75a.com" );
-            return 1;
-        }
-        if ( $args{added_comment} =~ m/myoff.forumup.co.za/is ) {
-            $class->notify_admins( %args, reason => "myoff.forumup.co.za" );
-            return 1;
-        }
-        if ( $args{added_comment} =~ m/peace.com/is ) {
-            $class->notify_admins( %args, reason => "peace.com" );
-            return 1;
-        }
-        if ( $args{added_comment} =~ m/look\s+for\s+some\s+my\s+links/is ) {
-            $class->notify_admins( %args, reason => "look for some my links" );
-            return 1;
-        }
         if ( ( $args{added_comment} =~ /http:\/\/.*http:\/\//s )
              || ( $args{added_comment} =~ /https:\/\/.*https:\/\//s )
              || ( $args{added_comment} =~ /a\s+href=.*a\s+href=/s ) ) {
@@ -161,6 +85,7 @@ sub looks_like_spam {
         }
         if ( ( $content =~ /good\s+site\.\s+thank/i )
              || ( $content =~ /cool\s+site\.\s+thank/i )
+             || ( $content =~ /useful\s+site\.\s+thank/i )
              || ( $content =~ /nice\s+site\.\s+thank/i ) ) {
             if ( $content =~ 'http://' ) {
                 $class->notify_admins( %args, reason => "'nice site' + URL" );
@@ -182,10 +107,6 @@ sub looks_like_spam {
         }
         if ( $content =~ 'http://' && $content =~ /\bxanax\b/ ) {
             $class->notify_admins( %args, reason => "'xanax' + URL" );
-            return 1;
-        }
-        if ( $content =~ 'http://' && $content =~ /\bphentermine\b/ ) {
-            $class->notify_admins( %args, reason => "'phentermine' + URL" );
             return 1;
         }
         if ( $content =~ 'http://' && $content =~ /\boxycodone\b/ ) {

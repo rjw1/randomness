@@ -24,6 +24,9 @@ my $dbh = $wiki->store->dbh;
 
 my %tt_vars = RGL::Addons->get_tt_vars( config => $config );
 
+# Make sure we have a legit referrer.
+my $referrer = $ENV{HTTP_REFERER}; # sic
+
 my $node_param = $q->param( "id" ) || "";
 my $node;
 if ( $node_param ) {
@@ -37,10 +40,10 @@ if ( $node_param ) {
 
 $tt_vars{addon_title} ||= "Add a comment to a page";
 
-# Add the comment if there is one.
+# Add the comment if there is one, and if we have a legit referrer.
 my $username = $q->param( "username" );
 my $comment = $q->param( "comment" );
-if ( $node && $comment ) {
+if ( $node && $comment && $referrer ) {
     my %node_data = $wiki->retrieve_node( $node );
     my %new_metadata = OpenGuides::Template->extract_metadata_vars( 
         wiki    => $wiki,
@@ -115,6 +118,11 @@ if ( $node && $comment ) {
     }
 
     $tt_vars{commit_error} = 1;
+}
+
+# If we have no referrer then there's something wrong or it's a spammer.
+if ( !$referrer ) {
+    $tt_vars{missing_referrer} = 1;
 }
 
 # Do the template stuff.

@@ -2,5 +2,5 @@ Title: Creating an apt repo.
 Tags: debian, packages, apt, repo, dwilson
 Date: 22 May 2008
 
-<p>So recently I've backported[1] a couple of debian packages and needed somewhere to serve them from. The current work apt repo scares me so I followed <a href="http://blog.unixdaemon.net/>Dean's</a> useful <a href="http://blog.unixdaemon.net/cgi-bin/blosxom.pl/operatingsystems/linux/debian/personal_apt_repo_initial.html"/guide</a> to setting one up instead. It worked very nicely and wasn't pain.</p>
+<p>So recently I've backported[1] a couple of debian packages and needed somewhere to serve them from. The current work apt repo scares me so I followed <a href="http://blog.unixdaemon.net/">Dean's</a> useful <a href="http://blog.unixdaemon.net/cgi-bin/blosxom.pl/operatingsystems/linux/debian/personal_apt_repo_initial.html">guide</a> to setting one up instead. It worked very nicely and wasn't pain.</p>
 <p><small>[1] post to come hopefully</small></p>

@@ -41,6 +41,12 @@
     </div>
     <label for="room">Has a bookable function room</label>
   </div>
+  <div class="criteria_search_checkbox_group" id="river_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.river %]
+    </div>
+    <label for="river">Has a river view</label>
+  </div>
   <div class="criteria_search_checkbox_group">
     <div class="criteria_search_checkbox">
       [% checkboxes.realale %]

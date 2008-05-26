@@ -63,13 +63,23 @@ sub looks_like_spam {
             return 1;
         }
 
-        if ( $args{added_comment} =~ m/(bibi-nibe|akir-nime|niva-tope|mila-yela|lopi-niza|madu-lika|aiva-nima|hite-buri|rews-kimd|kile-bibi|terveron|rexi-vild|reza-blat|lize-vida|dive-luni|lize111|bestgreatworld\.info|greatworldbank\.info)/i ) {
+        if ( $name eq "Old Pack Horse, W4 5TF" && $username =~ /^(com)$/is ) {
+            $class->notify_admins( %args, reason => "User '$1' editing OPH");
+            return 1;
+        }
+
+        if ( $args{added_comment} =~ m/(bibi-nibe|akir-nime|niva-tope|mila-yela|lopi-niza|madu-lika|aiva-nima|hite-buri|rews-kimd|kile-bibi|terveron|rexi-vild|reza-blat|lize-vida|dive-luni|lize111|bestgreatworld\.info|greatworldbank\.info|kelia.freehostia.com|jinerbond|nudestar.uni.cc|sexformnude.uni.cc|kamasutranet.co.cc|lipchild|finentikal)/i ) {
             $class->notify_admins( %args, reason => "$1" );
             return 1;
         }
 
         if ( $name eq "Chuen Cheng Ku, W1D 6PN" && $username =~ /@/ ) {
             $class->notify_admins( %args, reason => "CCK and \@ in username" );
+            return 1;
+        }
+
+        if ( $name eq "Nicolas, SW6 4ST" && $args{added_comment} =~ m!http://[-.a-z]+\.co.cc(\s|/)! ) {
+            $class->notify_admins( %args, reason => ".co.cc, Nicolas SW6" );
             return 1;
         }
 

@@ -38,6 +38,7 @@ my %all_criteria = (
                      thai      => "thai food",
                      room      => "function room",
                      pool      => "pool table",
+                     river     => "river view",
                    );
 
 setup_form_variables();

@@ -2,7 +2,7 @@
 
 <h2>[% addon_title %]</h2>
 
-[% IF !node_param || missing_referrer %]
+[% IF !node_param %]
   <p>Page name missing or in error; please go back and try again.  If this
   message persists, please contact the site administrator and tell them what
   you were trying to do.</p>

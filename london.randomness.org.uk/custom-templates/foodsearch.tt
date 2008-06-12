@@ -1,0 +1,66 @@
+[% INCLUDE addons_header.tt %]
+
+<h2>[% addon_title %]</h2>
+
+<form action="[% self_url %]" method="get">
+  <div class="criteria_search_group" id="locale_group">
+    <label for="locale">Locale:</label>
+    <div class="criteria_search_box">
+      [% locale_box %]
+    </div>
+  </div>
+  <div class="criteria_search_group" id="postal_district_group">
+    or: <label for="postal_district">Postal district:</lable>
+    <div class="criteria_search_box">
+      [% postal_district_box %]
+    </div>
+  </div>
+  <div class="criteria_search_group" id="near_tube_group">
+    or: <label for="tube_distance">Within</label>
+      <div class="criteria_search_box">
+        [% tube_distance_box %]
+      </div>
+    <label for="tube_station">of Tube station:</lable>
+    <div class="criteria_search_box">
+      [% tube_box %]
+    </div>
+  </div>
+  <div class="criteria_search_checkbox_group" id="vegan_friendly_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.vegan_friendly %]
+    </div>
+    <label for="vegan_friendly">Vegan friendly</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="veggie_friendly_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.veggie_friendly %]
+    </div>
+    <label for="veggie_friendly">Vegetarian friendly</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="totally_veggie_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.totally_veggie %]
+    </div>
+    <label for="totally_veggie">Totally vegetarian</label>
+  </div>
+  <div class="criteria_search_submit">
+    <input type="submit" name="Search" value="Search" class="form_button" />
+  </div>
+</form>
+
+[% IF results.size %]
+  <h3>[% results.size %] result[% IF results.size > 1 %]s[% END %] found</h3>
+
+  <dl class="criteria_search_results">
+    [% FOREACH result = results %]
+      <dt><a href="[% full_cgi_url %]?[% result.param %]">[% result.name %]</a></dt>
+      [% IF result.summary %]
+        <dd>[% result.summary %]</dd>
+      [% END %]
+    [% END %]
+  </ul>
+[% ELSIF doing_search %]
+  <p>No results found, sorry.  Try again with fewer criteria.</p>
+[% END %]
+
+[% INCLUDE addons_footer.tt %]

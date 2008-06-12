@@ -63,13 +63,18 @@ sub looks_like_spam {
             return 1;
         }
 
-        if ( $name eq "Old Pack Horse, W4 5TF" && $username =~ /^(com)$/is ) {
+        if ( $name eq "Old Pack Horse, W4 5TF" && $username =~ /^(com|lyrics)$/is ) {
             $class->notify_admins( %args, reason => "User '$1' editing OPH");
             return 1;
         }
 
-        if ( $args{added_comment} =~ m/(bibi-nibe|akir-nime|niva-tope|mila-yela|lopi-niza|madu-lika|aiva-nima|hite-buri|rews-kimd|kile-bibi|terveron|rexi-vild|reza-blat|lize-vida|dive-luni|lize111|bestgreatworld\.info|greatworldbank\.info|kelia.freehostia.com|jinerbond|nudestar.uni.cc|sexformnude.uni.cc|kamasutranet.co.cc|lipchild|finentikal)/i ) {
+        if ( $args{added_comment} =~ m/(bibi-nibe|akir-nime|niva-tope|mila-yela|lopi-niza|madu-lika|aiva-nima|hite-buri|rews-kimd|kile-bibi|terveron|rexi-vild|reza-blat|lize-vida|dive-luni|lize111|bestgreatworld\.info|greatworldbank\.info|kelia.freehostia.com|jinerbond|nudestar.uni.cc|sexformnude.uni.cc|kamasutranet.co.cc|lipchild|finentikal|pendosegi)/i ) {
             $class->notify_admins( %args, reason => "$1" );
+            return 1;
+        }
+
+        if ( $name eq "Websites About London" && $args{added_comment} =~ m/(www.google.us|us.cyworld.com)/ ) {
+            $class->notify_admins( %args, reason => "Websites About London, $1" );
             return 1;
         }
 
@@ -78,8 +83,18 @@ sub looks_like_spam {
             return 1;
         }
 
-        if ( $name eq "Nicolas, SW6 4ST" && $args{added_comment} =~ m!http://[-.a-z]+\.co.cc(\s|/)! ) {
-            $class->notify_admins( %args, reason => ".co.cc, Nicolas SW6" );
+        if ( $name eq "Websites About London" && $args{added_comment} =~ m!groups.google.us! ) {
+            $class->notify_admins( %args, reason => "groups.google.us/WAL" );
+            return 1;
+        }
+
+        if ( ( $name eq "Nicolas, SW6 4ST" || $name eq "Old Pack Horse, W4 5TF" || $name eq "Oriental Brasserie, W4 2HD" ) && $args{added_comment} =~ m!http://[-.a-z0-9]+\.(co.cc|uni.cc|talk4fun.net|297m.com|1vn.biz|aokhost.com|freeweb7.com|myokhost.com|22web.net|totalh.com|10001mb.com|isgreat.org|66ghz.com|iblogger.org|byethost12.com|20xhost.com|yourhelpful.net|fasthoster.info|happyhost.org|by.ru)(\s|/)! ) {
+            $class->notify_admins( %args, reason => "$1, $name" );
+            return 1;
+        }
+
+        if ( $username =~ m'&#' ) {
+            $class->notify_admins( %args, reason => "HTML entity in username" );
             return 1;
         }
 

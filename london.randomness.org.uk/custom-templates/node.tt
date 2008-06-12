@@ -45,6 +45,7 @@
   [% END %]
     version [% version %] of
     <span class="node_name">[% node_name %]</span></em>
+    <br><a href="[% cgi_url %]?[% node_param %]">(view current version)</a>
   </h2>
 [% END %]
 [% IF not (content || coord_field_1_value || coord_field_2_value || latitude || longitude) %]
@@ -52,10 +53,10 @@
 We don't have a page called "[% node_param %]". Would you like to <a href="[% full_cgi_url %]?action=edit;id=[% node_param %]">create it</a>?
 [% ELSE %]
 <div id="title_edit_link">
-  <a href="[% full_cgi_url %]?action=edit;id=[% node_param %]">Edit this page</a>
+  <a href="[% full_cgi_url %]?action=edit;id=[% node_param %]" rel="nofollow">Edit this page</a>
 </div>
 <div id="title_comment_link">
-  <a href="[% script_url %]scripts/add-comment.cgi?id=[% node_param %]">Add a comment</a>
+<a href="[% script_url %]scripts/add-comment.cgi?id=[% node_param %]" rel="nofollow">Add a comment</a>
 </div>
 </div>
 [% INCLUDE display_metadata.tt %]

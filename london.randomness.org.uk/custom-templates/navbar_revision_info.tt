@@ -11,7 +11,7 @@
         [% IF version == 1 %]
           Last edited [% last_modified %].
         [% ELSE %]
-          <a href="[% cgi_url %]?id=[% node_param %];version=[% version - 1 %];diffversion=[% version %]">Last edited</a> [% last_modified %].
+          <a href="[% cgi_url %]?id=[% node_param %];version=[% version - 1 %];diffversion=[% version %]" rel="nofollow">Last edited</a> [% last_modified %].
         [% END %]
       </div>
     [% ELSE %]

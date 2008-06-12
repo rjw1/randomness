@@ -1,0 +1,26 @@
+[% USE CGI %]
+[% INCLUDE addons_header.tt %]
+
+<div class="see_other_searches">
+  See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
+</div>
+
+<h2>[% addon_title %]</h2>
+
+<form id="criteria_form" action="[% self_url %]" method="get">
+  <p>Find pages that have been edited by: [% author_box %]</p>
+
+  <input type="submit" name="Search" value="Search" />
+</form>
+
+[% IF nodes.size %]
+  <ul>
+    [% FOREACH node = nodes %]
+      <li><a href="[% node.url %]">[% node.name %]</a></li>
+    [% END %]
+  </ul>
+[% ELSIF searching %]
+  <p>No pages found matching your criteria.</p>
+[% END %]
+
+[% INCLUDE addons_footer.tt %]

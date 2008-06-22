@@ -1,0 +1,4 @@
+Title: Cisco Routers for the Desperate
+Tags: cisco, routers, hsrp, books
+Date: 22 June 2008
+<p>If you dont know much about using and setting up cisco routers I humbly suggest you buy <a href="http://nostarch.com/frameset.php?startat=cisco">Cisco Routers for the Desperate</a>. It was very useful this week when I set up a pair of 2811s with HSRP. I would tell you how but I think you should buy the book instead.</p>

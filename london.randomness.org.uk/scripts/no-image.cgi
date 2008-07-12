@@ -309,6 +309,7 @@ $tt_vars{percent_photos} = floor( 100 * $num_photos / $num_pages );
 
 if ( $q->param( "format" ) && $q->param( "format" ) eq "kml" ) {
     $tt_vars{points} = $tt_vars{results};
+    $tt_vars{style} = "photo";
     print $q->header( "application/vnd.google-earth.kml+xml" );
     $tt->process( "kml.tt", \%tt_vars );
 } else {

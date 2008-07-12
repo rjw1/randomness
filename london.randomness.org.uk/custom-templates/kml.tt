@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+  <Document>
+    [% IF style AND style == 'photo' %]
+      <Style id="photo">
+        <IconStyle>
+          <Icon>
+            <href>http://maps.google.com/mapfiles/ms/micons/camera.png</href>
+          </Icon>
+        </IconStyle>
+      </Style>
+    [% END %]
+    [% FOREACH point = points %]
+      <Placemark>
+        <name>
+          [% point.name %]
+        </name>
+        [% IF style AND style == 'photo' %]
+          <styleUrl>#photo</styleUrl>
+        [% END %]
+        <Point>
+          <coordinates>[% point.long %],[% point.lat %]</coordinates>
+        </Point>
+        <description>
+          <![CDATA[
+            <a href="[% point.url %]">RGL entry</a>
+            [% IF point.categories %]
+              <br>Categories: [% point.categories.join(', ') %]
+            [% END %]
+          ]]>
+        </description>
+      </Placemark>
+    [% END %]
+  </Document>
+</kml>

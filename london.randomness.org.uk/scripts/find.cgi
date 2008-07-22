@@ -38,6 +38,7 @@ if ( $q->param( "do_search" ) ) {
   my $cat1 = $q->param( "cat1" );
   my $cat2 = $q->param( "cat2" );
   my $dist = $q->param( "distance" );
+  my $large_pointers = $q->param( "large_pointers" ) || 0;
 
   my $show_map = $q->param( "show_map" );
 
@@ -142,13 +143,25 @@ if ( $q->param( "do_search" ) ) {
       }
 
       my @results;
+      my $markertype;
+      if ( $large_pointers ) {
+        $markertype = "large_light_red";
+      } else {
+        $markertype = "small_light_red";
+      }
       foreach my $res ( sort { $a->{name} cmp $b->{name} }
                              values %origin_results ) {
         push @results, {
                          %$res,
                          type       => "origin",
-                         markertype => "small_light_red",
+                         markertype => $markertype,
                        };
+      }
+
+      if ( $large_pointers ) {
+        $markertype = "large_light_blue";
+      } else {
+        $markertype = "small_dark_blue";
       }
       foreach my $res ( sort { $a->{name} cmp $b->{name} }
                              values %end_results ) {
@@ -158,7 +171,7 @@ if ( $q->param( "do_search" ) ) {
           push @results, {
                            %$res,
                            type       => "end",
-                           markertype => "small_dark_blue",
+                           markertype => $markertype,
                          };
         }
       }
@@ -239,5 +252,7 @@ sub setup_form_fields {
   $tt_vars{show_map_box} = $q->checkbox( -name => "show_map",
                                                  -value => 1, label => "" );
   $tt_vars{include_all_origins_box} = $q->checkbox( -name => "include_all_origins",
+                                                 -value => 1, label => "" );
+  $tt_vars{large_pointers_box} = $q->checkbox( -name => "large_pointers",
                                                  -value => 1, label => "" );
 }

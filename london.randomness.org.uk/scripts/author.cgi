@@ -71,7 +71,8 @@ my $sql = "
     WHERE btrim(author.metadata_value) != ''
       AND btrim(author.metadata_value) != 'Anonymous'
       AND btrim(author.metadata_value) != 'Auto Create'
-    ORDER BY author_name";
+      AND moderated = true";
+
 
 my $sth = $dbh->prepare( $sql );
 $sth->execute or die $dbh->errstr;
@@ -80,6 +81,9 @@ my @authors;
 while ( my ( $name ) = $sth->fetchrow_array ) {
     push @authors, $name;
 }
+
+my %hash = map { lc($_) => $_ } reverse sort @authors;
+@authors = sort { lc($a) cmp lc($b) } values %hash;
 
 my $choose_string = " -- choose one -- ";
 

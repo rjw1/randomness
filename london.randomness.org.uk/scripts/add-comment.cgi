@@ -117,6 +117,9 @@ if ( $node && $comment ) {
     $tt_vars{commit_error} = 1;
 }
 
+# Robots don't need this.
+$tt_vars{deter_robots} = 1;
+
 # Do the template stuff.
 my $custom_template_path = $config->custom_template_path || "";
 my $template_path = $config->template_path;

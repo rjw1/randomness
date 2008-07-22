@@ -95,6 +95,18 @@
     </div>
     <label for="pool">Has a pool table</label>
   </div>
+  <div class="criteria_search_checkbox_group" id="step_free_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.step_free %]
+    </div>
+    <label for="step_free">Has step-free access</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="accessible_loo_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.accessible_loo %]
+    </div>
+    <label for="accessible_loo">Has an accessible toilet</label>
+  </div>
   <div class="criteria_search_submit">
     <input type="submit" name="Search" value="Search" class="form_button" />
   </div>

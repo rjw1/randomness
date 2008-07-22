@@ -1,5 +1,9 @@
 [% INCLUDE addons_header.tt %]
 
+<div class="see_other_searches">
+  See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
+</div>
+
 <h2>[% addon_title %]</h2>
 
 <form action="[% self_url %]" method="get">
@@ -10,7 +14,7 @@
     </div>
   </div>
   <div class="criteria_search_group" id="postal_district_group">
-    or: <label for="postal_district">Postal district:</lable>
+    or: <label for="postal_district">Postal district:</label>
     <div class="criteria_search_box">
       [% postal_district_box %]
     </div>
@@ -20,7 +24,7 @@
       <div class="criteria_search_box">
         [% tube_distance_box %]
       </div>
-    <label for="tube_station">of Tube station:</lable>
+    <label for="tube_station">of Tube station:</label>
     <div class="criteria_search_box">
       [% tube_box %]
     </div>
@@ -43,6 +47,18 @@
     </div>
     <label for="totally_veggie">Totally vegetarian</label>
   </div>
+  <div class="criteria_search_checkbox_group" id="step_free_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.step_free %]
+    </div>
+    <label for="step_free">Step-free access</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="accessible_loo_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.accessible_loo %]
+    </div>
+    <label for="accessible_loo">Accessible toilet</label>
+  </div>
   <div class="criteria_search_submit">
     <input type="submit" name="Search" value="Search" class="form_button" />
   </div>
@@ -60,7 +76,7 @@
     [% END %]
   </ul>
 [% ELSIF doing_search %]
-  <p>No results found, sorry.  Try again with fewer criteria.</p>
+  <p>No results found, sorry.  Try again with fewer (or different) criteria.</p>
 [% END %]
 
 [% INCLUDE addons_footer.tt %]

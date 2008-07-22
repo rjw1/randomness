@@ -34,6 +34,8 @@ my %all_criteria = (
                      vegan_friendly => "vegan friendly",
                      veggie_friendly => "vegetarian friendly",
                      totally_veggie => "totally vegetarian",
+                     step_free => "step-free access",
+                     accessible_loo => "accessible toilet",
                    );
 
 setup_form_variables();

@@ -39,6 +39,8 @@ my %all_criteria = (
                      room      => "function room",
                      pool      => "pool table",
                      river     => "river view",
+                     step_free => "step-free access",
+                     accessible_loo => "accessible toilet",
                    );
 
 setup_form_variables();

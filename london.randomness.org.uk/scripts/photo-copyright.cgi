@@ -73,7 +73,7 @@ while ( my ( $name ) = $sth->fetchrow_array ) {
     push @photographers, $name;
 }
 
-my $any_string = " -- any -- ";
+my $any_string = " -- choose one -- ";
 
 $tt_vars{photographer_box} = $q->popup_menu(
                                        -name => "copyright",

@@ -1,4 +1,6 @@
-  
+   [% UNLESS not_editable %]
+        <link rel="alternate" type="application/wiki" title="Edit this page!" href="[% source_site or full_cgi_url %]?id=[% node_param %];action=edit">
+[% END %] 
 
 <script type="text/javascript" language="javascript">
     function makeDirectionsLinks() {

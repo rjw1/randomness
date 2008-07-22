@@ -142,11 +142,25 @@ if ( $q->param( "do_search" ) ) {
       }
 
       my @results;
-      foreach my $res ( sort { $a->{name} cmp $b->{name} } values %origin_results ) {
-        push @results, { %$res, type => "origin", markertype => "small_light_red" };
+      foreach my $res ( sort { $a->{name} cmp $b->{name} }
+                             values %origin_results ) {
+        push @results, {
+                         %$res,
+                         type       => "origin",
+                         markertype => "small_light_red",
+                       };
       }
-      foreach my $res ( sort { $a->{name} cmp $b->{name} } values %end_results ) {
-        push @results, { %$res, type => "end", markertype => "small_dark_blue" };
+      foreach my $res ( sort { $a->{name} cmp $b->{name} }
+                             values %end_results ) {
+        # Don't want to overwrite origin-coloured markers with end-coloured
+        # markers for the same place.
+        unless ( $origin_results{ $res->{name} } ) {
+          push @results, {
+                           %$res,
+                           type       => "end",
+                           markertype => "small_dark_blue",
+                         };
+        }
       }
 
       # I hate that I have to do this.  Hate it, hate it.

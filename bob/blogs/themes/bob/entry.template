@@ -22,5 +22,6 @@
 <!-- tmpl_include name="comment-loop.inc" -->
 <!-- tmpl_include name="comment-form.inc" -->
 </div>
+<!-- tmpl_include name="ga.inc" -->
  </body>
 </html>

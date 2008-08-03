@@ -45,6 +45,7 @@
 </div>
 
 
+<!-- tmpl_include name="ga.inc" -->
 
 </body>
 </html>

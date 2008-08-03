@@ -1,0 +1,4 @@
+Title: Dean's Cron Commandments
+Tags: cron, rules, dean 
+Date: 04 August 2008
+<p>Dean wrote his <a href="http://blog.unixdaemon.net/cgi-bin/blosxom.pl/sysadmin/cron_commandments.html">Cron Commandments</a> a while back but they got some link loving from <a href="http://simonwillison.net/2008/Jun/27/cron/">Simon Willison </a>relatively recently. The one he misses though is <b>Thou shall not rewrite cron</b>. Im looking at you <a href="http://backgroundrb.rubyforge.org/">backgroundrb</a> and <a href="http://rufus.rubyforge.org/rufus-scheduler/files/README_txt.html">rufus-scheduler</a></p>

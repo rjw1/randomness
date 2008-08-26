@@ -10,8 +10,14 @@ use OpenGuides::Config;
 use RGL::Addons;
 use Template;
 use Wiki::Toolkit::Plugin::Categoriser;
+use Getopt::Long;
 
 my $config_file = $ENV{OPENGUIDES_CONFIG_FILE} || "../wiki.conf";
+my $output_file = "output.kml";
+GetOptions ("config=s" => \$config_file,
+			"output=s" => \$output_file);
+
+
 my $config = OpenGuides::Config->new( file => $config_file );
 my $guide = OpenGuides->new( config => $config );
 my $wiki = $guide->wiki;
@@ -42,4 +48,4 @@ my %tt_vars = ( points => \@points );
 my $custom_template_path = $config->custom_template_path || "";
 my $template_path = $config->template_path;
 my $tt = Template->new( { INCLUDE_PATH => ".:$custom_template_path:$template_path"  } );
-$tt->process( "kml.tt", \%tt_vars );
+$tt->process( "kml.tt", \%tt_vars, "$output_file" );

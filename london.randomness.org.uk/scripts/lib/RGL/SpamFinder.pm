@@ -80,12 +80,17 @@ sub looks_like_spam {
             return 1;
         }
 
+        if ( $comment =~ /\b(wernetesa)\b/is ) {
+            $class->notify_admins( %args, reason => "Matches $1" );
+            return 1;
+        }
+
         if ( $comment =~ m/(bibi-nibe|akir-nime|niva-tope|mila-yela|lopi-niza|madu-lika|aiva-nima|hite-buri|rews-kimd|kile-bibi|terveron|rexi-vild|reza-blat|lize-vida|dive-luni|lize111|bestgreatworld\.info|greatworldbank\.info|kelia.freehostia.com|jinerbond|nudestar.uni.cc|sexformnude.uni.cc|kamasutranet.co.cc|lipchild|finentikal|pendosegi|staggytheboyscoutsla|fjrf.3vindia.info)/i ) {
             $class->notify_admins( %args, reason => "$1" );
             return 1;
         }
 
-        if ( $name eq "Websites About London" && $comment =~ m/(www.google.us|us.cyworld.com|www.imeem.com|freeiq.com)/ ) {
+        if ( $name eq "Websites About London" && $comment =~ m/(www.google.us|us.cyworld.com|www.imeem.com|freeiq.com|vancouver-webpages.com|esnips.com)/ ) {
             $class->notify_admins( %args, reason => "Websites About London, $1" );
             return 1;
         }
@@ -136,9 +141,9 @@ sub looks_like_spam {
             }
         }
 
-        if ( $username =~ /^\s*spinu\s*$/is
+        if ( $username =~ /^\s*(spinu|specna|nepus|nadsy|weter|prasd|stalo|nabe|papa)\s*$/is
              && $comment =~ /^\s*respect\s*$/is ) {
-            $class->notify_admins( %args, reason => "Spinu respects us" );
+            $class->notify_admins( %args, reason => "$1 respects us" );
             return 1;
         }
 

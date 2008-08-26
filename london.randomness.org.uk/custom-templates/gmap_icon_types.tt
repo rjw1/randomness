@@ -25,11 +25,12 @@
           if ( size == 'large' ) {
             icon.iconSize = new GSize( 32, 32 );
             icon.shadowSize = new GSize(20, 17);
+            icon.iconAnchor = new GPoint( 16, 16 );
           } else {
             icon.iconSize = new GSize(10, 17);
             icon.shadowSize = new GSize(20, 17);
+            icon.iconAnchor = new GPoint(5, 17);
           }
-          icon.iconAnchor = new GPoint(5, 17);
           icon.infoWindowAnchor = new GPoint(9, 2);                      
           icon.infoShadowAnchor = new GPoint(9, 12);
 

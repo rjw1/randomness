@@ -21,6 +21,7 @@ their own right.</p>
 <li>Number of edits: [% data.edit_count %]</li>
 <li>Number of unique usernames used for at least one edit: [% data.username_count %]</li>
 <li>Number of images: [% data.image_count %]</li>
+<li>Geographical coverage: [% FILTER format( '%.0f' ) %][% data.km_squared %][% END %] km<sup>2</sup> ([% FILTER format( '%.0f' ) %][% data.miles_squared %][% END %] miles<sup>2</sup>)
 </ul>
 
 <h4>Statistics for the last complete month ([% last_month_name %])</h4>

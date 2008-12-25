@@ -1,8 +1,13 @@
 [%- USE CGI -%]
 <?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://earth.google.com/kml/2.0">
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
   <Document>
+
  <name>RGL KML file</name>
+<atom:author>      
+      <atom:name>Randomness Guide to London</atom:name>    
+    </atom:author>    
+    <atom:link href="http://london.randomness.org.uk" />  
     [% IF style AND style == 'photo' %]
       <Style id="photo">
         <IconStyle>

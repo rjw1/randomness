@@ -28,7 +28,7 @@ my %tt_vars = RGL::Addons->get_tt_vars( config => $config );
 my $q = CGI->new;
 
 my %all_criteria = (
-                     garden    => "beer gardens",
+                     garden    => "beer garden",
                      realale   => "real ale",
                      realcider => "real cider",
                      gbg       => "good beer guide",

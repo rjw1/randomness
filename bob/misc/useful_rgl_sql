@@ -1,0 +1,20 @@
+# 2009 gbg pubs
+select distinct node.name from node,metadata where node.id = metadata.node_id and metadata.metadata_value = 'Good Beer Guide 2009';
+
+select count(distinct node.name) from node,metadata where node.id = metadata.node_id and metadata.metadata_value = 'Good Beer Guide 2009';
+
+
+
+# pubs which have appeared in any gbg
+select distinct node.name from node,metadata where node.id = metadata.node_id and metadata.metadata_value = 'Good Beer Guide';
+
+# find pages created before
+SELECT count(*) from content where version = 1 and modified < '2008-10-30';
+# shorthand for 2008-01-01
+SELECT count(*) from content where version = 1 and modified < 2008;
+
+# total pages
+SELECT count(*) from node;
+should be equal to 
+SELECT count(*) from content where version = 1;
+

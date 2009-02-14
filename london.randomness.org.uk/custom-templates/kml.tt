@@ -7,7 +7,7 @@
 <atom:author>      
       <atom:name>Randomness Guide to London</atom:name>    
     </atom:author>    
-    <atom:link href="http://london.randomness.org.uk" />  
+    <atom:link href="http://london.randomness.org.uk" rel="related" />  
     [% IF style AND style == 'photo' %]
       <Style id="photo">
         <IconStyle>
@@ -30,6 +30,9 @@
         </Point>
         <description>
           <![CDATA[
+            [% IF point.address %]
+              [% point.address %]<br>
+            [% END %]
             <a href="[% point.url %]">RGL entry</a>
             [% IF point.categories %]
               <br>Categories: [% point.categories.join(', ') %]

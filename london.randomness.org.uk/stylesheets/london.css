@@ -2,12 +2,12 @@
 body {
   background: #656868;
   color: #000000;
-  font-family: lucida, verdana, arial, sans-serif;
+  font-family: 'Lucida Grande', verdana, arial, sans-serif;
 }
 
 a {
   color: #ac5519;
-  font-family: lucida, verdana, arial, sans-serif;
+  font-family: 'Lucida Grande', verdana, arial, sans-serif;
 }
 a:visited { color: #734f37; }
 a:active  { text-decoration: underline; }
@@ -26,7 +26,7 @@ div#body_wrapper {
   background: #F2E9BC;
   margin-left: 5%;
   margin-right: 5%;
-  margin-top: 2em;
+  margin-top: 1.5em;
   padding-top: -1.4em;
   //border: 1px solid #595A38;
   border: 1px solid black;
@@ -341,7 +341,7 @@ div#journeyplanner_link {
 /* The 'RDF/XML for this node' link that appears on all nodes */
 #rdf_link
 {
-  display: none;
+  font-size: 0.8em;
 }
 
 /* The footer that appears on all nodes */
@@ -591,6 +591,7 @@ div.criteria_search_box {
 }
 
 div.criteria_search_checkbox {
+  clear: both;
   float: left;
   width: 5%;
 }
@@ -605,7 +606,16 @@ div.criteria_search_group, div.criteria_search_checkbox_group {
   clear: both;
 }
 
-div#garden_group, div#vegan_friendly_group, div#food_style_group {
+div.criteria_category {
+  clear: both;
+  padding-top: 1em;
+}
+
+div.criteria_category_header {
+  font-weight: bold;
+}
+
+div#vegan_friendly_group, div#food_style_group {
   padding-top: 1em;
 }
 
@@ -737,7 +747,46 @@ div#total_photo_count_message {
 }
 
 div.old_info {
+  clear: both;
   padding: 0.5em;
   border: 1px dotted #595A38;
   font-size: 0.8em;
+}
+
+div.neighbouring_postcodes {
+  clear: both;
+  font-size: 0.8em;
+  border: 1px dotted #595A38;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  padding: 0.5em;
+}
+
+div.neighbouring_locales_list {
+  clear: both;
+  font-size: 0.8em;
+  border: 1px dotted #595A38;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  padding: 0.5em;
+}
+
+div.neighbouring_postcodes_grid {
+  clear: right;
+  float: right;
+  text-align: right;
+  margin-left: 1em;
+}
+
+div.neighbouring_postcodes_grid table td {
+  border:1px dotted #595A38;
+  padding: 0.3em;
+  text-align: center;
+}
+
+div.moderation_warning {
+  text-align: center;
+  border: 1px dotted #595A38;
+  margin: 1em;
+  padding: 1em;
 }

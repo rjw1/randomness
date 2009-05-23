@@ -29,84 +29,108 @@
       [% tube_box %]
     </div>
   </div>
-  <div class="criteria_search_checkbox_group" id="garden_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.garden %]
+
+  <div class="criteria_category">
+    <div class="criteria_category_header">Food and drink:</div>
+
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.realale %]
+      </div>
+      <label for="realale">Serves real ale</label>
     </div>
-    <label for="garden">Has a beer garden</label>
-  </div>
-  <div class="criteria_search_checkbox_group" id="room_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.room %]
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.realcider %]
+      </div>
+      <label for="realcider">Serves real cider</label>
     </div>
-    <label for="room">Has a bookable function room</label>
-  </div>
-  <div class="criteria_search_checkbox_group" id="river_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.river %]
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.lunch %]
+      </div>
+      <label for="lunch">Serves food at lunchtime</label>
     </div>
-    <label for="river">Has a river view</label>
-  </div>
-  <div class="criteria_search_checkbox_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.realale %]
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.dinner %]
+      </div>
+      <label for="dinner">Serves food in the evening</label>
     </div>
-    <label for="realale">Serves real ale</label>
-  </div>
-  <div class="criteria_search_checkbox_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.realcider %]
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.thai %]
+      </div>
+      <label for="thai">Serves Thai food</label>
     </div>
-    <label for="realcider">Serves real cider</label>
   </div>
-  <div class="criteria_search_checkbox_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.gbg %]
+
+  <div class="criteria_category">
+    <div class="criteria_category_header">Facilities:</div>
+
+    <div class="criteria_search_checkbox_group" id="step_free_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.step_free %]
+      </div>
+      <label for="step_free">Has step-free access</label>
     </div>
-    <label for="gbg">In the Good Beer Guide</label>
-  </div>
-  <div class="criteria_search_checkbox_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.wifi %]
+    <div class="criteria_search_checkbox_group" id="accessible_loo_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.accessible_loo %]
+      </div>
+      <label for="accessible_loo">Has an accessible toilet</label>
     </div>
-    <label for="wifi">Offers free wifi</label>
-  </div>
-  <div class="criteria_search_checkbox_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.lunch %]
+    <div class="criteria_search_checkbox_group" id="pool_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.pool %]
+      </div>
+      <label for="pool">Has a pool table</label>
     </div>
-    <label for="lunch">Serves food at lunchtime</label>
-  </div>
-  <div class="criteria_search_checkbox_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.dinner %]
+    <div class="criteria_search_checkbox_group" id="garden_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.garden %]
+      </div>
+      <label for="garden">Has a beer garden</label>
     </div>
-    <label for="dinner">Serves food in the evening</label>
-  </div>
-  <div class="criteria_search_checkbox_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.thai %]
+    <div class="criteria_search_checkbox_group" id="room_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.room %]
+      </div>
+      <label for="room">Has a bookable function room</label>
     </div>
-    <label for="thai">Serves Thai food</label>
-  </div>
-  <div class="criteria_search_checkbox_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.pool %]
+    <div class="criteria_search_checkbox_group" id="river_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.river %]
+      </div>
+      <label for="river">Has a river view</label>
     </div>
-    <label for="pool">Has a pool table</label>
-  </div>
-  <div class="criteria_search_checkbox_group" id="step_free_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.step_free %]
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.wifi %]
+      </div>
+      <label for="wifi">Offers free wifi</label>
     </div>
-    <label for="step_free">Has step-free access</label>
   </div>
-  <div class="criteria_search_checkbox_group" id="accessible_loo_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.accessible_loo %]
+
+  <div class="criteria_category">
+    <div class="criteria_category_header">Other criteria:</div>
+
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.gbg %]
+      </div>
+      <label for="gbg">In the Good Beer Guide</label>
     </div>
-    <label for="accessible_loo">Has an accessible toilet</label>
+
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.quiz %]
+      </div>
+      <label for="quiz">Offers a pub quiz</label>
+    </div>
+
   </div>
+
   <div class="criteria_search_submit">
     <input type="submit" name="Search" value="Search" class="form_button" />
   </div>

@@ -41,6 +41,12 @@ my %all_criteria = (
                      river     => "river view",
                      step_free => "step-free access",
                      accessible_loo => "accessible toilet",
+                     quiz      => "pub quiz",
+                     quiz_mon  => "pub quiz on mondays",
+                     quiz_tue  => "pub quiz on tuesdays",
+                     quiz_wed  => "pub quiz on wednesdays",
+                     quiz_thu  => "pub quiz on thursdays",
+                     quiz_sun  => "pub quiz on sundays",
                    );
 
 setup_form_variables();

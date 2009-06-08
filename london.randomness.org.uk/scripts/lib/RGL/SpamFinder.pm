@@ -8,13 +8,6 @@ use Email::Send;
 sub looks_like_spam {
     my ( $class, %args ) = @_;
 
-    if ( $args{metadata}{comment} =~ /some grammatical corrections/i ) {
-        $class->notify_admins( %args,
-                               id     => "00001",
-                               reason => "'some grammatical corrections'" );
-        return 1;
-    }
-
     my $name = $args{node};
     my $content = $args{content};
     my $username = $args{metadata}{username};
@@ -26,12 +19,6 @@ sub looks_like_spam {
         return 1;
     }
 
-    if ( $args{metadata}{comment} =~ /http:\/\/.*http:\/\//s ) {
-        $class->notify_admins( %args, id => "00003",
-                               reason => "URLs in change comment" );
-        return 1;
-    }
-
     my @cats = @{ $args{metadata}{category} };
     foreach my $cat ( @cats ) {
         if ( $cat =~ m'http://'i ) {
@@ -39,28 +26,9 @@ sub looks_like_spam {
                                    reason => "URL in category field" );
             return 1;
         }
-        if ( $cat =~ m'\n'i ) {
-            $class->notify_admins( %args, id => "00005",
-                                   reason => "Bare newline in category" );
-            return 1;
-        }
         if ( $cat =~ m/very nice site!/i ) {
-            $class->notify_admins( %args, id => "10005",
+            $class->notify_admins( %args, id => "00005",
                                    reason => "Very Nice Site in category" );
-            return 1;
-        }
-    }
-
-    my @locs = @{ $args{metadata}{locale} };
-    foreach my $loc ( @locs ) {
-        if ( $loc =~ m'http://'i ) {
-            $class->notify_admins( %args, id => "00006",
-                                   reason => "URL in locales field" );
-            return 1;
-        }
-        if ( $loc =~ m'\n'i ) {
-            $class->notify_admins( %args, id => "00007",
-                                   reason => "Bare newline in locale" );
             return 1;
         }
     }
@@ -109,67 +77,9 @@ sub looks_like_spam {
         }
 
         if ( $name eq "William, SE1 6AD"
-             && $comment =~ /i\salso\srecommend\sthis\ssite/is ) {
-            $class->notify_admins( %args, id => "00014",
-                                   reason => "I also recommend on $name" );
-            return 1;
-        }
-
-        if ( $name eq "William, SE1 6AD"
              && $comment =~ /you\shave\sa\sgreat\ssite/is ) {
             $class->notify_admins( %args, id => "00015",
                                    reason => "Have a great site on $name" );
-            return 1;
-        }
-
-        if ( $name eq "News" && $username =~ /^(com|football|w|lyrics)$/is ) {
-            $class->notify_admins( %args, id => "00016",
-                                   reason => "User '$1' editing News" );
-            return 1;
-        }
-
-        if ( $name eq "Old Pack Horse, W4 5TF" && $username =~ /^(com|lyrics)$/is ) {
-            $class->notify_admins( %args, id => "00017",
-                                   reason => "User '$1' editing OPH" );
-            return 1;
-        }
-
-        if ( $comment =~ m/(Good\s+(post|site),\s+admin.)/ ) {
-            $class->notify_admins( %args, id => "00018", reason => "$1" );
-            return 1;
-        }
-
-        if ( $comment =~ /geocities\.com.*\b(sex|porn|sexy|naked|tits|nude|fucking|fuck|boobs|orgasm)\b/is ) {
-            $class->notify_admins( %args, id => "00019",
-                                   reason => "$1 on geocities" );
-            return 1;
-        }
-
-        if ( $comment =~ /uk\.geocities\.com/ && $name =~ /^Category/ ) {
-            $class->notify_admins( %args, id => "00020",
-                                   reason => "geocities comment on category" );
-            return 1;
-        }
-
-        if ( $name eq "Woolwich Dockyard Station" ) {
-            if ( $comment =~ m/(mybloglog.com|vidilife.com|forums.jolt.co.uk|scam.com|indya.com)/i ) {
-                $class->notify_admins( %args, id => "00021",
-                                 reason => "$1 on Woolwich Dockyard Station");
-                return 1;
-            }
-        }
-
-        if ( $name eq "Toxophilite" ) {
-            if ( $comment =~ m/(xoops.org|scam.com|forums.jolt.co.uk)/i ) {
-                $class->notify_admins( %args, id => "00022",
-                                       reason => "$1 on Toxophilite" );
-                return 1;
-            }
-        }
-
-        if ( $username =~ m/(m0wz0a6e8ds|m0wzdgs|m0w6e8ds|m0wzds|m0wz0a6eds|m0wz6e8ds|m0wzb6sds|m0wzbs)/i ) {
-            $class->notify_admins( %args, id => "00023",
-                                   reason => "user: $1" );
             return 1;
         }
 
@@ -177,58 +87,6 @@ sub looks_like_spam {
             $class->notify_admins( %args, id => "00024",
                                    reason => "comment with more than 7 plus "
                                              . "signs in and no http://" );
-            return 1;
-        }
-
-        if ( $comment =~ /\b(wernetesa)\b/is ) {
-            $class->notify_admins( %args, id => "00025",
-                                   reason => "Matches $1" );
-            return 1;
-        }
-
-        if ( $comment =~ m/(bibi-nibe|akir-nime|niva-tope|mila-yela|lopi-niza|madu-lika|aiva-nima|hite-buri|rews-kimd|kile-bibi|terveron|rexi-vild|reza-blat|lize-vida|dive-luni|lize111|bestgreatworld\.info|greatworldbank\.info|kelia.freehostia.com|jinerbond|nudestar.uni.cc|sexformnude.uni.cc|kamasutranet.co.cc|lipchild|finentikal|pendosegi|staggytheboyscoutsla|fjrf.3vindia.info|forum.gorillamask.net|forum.xnxx.com|cityofbalanga.gov.ph|mybroadband.co.za|forums.epicgames.com|www.tetongravity.com|yedda.com|blackplanet.com|forum.skins.be|yuku.com|brides.com|dumpstersluts.com)/i ) {
-            $class->notify_admins( %args, id => "00026", reason => "$1" );
-            return 1;
-        }
-
-        if ( $comment =~ m/(If\s+a\s+man\s+takes\s+no\s+thought\s+about\s+what\s+is\s+distant)/){
-            $class->notify_admins( %args, id => "00027", reason => "$1" );
-            return 1;
-        }
-
-        if ( $name eq "Websites About London" && $comment =~ m/(www.google.us|us.cyworld.com|www.imeem.com|freeiq.com|vancouver-webpages.com|esnips.com)/ ) {
-            $class->notify_admins( %args, id => "00028",
-                                   reason => "Websites About London, $1" );
-            return 1;
-        }
-
-        if ( $name eq "Chuen Cheng Ku, W1D 6PN" && $username =~ /@/ ) {
-            $class->notify_admins( %args, id => "00029",
-                                   reason => "CCK and \@ in username" );
-            return 1;
-        }
-
-        if ( $name eq "Websites About London" && $comment =~ m!groups.google.us! ) {
-            $class->notify_admins( %args, id => "00030",
-                                   reason => "groups.google.us/WAL" );
-            return 1;
-        }
-
-        if ( $name eq "name" && $comment =~ m/^comment\d,$/ ) {
-            $class->notify_admins( %args, id => "00031",
-                                   reason => "badly configured spambot" );
-            return 1;
-        }
-
-        if ( ( $name eq "North Acton Station" || $name eq "Nicolas, SW6 4ST" || $name eq "Old Pack Horse, W4 5TF" || $name eq "Oriental Brasserie, W4 2HD" ) && $comment =~ m!http://[-.a-z0-9]+\.(co.cc|uni.cc|talk4fun.net|297m.com|1vn.biz|aokhost.com|freeweb7.com|myokhost.com|22web.net|totalh.com|10001mb.com|isgreat.org|66ghz.com|iblogger.org|byethost12.com|20xhost.com|yourhelpful.net|fasthoster.info|happyhost.org|by.ru|awardspace.com|awardspace.us|2kool4u.net|your-freehosting.info|150m.com|110mb.com)(\s|/)! ) {
-            $class->notify_admins( %args, id => "00032",
-                                   reason => "$1, $name" );
-            return 1;
-        }
-
-        if ( $username =~ m'&#' ) {
-            $class->notify_admins( %args, id => "00033",
-                                   reason => "HTML entity in username" );
             return 1;
         }
 

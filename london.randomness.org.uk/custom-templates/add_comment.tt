@@ -18,8 +18,33 @@
   <p>(<a href="[% full_cgi_url %]?[% node_param %]">Cancel and return to page</a>.)</p>
   <form action="[% self_url %]" method="post">
     <p>
-      Note: your comment will be appended to the bottom of the page, and will
-      be freely editable by other people.
+      <b>Please note:</b>
+      <ul>
+        <li>Your comment will be appended to the bottom of the page, and will
+            be freely editable by other people.  If it's interesting and
+            useful, someone will probably incorporate it into the main writeup
+            at some point.  It is very unlikely to be left there forever
+            exactly as you wrote it.</li>
+        <li>If the purpose of your comment is to tell the world how much you
+            hate this establishment, you're probably better off commenting
+            somewhere else <small>(some suggestions:
+            [<a href="http://www.beerintheevening.com/">1</a>]
+            [<a href="http://www.london-eating.co.uk/">2</a>]
+            [<a href="http://www.qype.co.uk/">3</a>]
+            [<a href="http://trustedplaces.com/">4</a>]
+            [<a href="http://www.welovelocal.com/">5</a>]
+            [<a href="http://www.yelp.co.uk/">6</a>])</small>.
+            We're not here to provide a soapbox to the world, and we're very
+            likely to just delete comments that contain no (or very little)
+            objective factual information.</li>
+        <li>If you're reporting a factual mistake on this page, please let us
+            know <i>why</i> you know it's wrong (e.g. you're the owner/manager,
+            or you were in there today and you noticed the prices have
+            changed, that sort of thing).</li>
+        <li>If you want to ask us a question, you're better off using the
+            contact information in <a href="/wiki.cgi?Contact_RGL">Contact
+            RGL</a>.</li>
+      </ul>
     </p>
 
     <p>

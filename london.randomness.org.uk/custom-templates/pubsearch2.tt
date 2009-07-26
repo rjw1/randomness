@@ -1,0 +1,141 @@
+[% INCLUDE addons_header.tt %]
+
+<div class="see_other_searches">
+  See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
+</div>
+
+<h2>[% addon_title %]</h2>
+
+<form action="[% self_url %]" method="get">
+  <div class="criteria_search_group" id="locale_group">
+    <label for="locale">Locale:</label>
+    <div class="criteria_search_box">
+      [% locale_box %]
+    </div>
+  </div>
+  <div class="criteria_search_group" id="postal_district_group">
+    or: <label for="postal_district">Postal district:</label>
+    <div class="criteria_search_box">
+      [% postal_district_box %]
+    </div>
+  </div>
+  <div class="criteria_search_group" id="near_tube_group">
+    or: <label for="tube_distance">Within</label>
+      <div class="criteria_search_box">
+        [% tube_distance_box %]
+      </div>
+    <label for="tube_station">of Tube station:</label>
+    <div class="criteria_search_box">
+      [% tube_box %]
+    </div>
+  </div>
+
+  <div class="criteria_category">
+    <div class="criteria_category_header">Food and drink</div>
+
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.realale %]
+      </div>
+      <label for="realale">Serves real ale</label>
+    </div>
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.realcider %]
+      </div>
+      <label for="realcider">Serves real cider</label>
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.lunch %]
+      </div>
+      <label for="lunch">Serves food at lunchtime</label>
+    </div>
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.dinner %]
+      </div>
+      <label for="dinner">Serves food in the evening</label>
+    </div>
+    <div class="criteria_search_checkbox_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.thai %]
+      </div>
+      <label for="thai">Serves Thai food</label>
+    </div>
+  </div>
+
+  <h4>Facilities:</h4>
+  <div class="criteria_search_checkbox_group" id="step_free_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.step_free %]
+    </div>
+    <label for="step_free">Has step-free access</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="accessible_loo_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.accessible_loo %]
+    </div>
+    <label for="accessible_loo">Has an accessible toilet</label>
+  </div>
+  <div class="criteria_search_checkbox_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.pool %]
+    </div>
+    <label for="pool">Has a pool table</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="garden_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.garden %]
+    </div>
+    <label for="garden">Has a beer garden</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="room_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.room %]
+    </div>
+    <label for="room">Has a bookable function room</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="river_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.river %]
+    </div>
+    <label for="river">Has a river view</label>
+  </div>
+  <div class="criteria_search_checkbox_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.wifi %]
+    </div>
+    <label for="wifi">Offers free wifi</label>
+  </div>
+
+  <h4>Other criteria</h4>
+
+  <div class="criteria_search_checkbox_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.gbg %]
+    </div>
+    <label for="gbg">In the Good Beer Guide</label>
+  </div>
+
+  <div class="criteria_search_submit">
+    <input type="submit" name="Search" value="Search" class="form_button" />
+  </div>
+</form>
+</div>
+
+[% IF pubs.size %]
+  <h3>[% pubs.size %] pub[% IF pubs.size > 1 %]s[% END %] found</h3>
+
+  <dl class="criteria_search_results">
+    [% FOREACH pub = pubs %]
+      <dt><a href="[% full_cgi_url %]?[% pub.param %]">[% pub.name %]</a></dt>
+      [% IF pub.summary %]
+        <dd>[% pub.summary %]</dd>
+      [% END %]
+    [% END %]
+  </ul>
+[% ELSIF doing_search %]
+  <p>No pubs found, sorry.  Try again with fewer criteria.</p>
+[% END %]
+
+[% INCLUDE addons_footer.tt %]

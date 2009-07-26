@@ -71,6 +71,18 @@
     </div>
     <label for="delivery">Offers delivery</label>
   </div>
+  <div class="criteria_search_checkbox_group" id="delivers_to_se16">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.delivers_to_se16 %]
+    </div>
+    <label for="delivers_to_se16">Delivers to SE16</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="vietnamese_food">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.vietnamese_food %]
+    </div>
+    <label for="vietnamese_food">Offers Vietnamese food</label>
+  </div>
   <div class="criteria_search_checkbox_group" id="step_free_group">
     <div class="criteria_search_checkbox">
       [% checkboxes.step_free %]

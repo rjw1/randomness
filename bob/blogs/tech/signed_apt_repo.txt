@@ -1,0 +1,47 @@
+Title: Setting up a Signed apt repo
+Tags: apt, debian, signed, debs
+Date: 07 August 2009
+<p>So you've set up a apt repository following dean's excellant <a href="http://blog.unixdaemon.net/cgi-bin/blosxom.pl/operatingsystems/linux/debian/personal_apt_repo_initial.html">instructions</a> and youve tried to install a package and got the following warning</p>
+<pre>WARNING: The following packages cannot be authenticated!</pre>
+<p>At this point you have several choices:-
+<ul>
+<li>press yes and carry on.(not that useful if youre using puppet to install stuff)</li>
+<li><code>echo "APT::Get::AllowUnauthenticated 1;" >> /etc/apt/apt.conf.d/99unauth</code></li>
+<li> Set up a <a href="http://wiki.debian.org/SecureApt">secure repository</a></li>
+</ul>
+<p>Lets go with setting up a secure repository.
+<ul>
+<li>Make yourself a gpg key - <code>gpg --gen-key</code></li>
+<li>Export your public key to a file - <code>gpg --armor --export $keyid >public.key</code>. You will need this later</li>
+<li>Create an apt-release.conf containing <code>APT::FTPArchive::Release::Suite "etch";</code><small>(Im behind and should have written this post a year ago)</small> in your repository base.</li>
+<li>Generate a release file - <code>apt-ftparchive -c apt-release.conf release dists/etch/ > dists/etch/Release</code></li>
+<li>Create a signed version - <code>gpg --sign -ba -o dists/etch/Release.gpg dists/etch/Release</code></li>
+</ul>
+Your repository is now secure. Now you need to tell your machines about your keyor apt-get will emit <code>W: GPG error: http://debianrepo etch Release: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY $KEYID</code>. To do this manually you can take the public.key you generated earlier and copy it to your machines and then run <code>apt-key add public.key</code></p>
+<p>
+Of course in this day and age doing things like that for all your machines wouldbe tedious so I use <a href="http://reductivelabs.com/products/puppet/">puppet</a> with a class something liek the following.</p>
+<pre>
+class aptkey {
+
+  file { "/etc/apt/public.key":
+    mode   => 440,
+    owner  => root,
+    group  => root,
+    source => [
+        "puppet://puppet/host/public.key",
+        "puppet://puppet/files/public.key"
+        ],
+  }
+  exec { "install-key":
+     command => "/usr/bin/apt-key add /etc/apt/public.key",
+     require => File["/etc/apt/public.key"],
+     unless  => "/usr/bin/apt-key list | /bin/grep -q 'firstname.lastname'";
+  }
+  exec { "key-update":
+     command => "/usr/bin/apt-get update",
+     require => Exec["install-key"],
+  }
+}
+</pre>
+
+

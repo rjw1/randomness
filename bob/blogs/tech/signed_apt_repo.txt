@@ -17,9 +17,9 @@ Date: 07 August 2009
 <li>Generate a release file - <code>apt-ftparchive -c apt-release.conf release dists/etch/ > dists/etch/Release</code></li>
 <li>Create a signed version - <code>gpg --sign -ba -o dists/etch/Release.gpg dists/etch/Release</code></li>
 </ul>
-Your repository is now secure. Now you need to tell your machines about your keyor apt-get will emit <code>W: GPG error: http://debianrepo etch Release: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY $KEYID</code>. To do this manually you can take the public.key you generated earlier and copy it to your machines and then run <code>apt-key add public.key</code></p>
+Your repository is now secure. Now you need to tell your machines about your key or apt-get will emit <pre>W: GPG error: http://debianrepo etch Release: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY $KEYID</pre>. To do this manually you can take the public.key you generated earlier and copy it to your machines and then run <code>apt-key add public.key</code></p>
 <p>
-Of course in this day and age doing things like that for all your machines wouldbe tedious so I use <a href="http://reductivelabs.com/products/puppet/">puppet</a> with a class something liek the following.</p>
+Of course in this day and age doing things like that for all your machines would be tedious so I use <a href="http://reductivelabs.com/products/puppet/">puppet</a> with a class something like the following.</p>
 <pre>
 class aptkey {
 

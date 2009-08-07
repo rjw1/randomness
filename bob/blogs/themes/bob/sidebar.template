@@ -1,13 +1,13 @@
 <div id="sidebar">
 Menu
 <ul>
-<li><a href="http://randomness.org.uk/">website</a>
-<li><a href="http://tech.randomness.org.uk">tech</a>
+<li><a href="http://randomness.org.uk/" rel="me" >website</a>
+<li><a href="http://tech.randomness.org.uk" rel="me" >tech</a>
 <li><a href="http://randomness.org.uk/wiki/">wiki</a>
-<li><a href="http://flickr.com/photos/rjw1/">flickr</a>
-<li><a href="http://del.icio.us/rjw1">del.icio.us</a>
-<li><a href="http://twitter.com/rjw1">twitter<a>
-<li><a href="http://rjw1.livejournal.com/">lj</a>
+<li><a href="http://flickr.com/photos/rjw1/" rel="me" >flickr</a>
+<li><a href="http://del.icio.us/rjw1" rel="me" > del.icio.us</a>
+<li><a href="http://twitter.com/rjw1" rel="me" >twitter<a>
+<li><a href="http://rjw1.livejournal.com/" rel="me" >lj</a>
 <li><a href="http://randomness.org.uk/bob.opml">opml</a>
 <li><a href="http://tech.randomness.org.uk/index.rss">feed</a>
 <li><a href="http://london.randomness.org.uk">Randomness Guide to London</a>

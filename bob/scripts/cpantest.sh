@@ -17,7 +17,7 @@ MODULE=`echo $1 | sed -e 's#http://search.cpan.org/CPAN/authors/id/##'`
 echo "Started $MODULE $STARTDATE"
 echo "Started $MODULE $STARTDATE" >> $HOME/cpantesting/history/tested
 # Perl versions available
-PERLVERS="5.8.8 5.10.0"
+PERLVERS="5.10.0 5.10.1-RC1 5.8.9"
 
 
 #Do testing

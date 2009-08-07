@@ -6,13 +6,14 @@
 mech-dump --links --absolute http://search.cpan.org/recent | grep "~" | ggrep -v -f $HOME/cpantesting/config/badmodules > $HOME/cpantesting/history/current
 
 # diff against a file called previous to get new modules 
-NEWMOD=`diff $HOME/cpantesting/history/previous $HOME/cpantesting/history/current | grep ">" | awk '{print $2}'`
+NEWMOD=`diff $HOME/cpantesting/history/previous $HOME/cpantesting/history/current | grep ">" | awk '{print $2}' | sort`
 NUMBER=`echo $NEWMOD | wc -w`
 STARTDATE=`date`
 echo "testing $NUMBER modules"
 echo "testing $NUMBER modules $STARTDATE" >> $HOME/cpantesting/history/autolog
 echo "testing $NEWMOD" >> $HOME/cpantesting/history/autolog
-
+# move current to previous before the for loop starts. Less likely to repeat modules this way.  
+mv $HOME/cpantesting/history/current $HOME/cpantesting/history/previous
 for modules in $NEWMOD
 do echo $modules 
 TARBALL=`mech-dump --links --absolute $modules |ggrep -e gz -e zip -e bz2 -m 1`
@@ -21,4 +22,3 @@ TARBALL=`mech-dump --links --absolute $modules |ggrep -e gz -e zip -e bz2 -m 1`
 done
 ENDDATE=`date`
 echo "tested $NUMBER modules $ENDDATE" >> $HOME/cpantesting/history/autolog
-mv $HOME/cpantesting/history/current $HOME/cpantesting/history/previous

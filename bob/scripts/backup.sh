@@ -8,3 +8,4 @@ done
 /opt/csw/bin/rsync  /export/home/bob/backups/london.sql.`/usr/bin/date +%Y%m%d`.gz hetzner.barnyard.co.uk:rglbackup/ 
 cp /export/home/bob/backups/london.sql.`/usr/bin/date +%Y%m%d`.gz /export/home/bob/web/vhosts/london.randomness.org.uk/dbdump/rgl.sql.gz
 cp /export/home/bob/backups/vienna.sql.`/usr/bin/date +%Y%m%d`.gz /export/home/bob/web/vhosts/vienna.openguides.org/dbdump/vienna.sql.gz
+find /export/home/bob/backups/ -mtime +7 -exec mv {} /export/home/bob/oldbackups/ \;

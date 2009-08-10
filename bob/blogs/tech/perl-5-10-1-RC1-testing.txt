@@ -1,0 +1,7 @@
+Title: Testing perl 5.10.1-RC1
+Tags: perl, testing, cpan, openguides, moose, catalyst
+Date: 10 August 2009
+<p>The first <a href="http://use.perl.org/articles/09/08/07/0910246.shtml">perl 5.10.1</a> release candidate was released the other day. As <a href="http://www.shadowcat.co.uk/blog/matt-s-trout/test-the-rc-test-the-rc-test-the-rc/">MST says</a> if you dont test it now and it breaks for you when its released its your fault. As a good <a href="http://www.cpantesters.org/">cpan tester</a> I've added it to my testing <a href="http://svn.randomness.org.uk/trunk/bob/scripts/cpantest.sh">setup</a>.</p>
+<p>Since I care about <a href="http://openguides.org/">OpenGuides</a> for the <a href="http://london.randomness.org.uk">Randomness Guide to London</a> I made sure to submit a <a href="http://www.nntp.perl.org/group/perl.cpan.testers/2009/08/msg4944870.html">test report</a> for <a href="http://www.cpantesters.org/distro/O/OpenGuides.html">it</a>.</p>
+<p>While I was doing this I also added perl 5.8.9 to my setup. I also changed my setup slightly by pre-installing <a href="http://www.iinteractive.com/moose/">Moose</a> and <a href="http://www.catalystframework.org/">Catalyst</a> since thats what all the cool perl programmers are using these days. Since installing and testing their dependency chains was burning a lot of cpu, time and bandwidth everytime a new module based on them was updated or added to <a href="http://search.cpan.org/">CPAN</a></p>
+

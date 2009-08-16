@@ -16,7 +16,7 @@ RewriteRule ^.*$ /holding.html [R=503,L]
 ErrorDocument 503 /holding.html
 </pre>
 
-</p>First turn on rewrite engine. Then the conditions for which the RewriteRule applies
+</p>First turn on the rewrite engine. Then the conditions for which the RewriteRule applies
 <ul>
 <li>Don't match an IP address. So you can see the site.</li>
 <li>Make sure holding.html exists</li>

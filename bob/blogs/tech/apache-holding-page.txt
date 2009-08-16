@@ -1,0 +1,32 @@
+Title: An Apache holding page with mod_rewrite
+Tags: apache, mod_rewrite, rgl, solaris, holding, cache, ddos
+Date: 16 August 2009
+<p>On Thursday the <a href="http://london.randomness.org.uk">Randomness Guide to London</a> was probably the target of a <a href="http://en.wikipedia.org/wiki/Denial-of-service_attack">ddos</a> attack. The machine it was hosted on went to load of about 60. Which is fine since its solaris. The main problem was when the machine exhausted its memory and started to swap. To mitigate this I dropped the number of concurrent connections apache allowed. The machine suffered less but the website became unusable because you were fighting to get a connection.</p>
+
+<p> Since I was in the <a href="http://london.randomness.org.uk/wiki.cgi?Bricklayer's_Arms,_SW15_1DD">pub</a> the other administrator of the <a href="http://london.randomness.org.uk">Randomness Guide to London</a> was renaming the CGIs so that load would drop and she could get on to it. When I got back I whipped up some mod_rewrite rules such that we could see the site but everyone else got a holding page. 10 minutes after this the ddos stopped. So it was a bit late. However a holding page is still a useful thing to have.</p>
+
+<p>The next morning I refined it a bit to be more intelligent and return a 503 which is the correct status code.</p>
+<pre>
+RewriteEngine On
+RewriteCond %{REMOTE_ADDR} !AAA.BBB.CCC.DDD
+RewriteCond %{DOCUMENT_ROOT}/holding.html -f
+RewriteCond %{DOCUMENT_ROOT}/holding.enable -f
+RewriteCond %{SCRIPT_FILENAME} !holding.html
+RewriteRule ^.*$ /holding.html [R=503,L]
+ErrorDocument 503 /holding.html
+</pre>
+
+</p>First turn on rewrite rules. Then the conditions for which the RewriteRule applies
+<ul>
+<li>Don't match an IP address. So you can see the site.</li>
+<li>Make sure holding.html exists</li>
+<li>Check for the existence of a file called holding.enable. This is the means by which you turn holding page on and off.</li>
+<li>Don't apply the rule when serving holding.html</li>
+</ul>
+Then the rule itself. Which basically redirects anything to the 503 error page. Which you then set as holding.html</p>
+<p>That's all you really need although at work I add an extra line to help stupid web caches not keep on showing the error page after the site is back. 
+<pre>
+Header Set Cache-Control "max-age=0, no-store"
+</pre>
+</p>
+

@@ -98,6 +98,12 @@
       </div>
       <label for="room">Has a bookable function room</label>
     </div>
+    <div class="criteria_search_checkbox_group" id="fire_group">
+      <div class="criteria_search_checkbox">
+        [% checkboxes.fire %]
+      </div>
+      <label for="fire">Has an open fire (when seasonally appropriate)</label>
+    </div>
     <div class="criteria_search_checkbox_group" id="river_group">
       <div class="criteria_search_checkbox">
         [% checkboxes.river %]

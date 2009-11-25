@@ -39,6 +39,7 @@ my %all_criteria = (
                      room      => "function room",
                      pool      => "pool table",
                      river     => "river view",
+                     fire      => "open fire",
                      step_free => "step-free access",
                      accessible_loo => "accessible toilet",
                      quiz      => "pub quiz",

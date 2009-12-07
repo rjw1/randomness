@@ -14,6 +14,9 @@ PATH=/opt/SUNWspro/bin:$PATH
 # remove search.cpan stuff for input. has the side effect that just a modulename will also work. 
 # normal input should be a download link for the module.
 MODULE=`echo $1 | sed -e 's#http://search.cpan.org/CPAN/authors/id/##'`
+if [ -n "$MODULE" ]
+then
+ 
 echo "Started $MODULE $STARTDATE"
 echo "Started $MODULE $STARTDATE" >> $HOME/cpantesting/history/tested
 # Perl versions available
@@ -36,3 +39,8 @@ done
 FINISHDATE=`date`
 echo "Finished $MODULE $FINISHDATE"
 echo "Finished $MODULE $FINISHDATE" >> $HOME/cpantesting/history/tested
+else
+echo "no module $1"
+echo "no module $1" >> $HOME/cpantesting/history/tested
+fi
+

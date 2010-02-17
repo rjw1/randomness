@@ -6,6 +6,7 @@
   [% INCLUDE navbar_locales.tt %]
   [% INCLUDE navbar_tools.tt %]
   [% INCLUDE navbar_help.tt %]
+  [% INCLUDE navbar_admin.tt %]
   [% INCLUDE navbar_this_page.tt %]
   [% INCLUDE navbar_options.tt %]
   [% INCLUDE navbar_revision_info.tt %]

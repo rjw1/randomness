@@ -46,7 +46,9 @@ locales.size > 0 %][% FOREACH locale = locales %][% locale.name %][%-
           type="application/opensearchdescription+xml"
           title="Search the site '[% site_name %]'"
           href="[% full_cgi_url %]?action=about;format=opensearch"  />
-  [% IF node_param AND current %]
+  [% IF node_name == 'Young Bean, EC2Y 5EL' AND current %]
+    <link rel="canonical" href="[% full_cgi_url %]?Young_Bean%2C_EC2V_5VS" />
+  [% ELSIF node_param AND current %]
     <link rel="canonical" href="[% full_cgi_url %]?[% node_param %]" />
   [% END %]
   [% IF deter_robots %]

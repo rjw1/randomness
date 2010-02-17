@@ -26,15 +26,15 @@
             at some point.  It is very unlikely to be left there forever
             exactly as you wrote it.</li>
         <li>If the purpose of your comment is to tell the world how much you
-            hate this establishment, you're probably better off commenting
-            somewhere else <small>(some suggestions:
+            hate (or love) this establishment, you're probably better off
+            commenting somewhere else <small>(some suggestions:
             [<a href="http://www.beerintheevening.com/">1</a>]
             [<a href="http://www.london-eating.co.uk/">2</a>]
             [<a href="http://www.qype.co.uk/">3</a>]
             [<a href="http://trustedplaces.com/">4</a>]
             [<a href="http://www.welovelocal.com/">5</a>]
             [<a href="http://www.yelp.co.uk/">6</a>])</small>.
-            We're not here to provide a soapbox to the world, and we're very
+            We're not a UGC (user-generated content) site, and we're very
             likely to just delete comments that contain no (or very little)
             objective factual information.</li>
         <li>If you're reporting a factual mistake on this page, please let us
@@ -48,19 +48,19 @@
     </p>
 
     <p>
-      <label for="username">
+      <label for="emanresu">
         Your username (<a href="[% script_url %]preferences.cgi">set it</a>):
         <br />
       </label>
-      <input type="text" size="30" name="username" id="username"
+      <input type="text" size="30" name="emanresu" id="emanresu"
        value="[% username %]" />
     </p>
 
     <p>
-      <label for="comment">
+      <label for="tnemmoc">
         Your comment:<br />
       </label>
-      <textarea name="comment" id="comment" rows="5" cols="50"></textarea>
+      <textarea name="tnemmoc" id="tnemmoc" rows="5" cols="50"></textarea>
     </p>
 
     <input type="hidden" name="id" value="[% node_name %]" />

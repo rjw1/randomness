@@ -220,13 +220,14 @@ while ( my ( $name, $this_locale, $this_category, $content,
                  address => CGI->escapeHTML( $address),
                  url  => $base_url . $param,
                };
-    if ( defined $this_lat && defined $this_long ) {
+    if ( $show_map && defined $this_lat && defined $this_long ) {
         ( $this_long, $this_lat ) = OpenGuides::Utils->get_wgs84_coords(
                                         latitude  => $this_lat,
                                         longitude => $this_long,
                                         config    => $config );
         $this->{lat} = $this_lat;
         $this->{long} = $this_long;
+        $this->{markertype} = "large_light_red";
         if ( !$bd_set ) {
             $min_lat = $max_lat = $this_lat;
             $min_long = $max_long = $this_long;
@@ -248,12 +249,6 @@ while ( my ( $name, $this_locale, $this_category, $content,
     }
     $results{$name} = $this;
 }
-
-%tt_vars = ( %tt_vars,
-             min_lat  => $min_lat,
-             max_lat  => $max_lat,
-             min_long => $min_long,
-             max_long => $max_long );
 
 my $any_string = " -- any -- ";
 
@@ -318,9 +313,13 @@ if ( $show_map ) {
                  enable_gmaps        => 1,
                  display_google_maps => 1,
                  show_map            => 1,
-                 lat                 => $config->centre_lat,
-                 long                => $config->centre_long,
-                 zoom                => $config->default_gmaps_zoom,
+                 exclude_navbar      => 1,
+                 min_lat             => $min_lat,
+                 max_lat             => $max_lat,
+                 min_long            => $min_long,
+                 max_long            => $max_long,
+                 lat                 => ( $min_lat + $max_lat ) / 2,
+                 long                => ( $min_long + $max_long ) / 2,
                  total_count         => $total_count,
                );
 }

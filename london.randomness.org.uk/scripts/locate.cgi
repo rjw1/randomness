@@ -36,9 +36,9 @@ if ( $q->param( "do_search" ) ) {
   my $large_pointers = $q->param( "large_pointers" ) || 0;
   my $show_map = $q->param( "show_map" );
 
-  if ( !$cat || !$loc ) {
-    my $mess = "Sorry!  You need to choose a locale and a category for "
-               . "this search to work.";
+  if ( !$cat && !$loc ) {
+    my $mess = "Sorry!  You need to choose a locale or a category (or both ) "
+               . "for this search to work.";
     $tt_vars{error_message} = $mess;
   } else {
     $tt_vars{do_search} = 1;
@@ -51,17 +51,24 @@ if ( $q->param( "do_search" ) ) {
     my $sql = "
       SELECT DISTINCT node.id, node.name, mlat.metadata_value as lat,
                  mlong.metadata_value as long
-      FROM node
+      FROM node";
+    if ( $cat ) {
+      $sql .= "
       INNER JOIN metadata as mcat
         ON ( node.id=mcat.node_id
              AND node.version=mcat.version
              AND lower(mcat.metadata_type)='category'
-             AND lower(mcat.metadata_value)=? )
+             AND lower(mcat.metadata_value)=? )";
+    }
+    if ( $loc ) {
+      $sql .= "
       INNER JOIN metadata as mloc
         ON ( node.id=mloc.node_id
              AND node.version=mloc.version
              AND lower(mloc.metadata_type)='locale'
-             AND lower(mloc.metadata_value)=? )
+             AND lower(mloc.metadata_value)=? )";
+    }
+    $sql .= "
       INNER JOIN metadata as mlat
         ON ( node.id=mlat.node_id
              AND node.version=mlat.version
@@ -82,7 +89,13 @@ if ( $q->param( "do_search" ) ) {
     my @results;
     my ( $min_lat, $max_lat, $min_long, $max_long, $bd_set );
     my $sth = $dbh->prepare( $sql );
-    $sth->execute( lc( $cat ), lc( $loc ) ) or die $dbh->errstr;
+    if ( $cat && $loc ) {
+      $sth->execute( lc( $cat ), lc( $loc ) ) or die $dbh->errstr;
+    } elsif ( $cat ) {
+      $sth->execute( lc( $cat ) ) or die $dbh->errstr;
+    } elsif ( $loc ) {
+      $sth->execute( lc( $loc ) ) or die $dbh->errstr;
+    }
     while ( my ( $id, $name, $lat, $long ) = $sth->fetchrow_array ) {
       my $url = $base_url . "?" . $formatter->node_name_to_node_param( $name );
       if ( $show_map ) {

@@ -95,7 +95,8 @@ my $sql = "
 SELECT DISTINCT
        node.name, locale.metadata_value, category.metadata_value, node.text,
        x.metadata_value, y.metadata_value,
-       latit.metadata_value, longit.metadata_value
+       latit.metadata_value, longit.metadata_value,
+       address.metadata_value
 FROM node
 LEFT JOIN metadata as img
   ON ( node.id = img.node_id
@@ -132,6 +133,11 @@ LEFT JOIN metadata as longit
        AND node.version = longit.version
        AND lower( longit.metadata_type ) = 'longitude'
      )
+LEFT JOIN metadata as address
+  ON ( node.id = address.node_id
+       AND node.version = address.version
+       AND lower( address.metadata_type ) = 'address'
+     )
 WHERE img.metadata_value IS NULL
 ";
 
@@ -152,9 +158,10 @@ my %categories;
 my %results;
 my $base_url = $config->script_url . $config->script_name . "?";
 my $total_count; # Everything with missing photo even if not on map.
+my ( $min_lat, $max_lat, $min_long, $max_long, $bd_set );
 
 while ( my ( $name, $this_locale, $this_category, $content,
-             $this_x, $this_y, $this_lat, $this_long)
+             $this_x, $this_y, $this_lat, $this_long, $address)
                                                      = $sth->fetchrow_array ) {
     # If this is a redirect it doesn't count at all.
     if ( $content =~ qr/^\s*#REDIRECT/ ) {
@@ -210,6 +217,7 @@ while ( my ( $name, $this_locale, $this_category, $content,
     my $param = $formatter->node_name_to_node_param( $name );
     my $this = {
                  name => CGI->escapeHTML( $name ),
+                 address => CGI->escapeHTML( $address),
                  url  => $base_url . $param,
                };
     if ( defined $this_lat && defined $this_long ) {
@@ -219,9 +227,33 @@ while ( my ( $name, $this_locale, $this_category, $content,
                                         config    => $config );
         $this->{lat} = $this_lat;
         $this->{long} = $this_long;
+        if ( !$bd_set ) {
+            $min_lat = $max_lat = $this_lat;
+            $min_long = $max_long = $this_long;
+            $bd_set = 1;
+        } else {
+            if ( $this_lat < $min_lat ) {
+                $min_lat = $this_lat;
+            }
+            if ( $this_long < $min_long ) {
+                $min_long = $this_long;
+            }
+            if ( $this_lat > $max_lat ) {
+                $max_lat = $this_lat;
+            }
+            if ( $this_long > $max_long ) {
+                $max_long = $this_long;
+            }
+        }
     }
     $results{$name} = $this;
 }
+
+%tt_vars = ( %tt_vars,
+             min_lat  => $min_lat,
+             max_lat  => $max_lat,
+             min_long => $min_long,
+             max_long => $max_long );
 
 my $any_string = " -- any -- ";
 

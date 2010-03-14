@@ -80,6 +80,7 @@ if ( $q->param( "do_search" ) ) {
     }
 
     my @results;
+    my ( $min_lat, $max_lat, $min_long, $max_long, $bd_set );
     my $sth = $dbh->prepare( $sql );
     $sth->execute( lc( $cat ), lc( $loc ) ) or die $dbh->errstr;
     while ( my ( $id, $name, $lat, $long ) = $sth->fetchrow_array ) {
@@ -93,6 +94,24 @@ if ( $q->param( "do_search" ) ) {
       }
       push @results, { id => $id, name => $name, url => $url,
                        lat => $lat, long => $long, markertype => $markertype };
+      if ( !$bd_set ) {
+        $min_lat = $max_lat = $lat;
+        $min_long = $max_long = $long;
+        $bd_set = 1;
+      } else {
+        if ( $lat < $min_lat ) {
+          $min_lat = $lat;
+        }
+        if ( $long < $min_long ) {
+          $min_long = $long;
+        }
+        if ( $lat > $max_lat ) {
+          $max_lat = $lat;
+        }
+        if ( $long > $max_long ) {
+          $max_long = $long;
+        }
+      }
     }
 
     $tt_vars{results} = \@results;
@@ -100,13 +119,16 @@ if ( $q->param( "do_search" ) ) {
     if ( $show_map ) {
       %tt_vars = (
                    %tt_vars,
+                   min_lat             => $min_lat,
+                   max_lat             => $max_lat,
+                   min_long            => $min_long,
+                   max_long            => $max_long,
                    exclude_navbar      => 1,
                    enable_gmaps        => 1,
                    display_google_maps => 1,
                    show_map            => 1,
-                   lat                 => $config->centre_lat,
-                   long                => $config->centre_long,
-                   zoom                => $config->default_gmaps_zoom,
+                   lat                 => ( $min_lat + $max_lat ) / 2,
+                   long                => ( $min_long + $max_long ) / 2,
                  );
     }
   }

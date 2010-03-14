@@ -99,6 +99,13 @@ if ( $q->param( "do_search" ) ) {
     $sth->execute( lc( $cat1 ) ) or die $dbh->errstr;
     while ( my ( $id, $name, $x, $y, $lat, $long ) = $sth->fetchrow_array ) {
       my $url = $base_url . "?" . $formatter->node_name_to_node_param( $name );
+      if ( $show_map ) {
+        # I still hate that I have to do this.
+        ( $long, $lat ) = OpenGuides::Utils->get_wgs84_coords(
+                                        latitude  => $lat,
+                                        longitude => $long,
+                                        config    => $config );
+      }
       push @cat1stuff, { id => $id, name => $name, url => $url,
                          x => $x, y => $y, lat => $lat, long => $long };
     }
@@ -110,6 +117,13 @@ if ( $q->param( "do_search" ) ) {
     }
     while ( my ( $id, $name, $x, $y, $lat, $long ) = $sth->fetchrow_array ) {
       my $url = $base_url . "?" . $formatter->node_name_to_node_param( $name );
+      if ( $show_map ) {
+        # I still hate that I have to do this.
+        ( $long, $lat ) = OpenGuides::Utils->get_wgs84_coords(
+                                        latitude  => $lat,
+                                        longitude => $long,
+                                        config    => $config );
+      }
       push @cat2stuff, { id => $id, name => $name, url => $url,
                          x => $x, y => $y, lat => $lat, long => $long };
     }
@@ -121,11 +135,9 @@ if ( $q->param( "do_search" ) ) {
                    enable_gmaps        => 1,
                    display_google_maps => 1,
                    show_map            => 1,
-                   lat                 => $config->centre_lat,
-                   long                => $config->centre_long,
-                   zoom                => $config->default_gmaps_zoom,
                  );
       my ( %origin_results, %end_results );
+      my ( $min_lat, $max_lat, $min_long, $max_long, $bd_set );
       foreach my $origin ( @cat1stuff ) {
         foreach my $end ( @cat2stuff ) {
           my $thisdist = int( sqrt(   ( $origin->{x} - $end->{x} )**2
@@ -143,6 +155,7 @@ if ( $q->param( "do_search" ) ) {
       }
 
       my @results;
+      my ( $min_lat, $max_lat, $min_long, $max_long, $bd_set );
       my $markertype;
       if ( $large_pointers ) {
         $markertype = "large_light_red";
@@ -156,6 +169,26 @@ if ( $q->param( "do_search" ) ) {
                          type       => "origin",
                          markertype => $markertype,
                        };
+        my $lat = $res->{lat};
+        my $long = $res->{long};
+        if ( !$bd_set ) {
+          $min_lat = $max_lat = $lat;
+          $min_long = $max_long = $long;
+          $bd_set = 1;
+        } else {
+          if ( $lat < $min_lat ) {
+            $min_lat = $lat;
+          }
+          if ( $long < $min_long ) {
+            $min_long = $long;
+          }
+          if ( $lat > $max_lat ) {
+            $max_lat = $lat;
+          }
+          if ( $long > $max_long ) {
+            $max_long = $long;
+          }
+        }
       }
 
       if ( $large_pointers ) {
@@ -174,18 +207,36 @@ if ( $q->param( "do_search" ) ) {
                            markertype => $markertype,
                          };
         }
+        my $lat = $res->{lat};
+        my $long = $res->{long};
+        if ( !$bd_set ) {
+          $min_lat = $max_lat = $lat;
+          $min_long = $max_long = $long;
+          $bd_set = 1;
+        } else {
+          if ( $lat < $min_lat ) {
+            $min_lat = $lat;
+          }
+          if ( $long < $min_long ) {
+            $min_long = $long;
+          }
+          if ( $lat > $max_lat ) {
+            $max_lat = $lat;
+          }
+          if ( $long > $max_long ) {
+            $max_long = $long;
+          }
+        }
       }
-
-      # I hate that I have to do this.  Hate it, hate it.
-      foreach my $res ( @results ) {
-        my ( $long, $lat ) = OpenGuides::Utils->get_wgs84_coords(
-                                        latitude  => $res->{lat},
-                                        longitude => $res->{long},
-                                        config    => $config );
-        $res->{lat} = $lat;
-        $res->{long} = $long;
-      }
-      $tt_vars{results} = \@results;
+      %tt_vars = ( %tt_vars,
+                   results  => \@results,
+                   min_lat  => $min_lat,
+                   max_lat  => $max_lat,
+                   min_long => $min_long,
+                   max_long => $max_long,
+                   lat      => ( $min_lat + $max_lat ) / 2,
+                   long     => ( $min_long + $max_long ) / 2,
+                 );
     } else {
       my @results;
       foreach my $origin ( @cat1stuff ) {

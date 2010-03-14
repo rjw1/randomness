@@ -37,7 +37,9 @@ if ( $q->param( "do_search" ) ) {
   my $show_map = $q->param( "show_map" );
 
   if ( !$cat || !$loc ) {
-    $tt_vars{error_message} = "Must supply both locale and category.";
+    my $mess = "Sorry!  You need to choose a locale and a category for "
+               . "this search to work.";
+    $tt_vars{error_message} = $mess;
   } else {
     $tt_vars{do_search} = 1;
     $tt_vars{cat} = $cat;
@@ -94,7 +96,6 @@ if ( $q->param( "do_search" ) ) {
     }
 
     $tt_vars{results} = \@results;
-    $tt_vars{addon_title} = "Locale/Category Search";
 
     if ( $show_map ) {
       %tt_vars = (
@@ -111,6 +112,7 @@ if ( $q->param( "do_search" ) ) {
   }
 }
 
+$tt_vars{addon_title} = "Locale/Category Search";
 print $q->header;
 my $custom_template_path = $config->custom_template_path || "";
 my $template_path = $config->template_path;

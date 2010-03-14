@@ -17,7 +17,7 @@
 
 [% IF show_search_example %]
   <div class="category_search_example">
-      Example search: (todo)
+      Example search: <a href="http://london.randomness.org.uk/scripts/locate.cgi?cat=Cafes&loc=Fitzrovia&show_map=1&large_pointers=1&do_search=1">cafes in Fitzrovia</a>
   </div>
 [% END %]
 
@@ -26,11 +26,11 @@
 [% END %]
 
 [% IF do_search %]
+  <h3>[% cat %] in [% loc %]:</h3>
   [% IF results.size %]
     [% IF show_map %]
       [% INCLUDE search_result_map.tt %]
     [% ELSE %]
-      <h3>[% cat %] in [% loc %]:</h3>
       <ul>
         [% FOREACH result = results %]
           <li>

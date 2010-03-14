@@ -16,18 +16,24 @@
 
   </ul>
 
-  <table width="100%" height="100%">
-    <tr>
-      <td><div id="map" style=" width: 75%; height: 600px"></div></td>
-    </tr>
-  </table>
+  <div id="map" style="float: left; width: 75%; height: 600px"></div>
 
   <script defer="defer" type="text/javascript">
     //<![CDATA[
-      var map = new GMap( document.getElementById( "map" ) );
+      var map = new GMap2( document.getElementById( "map" ) );
+      map.setCenter( new GLatLng( [% lat %], [% long %] ) );
       map.addControl( new GLargeMapControl() );
       map.addControl( new GMapTypeControl() );
-      map.centerAndZoom( new GPoint( [% long %], [% lat %] ), [% zoom %] );
+      var zoom = map.getBoundsZoomLevel(
+        new GLatLngBounds(
+          new GLatLng( [% min_lat %], [% min_long %] ),
+          new GLatLng( [% max_lat %], [% max_long %] )
+        )
+      );
+      if ( zoom > 15 ) {
+        zoom = 15;
+      }
+      map.setZoom( zoom );
 
       [% IF map_type == "satellite" %]
         map.setMapType( G_SATELLITE_TYPE );
@@ -38,7 +44,7 @@
       [% i = 0 %]
       [% FOREACH node = results %]
         [% i = i + 1 %]
-        var point[% i %] = new GPoint( [% node.long %], [% node.lat %] );
+        var point[% i %] = new GLatLng( [% node.lat %], [% node.long %] );
         [% IF node.markertype %]
           if ( gmapIcons[ '[% node.markertype %]' ] ) {
             var marker[% i %] = new GMarker( point[% i %], gmapIcons.[% node.markertype %] );

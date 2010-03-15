@@ -1,6 +1,6 @@
 #!/bin/bash
 # script to check the health of services being load balanced by ipvs
-# intended to be run as a nagios check. needs sudo access
+# intended to be run as a nagios check under nrpe. needs sudo access
 
 # options to set port and ip
 while getopts "i:f:p:t:r:h" option

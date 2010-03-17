@@ -10,14 +10,13 @@
 <form action="[% self_url %]" method="GET">
   <p>Find me things in category [% catbox %] located in [% locbox %].</p>
   <p>[% show_map_box %] Show them on a map<br />
-     [% large_pointers_box %] (use larger map markers)</p>
-      <input type="hidden" name="do_search" value="1">
+     [% small_pointers_box %] (use smaller map markers)</p>
       <input type="submit" name="Search" value="Search" class="form_button">
 </form>
 
 [% IF show_search_example %]
   <div class="category_search_example">
-      Example search: <a href="http://london.randomness.org.uk/scripts/locate.cgi?cat=Cafes&loc=Fitzrovia&show_map=1&large_pointers=1&do_search=1">cafes in Fitzrovia</a>
+      Example search: <a href="http://london.randomness.org.uk/scripts/locate.cgi?cat=Cafes&loc=Fitzrovia&map=1">cafes in Fitzrovia</a>
   </div>
 [% END %]
 

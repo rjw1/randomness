@@ -24,22 +24,23 @@ my %tt_vars = RGL::Addons->get_tt_vars( config => $config );
 
 my $q = CGI->new;
 
-if ( !$q->param( "do_search" ) ) {
-    $tt_vars{show_search_example} = 1;
-}
 $tt_vars{self_url} = $q->url( -relative );
+$tt_vars{show_search_example} = 1;
 setup_form_fields();
 
-if ( $q->param( "do_search" ) ) {
-  my $cat = $q->param( "cat" );
-  my $loc = $q->param( "loc" );
+my $do_search = $q->param( "do_search" );
+my $cat = $q->param( "cat" );
+my $loc = $q->param( "loc" );
+
+if ( $do_search && !$cat && !$loc ) {
+  $tt_vars{error_message} = "Sorry!  You need to choose a locale or a "
+    . "category (or both) for this search to work.";
+} elsif ( $do_search || $cat || $loc ) {
+  $tt_vars{show_search_example} = 0;
   my $large_pointers = $q->param( "large_pointers" ) || 0;
   my $show_map = $q->param( "show_map" );
 
   if ( !$cat && !$loc ) {
-    my $mess = "Sorry!  You need to choose a locale or a category (or both ) "
-               . "for this search to work.";
-    $tt_vars{error_message} = $mess;
   } else {
     $tt_vars{do_search} = 1;
     $tt_vars{cat} = $cat;

@@ -28,7 +28,7 @@ $tt_vars{self_url} = $q->url( -relative );
 $tt_vars{show_search_example} = 1;
 setup_form_fields();
 
-my $do_search = $q->param( "do_search" );
+my $do_search = $q->param( "Search" );
 my $cat = $q->param( "cat" );
 my $loc = $q->param( "loc" );
 
@@ -37,8 +37,8 @@ if ( $do_search && !$cat && !$loc ) {
     . "category (or both) for this search to work.";
 } elsif ( $do_search || $cat || $loc ) {
   $tt_vars{show_search_example} = 0;
-  my $large_pointers = $q->param( "large_pointers" ) || 0;
-  my $show_map = $q->param( "show_map" );
+  my $small_pointers = $q->param( "small_pointers" ) || 0;
+  my $show_map = $q->param( "map" );
 
   if ( !$cat && !$loc ) {
   } else {
@@ -81,10 +81,10 @@ if ( $do_search && !$cat && !$loc ) {
       ORDER BY node.name";
 
     my $markertype;
-    if ( $large_pointers ) {
-      $markertype = "large_light_red";
-    } else {
+    if ( $small_pointers ) {
       $markertype = "small_light_red";
+    } else {
+      $markertype = "large_light_red";
     }
 
     my @results;
@@ -186,8 +186,8 @@ sub setup_form_fields {
                                              map { $_ => $_ } @locales }
                               );
 
-  $tt_vars{show_map_box} = $q->checkbox( -name => "show_map",
-                                                 -value => 1, label => "" );
-  $tt_vars{large_pointers_box} = $q->checkbox( -name => "large_pointers",
-                                                 -value => 1, label => "" );
+  $tt_vars{show_map_box} = $q->checkbox( -name => "map",
+                                         -value => 1, label => "" );
+  $tt_vars{small_pointers_box} = $q->checkbox( -name => "small_pointers",
+                                               -value => 1, label => "" );
 }

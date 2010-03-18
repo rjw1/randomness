@@ -54,7 +54,7 @@
         [% ELSE %]
           var marker[% i %] = new GMarker( point[% i %], gmapIcons.default );
         [% END %]
-        var htmlString[% i %] = "<a href=\"[% node.url %]\">[% CGI.escapeHTML( node.name ) %]</a>";
+        var htmlString[% i %] = "<a href=\"[% node.url %]\">[% CGI.escapeHTML( node.name ) %]</a><br>[% node.address %]";
         GEvent.addListener( marker[% i %], "click",
           function() { 
             marker[% i %].openInfoWindowHtml( htmlString[% i %] );

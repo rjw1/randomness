@@ -47,6 +47,10 @@ if ( $do_search && !$cat && !$loc ) {
     $tt_vars{loc} = $loc;
 
     my $base_url = $config->script_url . $config->script_name;
+    $tt_vars{cat_link} = $base_url . "?" . $formatter->node_name_to_node_param(
+                         "Category " . $cat );
+    $tt_vars{loc_link} = $base_url . "?" . $formatter->node_name_to_node_param(
+                         "Locale " . $loc );
 
     my $dbh = $wiki->store->dbh;
     my $sql = "

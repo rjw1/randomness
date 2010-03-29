@@ -156,19 +156,21 @@ my $tt = Template->new( { INCLUDE_PATH => ".:$custom_template_path:$template_pat
 $tt->process( "locate.tt", \%tt_vars );
 
 sub setup_form_fields {
-  my $any_string = " -- choose -- ";
-
   my @categories = $wiki->list_nodes_by_metadata(
     metadata_type  => "category",
     metadata_value => "category",
     ignore_case    => 1,
   );
   @categories = map { s/^Category //; $_; } @categories;
-  @categories = sort( @categories );
+  my %tmphash = map { $_ => 1 } @categories;
+  for my $key ( ( "Breweries", "Category", "Drink", "Food", "Locales", "Meta", "Now Closed", "Postal Districts", "Pub Chains", "Pub Crawls", "Streets", "Travel", "Wifi" ) ) {
+    delete $tmphash{ $key };
+  }
+  @categories = sort( keys %tmphash );
 
   $tt_vars{catbox} = $q->popup_menu( -name   => "cat",
                                 -values => [ "", @categories ],
-                                -labels => { "" => $any_string,
+                                -labels => { "" => " -- anything -- ",
                                              map { $_ => $_ } @categories }
                               );
 
@@ -182,7 +184,7 @@ sub setup_form_fields {
 
   $tt_vars{locbox} = $q->popup_menu( -name   => "loc",
                                 -values => [ "", @locales ],
-                                -labels => { "" => $any_string,
+                                -labels => { "" => " -- anywhere -- ",
                                              map { $_ => $_ } @locales }
                               );
 

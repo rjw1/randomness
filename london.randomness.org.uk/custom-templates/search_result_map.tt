@@ -30,8 +30,8 @@
           new GLatLng( [% max_lat %], [% max_long %] )
         )
       );
-      if ( zoom > 15 ) {
-        zoom = 15;
+      if ( zoom > 16 ) {
+        zoom = 16;
       }
       map.setZoom( zoom );
 

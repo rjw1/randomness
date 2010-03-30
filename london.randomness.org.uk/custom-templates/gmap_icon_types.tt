@@ -1,7 +1,7 @@
     <script defer="defer" type="text/javascript">                         
       //<![CDATA[ 
-        var gmapIcons = new Object();
-        var types = new Array( 'default', 'small_light_red', 'small_dark_blue', 'large_light_red', 'large_light_blue' );
+        var gmapIcons = {};
+        var types = [ 'default_icon', 'small_light_red', 'small_dark_blue', 'large_light_red', 'large_light_blue' ];
 
         for ( var i=0; i < types.length; i++ ) {
           var type = types[i];

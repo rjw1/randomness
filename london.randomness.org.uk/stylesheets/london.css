@@ -28,7 +28,6 @@ div#body_wrapper {
   margin-right: 5%;
   margin-top: 1.5em;
   padding-top: -1.4em;
-  //border: 1px solid #595A38;
   border: 1px solid black;
 }
 
@@ -42,7 +41,6 @@ div#body_wrapper {
 #banner h1 {
   padding-top: 0.5em;
   padding-left: 0.5em;
-  //font-size: 0.8em;
 }
 
 #banner a {
@@ -58,14 +56,9 @@ div#redirect_message {
   display: none;
 }
 
-#content {
-  //padding: 1em;
-}
-
 #maincontent {
   float: left;
   width: 70%;
-  //margin-top: -1em;
   padding-left: 1em;
 }
 
@@ -102,8 +95,6 @@ div.summary_bar_link {
   color: black;
   background: #F1C969;
   width: 25%;
-  //margin-right: -1em;
-  //margin-top: -1.0em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   border-left: 1px dotted #595A38;
@@ -244,19 +235,12 @@ div#node_image_copyright a {
 {
 }
 
-/* The name of a node */
-div#node_title {
-#  padding: 2em 0.5em 0.5em 0.5em;
-}
-
 h2.node_name {
   color: #A0410D;
   font-style: italic;
   font-size: 1.2em;
   padding-top: 0.5em;
   margin-bottom: 0.2em;
-#  margin-left: -0.5em;
-#  display: inline;
 }
 
 div#title_edit_link, div#title_comment_link {
@@ -306,7 +290,6 @@ div#metadata ul li span.metadata_label {
   padding: 0.8em;
   font-size: 0.8em;
   border: 1px dotted #3A3B22;
- // margin-left: -3px;
 }
 
 #location_stuff select {
@@ -349,7 +332,6 @@ div#journeyplanner_link {
   font-size: smaller;
   text-align: right;
   padding-right: 1em;
-  //border-top: 1px dotted #595A38;
 }
 
 /* The delete-this-page link in the footer */

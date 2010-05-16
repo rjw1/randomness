@@ -1,0 +1,15 @@
+
+[% template.name %]
+
+<table>
+ [% FOREACH pub IN pubs -%]
+      <tr>
+        <td><a href="http://london.randomness.org.uk/wiki.cgi?[% pub.name | replace('\s+', '_') %]">[% pub.name %]</a></td>
+        <td>[% IF pub.visited %]yes[% ELSE %] no [% END %]</td>
+	<td> [% pub.id %]</td>
+	<td> [% pub.year_count | html %]</td>
+	<td> [% pub.year_list | html %]</td>
+
+      </tr>
+    [% END -%]
+</table>

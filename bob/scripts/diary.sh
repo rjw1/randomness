@@ -1,5 +1,6 @@
 #!/bin/bash
 # script to generate my diary in html 
+# to be run on nebula
 
 # quiety update the svn directory
 svn up -q /export/home/bob/web/vhosts/randomness.org.uk/diary/

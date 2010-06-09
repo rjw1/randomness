@@ -29,7 +29,7 @@ echo "nothing to do"
 exit 0
 elif  [[ $SVNOUTPUT =~ "warning" ]]
 then
-echo "not a workign copy"
+echo "not a working copy"
 exit 3
 elif   [[ $SVNOUTPUT =~ ^M ]]
 then

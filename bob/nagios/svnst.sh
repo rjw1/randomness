@@ -35,7 +35,7 @@ elif   [[ $SVNOUTPUT =~ ^M ]]
 then
 echo "files modified"
 exit 1
-elif [[ $SVNOUTPUT =~ ^\? ]]
+elif [[ $SVNOUTPUT =~ "^\?" ]]
 then 
 echo "files to add"
 exit 1
@@ -43,7 +43,7 @@ elif [[ $SVNOUTPUT =~ ^A ]]
 then 
 echo "files to add"
 exit 1
-elif [[ $SVNOUTPUT =~ ^\! ]]
+elif [[ $SVNOUTPUT =~ "^\!" ]]
 then 
 echo "files missing"
 exit 1

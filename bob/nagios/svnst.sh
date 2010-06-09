@@ -21,34 +21,34 @@ then
   exit 3
 fi
 
+SVNOUTPUT=`svn st $DIRTOCHECK 2>&1`
 
-
-if [[ `svn st $DIRTOCHECK 2>&1`  = "" ]]
+if [[ $SVNOUTPUT  = "" ]]
 then
 echo "nothing to do"
 exit 0
-elif svn st $DIRTOCHECK 2>&1 | grep -q "warning" 
+elif  [[ $SVNOUTPUT =~ "warning" ]]
 then
 echo "not a workign copy"
 exit 3
-elif  svn st $DIRTOCHECK | grep -q "M" 
+elif   [[ $SVNOUTPUT =~ ^M ]]
 then
 echo "files modified"
 exit 1
-elif svn st $DIRTOCHECK | grep -q "?" 
+elif [[ $SVNOUTPUT =~ ^\? ]]
 then 
 echo "files to add"
 exit 1
-elif svn st $DIRTOCHECK | grep -q "A"
+elif [[ $SVNOUTPUT =~ ^A ]]
 then 
 echo "files to add"
 exit 1
-elif svn st $DIRTOCHECK | grep -q "!"
+elif [[ $SVNOUTPUT =~ ^\! ]]
 then 
 echo "files missing"
 exit 1
 else
-echo "not and expected result"
+echo "not an expected result"
 exit 3
 fi
 

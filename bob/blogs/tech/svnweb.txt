@@ -1,6 +1,7 @@
 Title: SVN::Web for my repository
 Tags: svn, web, perl, rss, email
 Date: 08 January 2008
+
 <p>I've had a <a href="http://svn.randomness.org.uk/">svn repo</a> for a while. Today I installed <a href="http://search.cpan.org/dist/SVN-Web/">SVN::Web</a> which gives a useful web interface to it. For example you can see other revisions than the current one. <a href="http://svnweb.randomness.org.uk/index.cgi/randomness/">My Repository</a> via SVN::Web.</p>
 <p> One reason why i did this is that it gives a <a href="http://svnweb.randomness.org.uk/index.cgi/randomness/rss">RSS feed</a> of the revision log. This means I can use <a href="http://rssfwd.com/">RSS FWD</a> to get commit messages in my email without having to mess with commit hooks.</p>
 

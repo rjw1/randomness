@@ -1,6 +1,7 @@
 Title: Multiple Hearbeats
 Tags: ha, heartbeat, tip
 Date: 30 March 2007
+
         <p>If you are running more than one <a href="http://www.linux-ha.org/HeartbeatProgram">heartbeat
 </a>
 cluster on a network segment do make sure that your udpport is

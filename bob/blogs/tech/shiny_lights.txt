@@ -1,6 +1,7 @@
 Title: Ooo Shiny Lights
 Tags: drbd, ha, heartbeat, shiny
 Date: 31 July 2006
+
 <p> I was sitting in a datacentre in the arse end of nowhere the other day waiting for a machine to boot when I noticed that 4 drives were flashing their activity lights at the same time. The fact that these 4 drives were spread across 2 machines was really shiny. It meant that soemthing I had set up was obvioulsy working properly.</p>
 <p> Each machine had 2 mirrored disks using software raid which accounts for 2 drives in one machine flashing at the same time. What made all 4 drives flash at the same time was <a href="http://www.drbd.org/">drbd</a> which is bascially network raid 1.</p>
 <p> We are using <a href="http://www.drbd.org/">drbd</a> along with <a href="http://linux-ha.org/HeartbeatProgram">heartbeat</a> to provide a HA solution for our database needs.</p>

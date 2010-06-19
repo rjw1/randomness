@@ -1,6 +1,7 @@
 Title: Generating a SSL certificate with Capistrano
 Tags: capistrano, deployment, ssl, certificate, recipe
 Date: 30 August 2009
+
 <p><a href="http://www.capify.org/index.php/Capistrano">Capistrano</a> is useful for deploying ruby applications. It can also be used to help with configuration and setup of things related to the applications</p>
 <p> Such as creating the ssl keys and certificates for the demo and staging sites. I've always used an <a href="http://www.exim.org/exim-html-4.00/doc/html/spec_36.html#SECT36.5">openssl one liner</a> to do this but I still needed to fill in the details for the certificate. Which is less that ideal if you want to automate the creation of the keys and certificates. So I dug around and found the right incantation to pass the certificate details to openssl. I then made this into a capistrano recipe.</p>
 

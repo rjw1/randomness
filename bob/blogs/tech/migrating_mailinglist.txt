@@ -1,5 +1,6 @@
 Title: Migrating a Mailman mailing list to a new box.
 Tags: mailman, mailinglist
 Date: 24 September 2006
+
 <p>So yesterday I was moving a mailing list from one box to another and changing the domain names used for it. Most of this was achived by copying <code>$mailmandir/lists/$listname</code> and <code>$mailmandir/archives/private/$listname*</code> to the new machine (and depending on your set up messing with permissions). However this leaves the old hostname in the admin interface and archives links. Which is annoying</p>
 <p>Thankfully mailman provides a way to fix this. <code>$mailmandir/bin/withlist -l -r fix_url $listname -u $listdomain</code>.<br />eg <code>/export/home/mailman/bin/wishlist -l -r fix_url examplelist -u lists.example.com</p>

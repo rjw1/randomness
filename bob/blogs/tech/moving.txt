@@ -1,6 +1,7 @@
 Title: Moving to chronicle
 Tags: software, blog, zimki, chronicle, perl
 Date: 29 December 2007
+
 <p><a href="http://www.zimki.com">Zimki</a> is now dead. So I had to move my <a href="http://tech.randomness.org.uk">blog</a> to something else. After much thought I have moved it back to my own colo using <a href="http://www.steve.org.uk/Software/chronicle/">Chronicle</a> as the blogging software.<p>
 <p>Of course this may mean some of you get a load of repeat entries. Sorry</p>
 <p>With chronicle I made my own <a href="http://svn.randomness.org.uk/trunk/bob/blogs/themes/bob/">theme</a>. I also improved the way they do stuff. It has always baffled me that people use templating engines yet dont make use of includes for site furniture like the header, footer and sidebar. So I added these<p>

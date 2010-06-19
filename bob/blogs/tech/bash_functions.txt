@@ -1,6 +1,7 @@
 Title: Function and Alias use in bash
 Tags: bash, hints, ssh, tricks
 Date: 01 October 2006
+
 <p>For a while now ive been using aliases to connect to machines. I alias a $hostname to <code>xterm -T $hostname -e ssh $hostname &</code>. This means each connection gets a new fresh xterm. Of course doing an alias command for each host woudl be tedious so i have some magic in bash startup stuff.</p>
 <pre>
 bob@betty:~ >cat .bashrc 

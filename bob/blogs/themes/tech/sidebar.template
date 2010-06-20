@@ -1,0 +1,43 @@
+<div id="sidebar">
+Menu
+<ul>
+<li><a href="http://randomness.org.uk/" rel="me" >website</a>
+<li><a href="http://tech.randomness.org.uk" rel="me" >tech</a>
+<li><a href="http://randomness.org.uk/wiki/">wiki</a>
+<li><a href="http://flickr.com/photos/rjw1/" rel="me" >flickr</a>
+<li><a href="http://del.icio.us/rjw1" rel="me" > del.icio.us</a>
+<li><a href="http://twitter.com/rjw1" rel="me" >twitter<a>
+<li><a href="http://rjw1.livejournal.com/" rel="me" >lj</a>
+<li><a href="http://randomness.org.uk/bob.opml">opml</a>
+<li><a href="http://tech.randomness.org.uk/index.rss">feed</a>
+<li><a href="http://london.randomness.org.uk">Randomness Guide to London</a>
+<li><a href="http://rwc.randomness.org.uk">Rugby World Cup Blog</a>
+<li><a href="http://londonjoinery.com">London Joinery</a>
+<li><a href="http://westcountrystairs.com">West Country Stairs</a>
+
+
+
+</ul>
+<!-- tmpl_if name='datecloud' -->
+Archive
+<ul>
+<!-- tmpl_loop name='datecloud' -->
+<li><!-- tmpl_var name='year' -->
+<ul>
+<!-- tmpl_loop name='months' -->
+<li><a href="<!-- tmpl_var name='top' -->archive/<!-- tmpl_var name='year' -->/<!-- tmpl_var name='month' -->/"><!-- tmpl_var name='month_name' --> (<!-- tmpl_var name='count' -->)</a></li>
+<!-- /tmpl_loop -->
+</ul></li>
+<!-- /tmpl_loop -->
+</ul>
+<!-- /tmpl_if name='datecloud' -->
+
+<!-- tmpl_if name='tagcloud' -->
+Tags
+<ul>
+<!-- tmpl_loop name='tagcloud' -->
+ <li><a href="<!-- tmpl_var name='top' -->tags/<!-- tmpl_var name='tag' escape='html' -->"><!-- tmpl_var name='tag' escape='html' --> (<!-- tmpl_var name='count' -->)</a></li>
+<!-- /tmpl_loop -->
+</ul>
+<!-- /tmpl_if -->
+</div>

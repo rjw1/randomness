@@ -1,0 +1,23 @@
+
+agile sysamdin
+
+test deploys. while puppet and nagios should be testign stuff they may not catch everything. think of it as a deployment checklist.
+
+things to test.
+exim set up
+these users should be present.
+there shoudl be this number of users
+these disks.
+these paratiotions
+total parations
+packages. total number. spefici ones.
+ports open, ports not open
+ips. spefici total. is bonding used. check mac addresses. for devices.
+test it has munin and nagios checks(total number)
+xinetd.
+check general configs such as resolv.conf. ssh set up. hosts file. 
+
+anything puppet does should have a corrresponding test. most things tested shoudl become soemthign puppet does. apart form when you dont trust it.
+
+for CI could be run as a nagios test through nrpe  once a day. or more often. with a genric pas or fail. then can be run more usefully locally.
+

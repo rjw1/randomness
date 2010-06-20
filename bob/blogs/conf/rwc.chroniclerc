@@ -47,7 +47,7 @@ theme-dir = /export/home/bob/blogs/themes
 #
 #  The theme to use.
 #
-theme = bob
+theme = rwc
 
 
 #
@@ -110,8 +110,8 @@ url_prefix = http://rwc.randomness.org.uk/
 #
 #  The title for the Blog
 #
-blog_title    = bob does the RWC2007
-blog_subtitle = My thoughts on the rugby world cup 2007
+blog_title    = bob's rugby world cup
+blog_subtitle = bob's ramblings about the rugby world cup. 
 
 #
 #  A command to run pre-build

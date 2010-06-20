@@ -18,6 +18,8 @@
   <div class="date"><!-- tmpl_var name='date' --></div>
   <div class="body"><!-- tmpl_var name='body' --></div>
   <div class="tags">
+<a href="<!-- tmpl_var name='top' --><!-- tmpl_var name
+='link' escape='html' -->#disqus_thread">Comments</a></h1>
    <!-- tmpl_if name='comment_count' -->
     <span class="comments">
      <!-- tmpl_var name='comment_count' --> comment<!-- tmpl_if name='comment_plural' -->s<!-- /tmpl_if -->.
@@ -37,6 +39,7 @@
  <!-- /tmpl_loop -->
 </div>
 
+<!-- tmpl_include name="disqus-count.inc" -->
 <!-- tmpl_include name="ga.inc" -->
 </body>
 </html>

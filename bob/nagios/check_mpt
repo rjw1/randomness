@@ -1,0 +1,48 @@
+#!/bin/bash
+# nagios check script for checking the status of LSI mirrors on ibm x345
+# needs mpt-status installed and working
+# needs sudo
+
+# define the command. may differ between systems
+BIN="sudo /usr/sbin/mpt-status "
+
+# check the status of the volume
+STATUS=`$BIN -s | awk  '{print $3}' | head -1`
+
+# if optimal everthing is okay 
+if [[ "$STATUS" == "OPTIMAL" ]]
+then	
+	# echo out the service status and return 0 for okay
+        echo "SERVICE STATUS: All disks on online. RAID array working"
+        exit 0
+# if degraded its not happy
+elif [[ "$STATUS" == "DEGRADED" ]]
+then
+	# check for missing disk if 2 our missing we have real problems and wouldnt be running ( assuming we dont have a hot spare)
+	DISKSTATUS=`$BIN -s | grep MISSING | awk  '{print $3}'`
+	if [[ "$DISKSTATUS" == "MISSING" ]]
+	then
+		# work out which disk is missing
+		DISKNUM=`$BIN -s| grep MISSING | awk  '{print $2}'`
+		# echo out the service status and return 2 for critical
+		echo "SERVICE STATUS: RAID arrary degraded, Disk $DISKNUM offline"
+		exit 2
+	else
+		# get the status of the mirror
+		MIRRORSTATUS=`$BIN | grep vol_id | awk '{print $14}'`
+		# if doesnt say anything there we still want to return that bad things are happening. hopefully this should never trigger
+		if [[ "x$MIRRORSTATUS" == "x" ]]
+
+		then
+			echo "SERVICE STATUS: RAID array degraded"
+			exit 2
+		else
+			# if it did say something tell us.
+			echo "SERVICE STATUS: RAID array degraded. $MIRRORSTATUS"
+			exit 1
+		fi
+	fi
+fi
+
+		
+

@@ -4,7 +4,7 @@ Date: 2010/07/19 23:00
 
 First pie? 
 
-<a href="http://www.flickr.com/photos/mr_t_in_dc/4783996765/in/photostream/"><img src="http://farm5.static.flickr.com/4141/4783996765_d7b943aef4.jpg"></a><a href="http://creativecommons.org/licenses/by-nd/2.0/deed.en">&copyright;Mr. T in DC</a>
+<a href="http://www.flickr.com/photos/mr_t_in_dc/4783996765/in/photostream/"><img src="http://farm5.static.flickr.com/4141/4783996765_d7b943aef4.jpg"></a><br /><a href="http://creativecommons.org/licenses/by-nd/2.0/deed.en">&copy; Mr. T in DC</a>
 
 Yes, this is pie. It is entirely encased in pastry.
 

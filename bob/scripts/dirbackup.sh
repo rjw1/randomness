@@ -55,7 +55,7 @@ if [ ! -d "$DIRTOBACKUP" ]; then
 fi
 
 STARTCLEAN=$(date +'%s')
-find $BACKUPDIR -name "*_backup_*" -mtime +${DAYSTOKEEP} -exec rm {} \;
+find $BACKUPDIR -name "${DIRNAME}_backup_*" -mtime +${DAYSTOKEEP} -exec rm {} \;
 STOPCLEAN=$(date +'%s')
 STARTBACKUP=$(date +'%s')
 /bin/tar -zcf $BACKUPFILE -C $ROOTPATH $DIRNAME

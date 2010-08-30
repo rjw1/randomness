@@ -38,8 +38,8 @@ if ( $node_param ) {
 $tt_vars{addon_title} ||= "Add a comment to a page";
 
 # Add the comment if there is one.
-my $username = $q->param( "username" );
-my $comment = $q->param( "comment" );
+my $username = $q->param( "emanresu" );
+my $comment = $q->param( "tnemmoc" );
 if ( $node && $comment ) {
     my %node_data = $wiki->retrieve_node( $node );
     my %new_metadata = OpenGuides::Template->extract_metadata_vars( 

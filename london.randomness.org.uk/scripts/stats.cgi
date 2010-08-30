@@ -135,6 +135,15 @@ $data{km_squared} = ( ( $data{x_max} - $data{x_min} ) / 1000 )
 
 $data{miles_squared} = $data{km_squared} * 0.386;
 
+# We can streamline this by using select count in the RGL::Addons select.
+my @pages_with_geodata = RGL::Addons->get_nodes_with_geodata(
+    wiki => $wiki,
+    config => $config,
+);
+my $num_with_geodata = scalar @pages_with_geodata;
+$data{pages_per_square_km}   = $num_with_geodata / $data{km_squared};
+$data{pages_per_square_mile} = $num_with_geodata / $data{miles_squared};
+
 $tt_vars{data} = \%data;
 
 # Get the month.

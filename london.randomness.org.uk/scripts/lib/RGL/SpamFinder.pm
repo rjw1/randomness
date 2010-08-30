@@ -14,7 +14,13 @@ sub looks_like_spam {
     my $host = $args{metadata}{host};
     my $comment = $args{added_comment} || "";
 
-    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine|buyphentermine|adipex|phendimetrazine|ephedrine|lipitor|hydrocodone|replica-watches|propecia|ativan|levitra|lexapro|ambien|citalopram|effexor|fluoxetine)\b/is ) {
+    if ( $name eq "Area, SE1 7TP" && $args{via_add_comment} ) {
+      $class->notify_admins( %args, id => "00001",
+                             reason => "Adding comment to nonexistent page" );
+      return 1;
+    }
+
+    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine|buyphentermine|adipex|phendimetrazine|ephedrine|lipitor|hydrocodone|replica-watches|propecia|ativan|levitra|lexapro|ambien|citalopram|effexor|fluoxetine|prozac|kamagra|accutane|zithromax|clenbuterol|nolvadex|lorazepam|clonazepam|diazepam|valium|clomid|rimonabant|xenical|lolita|lolitas)\b/is ) {
         $class->notify_admins( %args, id => "00002", reason => "Matches $1" );
         return 1;
     }
@@ -35,6 +41,12 @@ sub looks_like_spam {
 
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
+
+        if ( $username eq "name" && $name eq "Using Photos From Flickr" ) {
+            $class->notify_admins( %args, id => "00007",
+                                   reason => "name on UPFF" );
+            return 1;
+        }
 
         if ( $name eq "Wasabi, EC2A 1AT"
              && $comment =~ m/(geocities|angelfire).com/is ) {
@@ -76,6 +88,12 @@ sub looks_like_spam {
             return 1;
         }
 
+        if ( $comment =~ m/(http.*\.co\.cc\/sitemap)/ ){
+            $class->notify_admins( %args, id => "00014",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
         if ( $name eq "William, SE1 6AD"
              && $comment =~ /you\shave\sa\sgreat\ssite/is ) {
             $class->notify_admins( %args, id => "00015",
@@ -83,10 +101,117 @@ sub looks_like_spam {
             return 1;
         }
 
+        if ( $comment =~ m/(www.sex6090.com)/ ){
+            $class->notify_admins( %args, id => "00016",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(i\s+bookmarked\s+this\s+link.\s+thank\s+you\s+for\s+good\s+job)/i ){
+            $class->notify_admins( %args, id => "00017",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(great\s+site\.\s+keep\s+doing\.)/i ){
+            $class->notify_admins( %args, id => "00018",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(i\s+want\s+to\s+say.+thank\s+you\s+for\s+this)/i ){
+            $class->notify_admins( %args, id => "00019",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(if\s+you\s+have\s+to\s+do\s+it,\s+you\s+might\s+as\s+well\s+do\s+it\s+right)/i ){
+            $class->notify_admins( %args, id => "00020",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(excellent\s+site\.\s+it\s+was\s+pleasant\s+to\s+me)/i ){
+            $class->notify_admins( %args, id => "00021",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(very\s+interesting\s+site\.\s+hope\s+it\s+will\s+always\s+be\s+alive)/i ){
+            $class->notify_admins( %args, id => "00022",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(perfect\s+work!)/i ){
+            $class->notify_admins( %args, id => "00023",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
         if ( $comment =~ m/(\+.*){7,}/ && $comment !~ m'http://' ) {
             $class->notify_admins( %args, id => "00024",
                                    reason => "comment with more than 7 plus "
                                              . "signs in and no http://" );
+            return 1;
+        }
+
+        if ( $comment =~ /(fogg.net.ru|chadsreviews.com|kelvinbrown.com|www.tribune-libre.net|www.radosvet.net|www.limitedwebgroup.com|www.citadel-voices.de|trex.vx99.com|blog.ulfgermann.de|www.extratasty.com|newvigrx.com|vimaxonline.info)/ ) {
+            $class->notify_admins( %args, id => "00024", reason => "$1" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(great\s+work,webmaster,nice\s+design)/i ){
+            $class->notify_admins( %args, id => "00025",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(very\s+cute\s+:-\)\)\))/i ){
+            $class->notify_admins( %args, id => "00026",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(it\s+is\s+the\s+coolest\s+site,\s+keep\s+so!)/i ){
+            $class->notify_admins( %args, id => "00027",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(great\.\s+now\s+i\s+can\s+say\s+thank\s+you!)/i ){
+            $class->notify_admins( %args, id => "00028",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(ss.txt;0;0)/i ){
+            $class->notify_admins( %args, id => "00029",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(dietguidance\.us\s+association)/i ){
+            $class->notify_admins( %args, id => "00030",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(dentaldoctor\.us\s+association)/i ){
+            $class->notify_admins( %args, id => "00031",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(lady-sonia\.us)/i ){
+            $class->notify_admins( %args, id => "00032",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $comment =~ m/(sexcoctail\.com)/i ){
+            $class->notify_admins( %args, id => "00033",
+                                   reason => "$1 in comment" );
             return 1;
         }
 
@@ -129,7 +254,7 @@ sub looks_like_spam {
             }
         }
 
-        if ( $content =~ 'http://' && $content =~ /\banal\b/ && $content =~ /\bsex\b/ ) {
+         if ( $content =~ 'http://' && $content =~ /\banal\b/ && $content =~ /\bsex\b/ ) {
             $class->notify_admins( %args, id => "00039",
                                    reason => "'anal' + 'sex' + URL" );
             return 1;
@@ -164,6 +289,11 @@ sub looks_like_spam {
         }
         if ( $comment =~ /(www\.blikum\.com)/ ) {
             $class->notify_admins( %args, id => "00046", reason => $1 );
+            return 1;
+        }
+        if ( $comment =~ m/(generictablets\.net)/i ){
+            $class->notify_admins( %args, id => "00047",
+                                   reason => "$1 in comment" );
             return 1;
         }
     }

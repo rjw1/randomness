@@ -11,7 +11,6 @@ use OpenGuides;
 use RGL::Addons;
 use OpenGuides::Config;
 use Template;
-use Wiki::Toolkit::Plugin::Categoriser;
 use Wiki::Toolkit::Plugin::Locator::Grid;
 
 my $config_file = $ENV{OPENGUIDES_CONFIG_FILE} || "../wiki.conf";
@@ -23,26 +22,21 @@ my $formatter = $wiki->formatter;
 my $dbh = $wiki->store->dbh;
 my $locator = Wiki::Toolkit::Plugin::Locator::Grid->new( x => "os_x", y => "os_y" );
 $wiki->register_plugin( plugin => $locator );
-my $categoriser = Wiki::Toolkit::Plugin::Categoriser->new;
-$wiki->register_plugin( plugin => $categoriser );
 
 my %tt_vars = RGL::Addons->get_tt_vars( config => $config );
 
 my $q = CGI->new;
 
 my %all_criteria = (
-                     vegan_friendly => "vegan friendly",
-                     veggie_friendly => "vegetarian friendly",
-                     totally_veggie => "totally vegetarian",
-                     step_free => "step-free access",
-                     accessible_loo => "accessible toilet",
-                     restaurants_only => "restaurants",
-                     cafes_only => "cafes",
-                     takeaway => "takeaway",
-                     delivery => "takeaway delivery",
-                     indian_food => "indian food",
-                     vietnamese_food => "vietnamese food",
-                     delivers_to_se16 => "delivers to se16",
+                     garden    => "beer garden",
+                     realale   => "real ale",
+                     realcider => "real cider",
+                     gbg       => "good beer guide",
+                     wifi      => "free wireless",
+                     lunch     => "food served lunchtimes",
+                     dinner    => "food served evenings",
+                     thai      => "thai food",
+                     room      => "function room",
                    );
 
 setup_form_variables();
@@ -69,20 +63,11 @@ if ( $q->param( "Search" ) ) {
   }
 
   my $sql = "
-SELECT DISTINCT node.name, summary.metadata_value FROM node
-INNER JOIN metadata as cat
-  ON ( node.id = cat.node_id AND node.version = cat.version
-       AND lower(cat.metadata_type) = 'category'
-       AND (
-";
-
-  my @foodcats = $categoriser->subcategories( category => "Food" );
-  @foodcats = map { "lower(cat.metadata_value) = '" . lc($_) . "'"; }
-              @foodcats;
-  $sql .= join " OR ", @foodcats;
-
-  $sql .="
-           )
+SELECT node.name, summary.metadata_value FROM node
+INNER JOIN metadata as pub
+  ON ( node.id = pub.node_id AND node.version = pub.version
+       AND lower(pub.metadata_type) = 'category'
+       AND lower(pub.metadata_value) = 'pubs'
      )
 INNER JOIN metadata as summary
   ON ( node.id = summary.node_id AND node.version = summary.version
@@ -123,15 +108,15 @@ INNER JOIN metadata AS $criterion
   my $sth = $dbh->prepare( $sql );
   $sth->execute( @dbparams ) or die $dbh->errstr;
 
-  my @results;
+  my @pubs;
   while ( my ( $name, $summary ) = $sth->fetchrow_array ) {
     if ( !$tube or $candidates{$name} ) {
       my $param = $formatter->node_name_to_node_param( $name );
-      push @results, { name => $name, param => $param, summary => $summary };
+      push @pubs, { name => $name, param => $param, summary => $summary };
     }
   }
 
-  $tt_vars{results} = \@results;
+  $tt_vars{pubs} = \@pubs;
 }
 
 # Do the template stuff.
@@ -141,11 +126,12 @@ my $tt = Template->new( { INCLUDE_PATH =>
                                    "$custom_template_path:$template_path"  } );
 %tt_vars = (
              %tt_vars,
-             addon_title => "Food search",
+             addon_title => "Pub search",
+             self_url => $q->url( -full => 1 ),
            );
 
 print $q->header;
-$tt->process( "foodsearch.tt", \%tt_vars );
+$tt->process( "pubsearch.tt", \%tt_vars );
 
 sub setup_form_variables {
 
@@ -160,18 +146,28 @@ sub setup_form_variables {
                                                     },
                                        );
 
-  # Find all locales.  Maybe later we can filter on locales that we'll actually
-  # get some results for.
-  my @all_locales = $wiki->list_nodes_by_metadata(
-        metadata_type  => "category",
-        metadata_value => "locales",
-        ignore_case    => 1,
-  );
+  # Find all locales that have pubs in.
+  my $sql = "
+  SELECT DISTINCT locale.metadata_value FROM node
+  INNER JOIN metadata as pub
+    ON ( node.id=pub.node_id
+         AND node.version=pub.version
+         AND lower(pub.metadata_type) = 'category'
+         AND lower(pub.metadata_value) = 'pubs'
+       )
+  INNER JOIN metadata as locale
+    ON ( node.id = locale.node_id
+         AND node.version = locale.version
+         AND lower(locale.metadata_type) = 'locale'
+       )
+  ";
+
+  my $sth = $dbh->prepare( $sql );
+  $sth->execute or die $dbh->errstr;
 
   my %locales;
   my %postal_districts;
-  foreach my $locale ( @all_locales ) {
-    $locale =~ s/^Locale //;
+  while ( my ( $locale ) = $sth->fetchrow_array ) {
     if ( $locale =~ /^[A-Z][A-Z]?[0-9][0-9]?$/ ) {
       $postal_districts{$locale} = 1;
     } else {

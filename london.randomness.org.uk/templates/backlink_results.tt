@@ -1,0 +1,19 @@
+[% INCLUDE header.tt %]
+[% INCLUDE banner.tt %]
+<div id="content">
+[% INCLUDE navbar.tt %]
+<div id="maincontent">
+<h1>
+  [% site_name %] - Backlinks to <span class="node_name">[% node_name %]</span>
+</h1>
+
+<p>Results found: [% num_results %]</p>
+
+<ul>
+  [% FOREACH hit = results %]
+    <li><a href="[% cgi_url %]?[% hit.url %]">[% hit.title %]</a></li>
+  [% END %]
+</ul>
+
+</div>
+[% INCLUDE footer.tt %]

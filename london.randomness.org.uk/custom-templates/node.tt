@@ -34,7 +34,7 @@
   [% ELSIF backlinks_in_title %]
     <h2 class="node_name"><a href="[% cgi_url %]?action=show_backlinks;id=[% CGI.escape(node_name) %]">[% node_name %]</a></h2>
   [% ELSE %]
-    <h2 class="node_name">[% node_name %]</h2>
+    <h2 class="node_name">[% node_name | replace( '^Category', 'Category:' ) | replace( '^Locale', 'Locale:' ) %]</h2>
   [% END %]
 [% ELSE %]
   <h2><em>

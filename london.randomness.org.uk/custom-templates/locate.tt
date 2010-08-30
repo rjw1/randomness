@@ -8,9 +8,9 @@
 <h2>[% addon_title %]</h2>
 
 <form action="[% self_url %]" method="GET">
-  <p>Find me things in category [% catbox %] located in [% locbox %].</p>
+  <p>Find me things in category [% catbox %] located in [% locbox %]</p>
   <p>[% show_map_box %] Show them on a map
-     [% small_pointers_box %] (use smaller map markers)
+     [% small_pointers_box %] Use smaller map markers
       <input type="submit" name="Search" value="Search" class="form_button">
   </p>
 </form>

@@ -77,6 +77,12 @@
     </div>
     <label for="delivers_to_se16">Delivers to SE16</label>
   </div>
+  <div class="criteria_search_checkbox_group" id="indian_food">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.indian_food %]
+    </div>
+    <label for="indian_food">Offers Indian food</label>
+  </div>
   <div class="criteria_search_checkbox_group" id="vietnamese_food">
     <div class="criteria_search_checkbox">
       [% checkboxes.vietnamese_food %]
@@ -94,12 +100,6 @@
       [% checkboxes.accessible_loo %]
     </div>
     <label for="accessible_loo">Accessible toilet</label>
-  </div>
-  <div class="criteria_search_checkbox_group" id="rgl_recommended_group">
-    <div class="criteria_search_checkbox">
-      [% checkboxes.rgl_recommended %]
-    </div>
-    <label for="rgl_recommended">RGL Recommended</label>
   </div>
   <div class="criteria_search_submit">
     <input type="submit" name="Search" value="Search" class="form_button" />

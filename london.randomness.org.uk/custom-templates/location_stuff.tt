@@ -40,14 +40,17 @@
     </div>
 
     <div id="search_your_london">
+[% IF 0 %]
       Search YourLondon.gov.uk for nearby
       <a href="http://yourlondon.gov.uk/maps/fyn.jsp?postcode=[% CGI.escape(postcode) %]&classification=06340461">public toilets</a> or
       <a href="http://yourlondon.gov.uk/maps/fyn.jsp?postcode=[% CGI.escape(postcode) %]&classification=02090141">cash machines</a>.
+[% ELSE %]
+[YourLondon.gov.uk public toilet/cash machine search not currently available &#8212; sorry!]
+[% END %]
     </div>
 <br />
     <div id="bus_routes">
-     Find nearby <a href="http://www.tfl.gov.uk/tfl/gettingaround/maps/buses/tfl
--bus-map/text/search.aspx?q=[% CGI.escape(postcode) %]"#>bus routes</a>
+     Find nearby <a href="http://www.tfl.gov.uk/tfl/gettingaround/maps/buses/tfl-bus-map/text/?q=[% CGI.escape(postcode) %]"#>bus routes</a>
    </div>
 
   [% END %]

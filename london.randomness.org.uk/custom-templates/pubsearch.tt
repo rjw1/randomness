@@ -6,6 +6,22 @@
 
 <h2>[% addon_title %]</h2>
 
+[% IF pubs.size %]
+  <h3>[% pubs.size %] pub[% IF pubs.size > 1 %]s[% END %] found</h3>
+
+  <dl class="criteria_search_results">
+    [% FOREACH pub = pubs %]
+      <dt><a href="[% full_cgi_url %]?[% pub.param %]">[% pub.name %]</a></dt>
+      [% IF pub.summary %]
+        <dd>[% pub.summary %]</dd>
+      [% END %]
+    [% END %]
+  </dl>
+  <h3>Search again</h3>
+[% ELSIF doing_search %]
+  <p>No pubs found, sorry.  Try again with fewer criteria.</p>
+[% END %]
+
 <form action="[% self_url %]" method="get">
   <div class="criteria_search_group" id="locale_group">
     <label for="locale">Locale:</label>
@@ -14,13 +30,13 @@
     </div>
   </div>
   <div class="criteria_search_group" id="postal_district_group">
-    or: <label for="postal_district">Postal district:</label>
+    <label for="postal_district">or postal district:</label>
     <div class="criteria_search_box">
       [% postal_district_box %]
     </div>
   </div>
   <div class="criteria_search_group" id="near_tube_group">
-    or: <label for="tube_distance">Within</label>
+    <label for="tube_distance">or within</label>
       <div class="criteria_search_box">
         [% tube_distance_box %]
       </div>
@@ -141,20 +157,5 @@
     <input type="submit" name="Search" value="Search" class="form_button" />
   </div>
 </form>
-
-[% IF pubs.size %]
-  <h3>[% pubs.size %] pub[% IF pubs.size > 1 %]s[% END %] found</h3>
-
-  <dl class="criteria_search_results">
-    [% FOREACH pub = pubs %]
-      <dt><a href="[% full_cgi_url %]?[% pub.param %]">[% pub.name %]</a></dt>
-      [% IF pub.summary %]
-        <dd>[% pub.summary %]</dd>
-      [% END %]
-    [% END %]
-  </ul>
-[% ELSIF doing_search %]
-  <p>No pubs found, sorry.  Try again with fewer criteria.</p>
-[% END %]
 
 [% INCLUDE addons_footer.tt %]

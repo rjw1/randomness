@@ -48,6 +48,18 @@ sub looks_like_spam {
             return 1;
         }
 
+        if ( $comment =~ m/(http.*ryjgy.edu.ms\/sitemap)/ ){
+            $class->notify_admins( %args, id => "00016",
+                                   reason => "$1 in comment" );
+            return 1;
+        }
+
+        if ( $host eq "93.126.94.14" && $name eq "Category Pool Table" ) {
+            $class->notify_admins( %args, id => "00017",
+                                   reason => "$host comment on $name" );
+            return 1;
+        }
+
         if ( $comment =~ m/(\+.*){7,}/ && $comment !~ m'http://' ) {
             $class->notify_admins( %args, id => "00024",
                                    reason => "comment with more than 7 plus "

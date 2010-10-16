@@ -1,10 +1,12 @@
-#!/opt/csw/bin/perl
+#!/usr/bin/perl
 
 use strict;
 use warnings;
 
 # Hack around bug, for now.
 use lib qw( /export/home/kake/tmp/Wiki-Toolkit-Plugin-Categoriser-0.05/lib );
+use lib qw( /export/home/rgl/web/vhosts/london.randomness.org.uk/scripts/lib/ );
+use lib qw( /export/home/rgl/perl5/lib/perl5 );
 
 use CGI qw( :standard );
 use CGI::Carp qw( fatalsToBrowser );

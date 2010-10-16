@@ -43,7 +43,7 @@ if ( $author ) {
                AND content.version = author.version
                AND lower( author.metadata_type ) = 'username'
              )
-        WHERE lower(btrim(author.metadata_value)) = ?
+        WHERE lower(author.metadata_value) = ?
         ORDER BY node.name";
 
     my $sth = $dbh->prepare( $sql );
@@ -62,16 +62,16 @@ if ( $author ) {
 }
 
 my $sql = "
-    SELECT DISTINCT btrim(author.metadata_value) AS author_name
+    SELECT DISTINCT author.metadata_value AS author_name
     FROM content
     INNER JOIN metadata AS author
       ON ( content.node_id = author.node_id
            AND content.version = author.version
            AND lower( author.metadata_type ) = 'username'
          )
-    WHERE btrim(author.metadata_value) != ''
-      AND btrim(author.metadata_value) != 'Anonymous'
-      AND btrim(author.metadata_value) != 'Auto Create'
+    WHERE author.metadata_value != ''
+      AND author.metadata_value != 'Anonymous'
+      AND author.metadata_value != 'Auto Create'
       AND moderated = true";
 
 

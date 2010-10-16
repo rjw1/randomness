@@ -78,28 +78,28 @@ my %sql = (
       AND img.date_added < $max_date
                        ",
   x_min => "
-    SELECT min( md.metadata_value::integer )
+    SELECT min( md.metadata_value )
     FROM node, metadata AS md
     WHERE node.id=md.node_id
       AND node.version=md.version
       AND md.metadata_type='os_x'
            ",
   x_max => "
-    SELECT max( md.metadata_value::integer )
+    SELECT max( md.metadata_value )
     FROM node, metadata AS md
     WHERE node.id=md.node_id
       AND node.version=md.version
       AND md.metadata_type='os_x'
            ",
   y_min => "
-    SELECT min( md.metadata_value::integer )
+    SELECT min( md.metadata_value )
     FROM node, metadata AS md
     WHERE node.id=md.node_id
       AND node.version=md.version
       AND md.metadata_type='os_y'
            ",
   y_max => "
-    SELECT max( md.metadata_value::integer )
+    SELECT max( md.metadata_value )
     FROM node, metadata AS md
     WHERE node.id=md.node_id
       AND node.version=md.version

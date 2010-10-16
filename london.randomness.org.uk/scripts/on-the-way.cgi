@@ -111,20 +111,20 @@ sub do_search {
   my $dbh = $wiki->store->dbh;
   my $sql = "
     SELECT node.name, mx.metadata_value as x, my.metadata_value as y,
-           mlat.metadata_value as lat, mlong.metadata_value as long
+           mlat.metadata_value as lat, mlong.metadata_value as 'long'
     FROM node
       INNER JOIN metadata as mx
         ON ( node.id=mx.node_id
              AND node.version=mx.version
              AND lower(mx.metadata_type)='os_x'
-             AND mx.metadata_value::integer >= ?
-             AND mx.metadata_value::integer <= ? )
+             AND mx.metadata_value >= ?
+             AND mx.metadata_value <= ? )
       INNER JOIN metadata as my
         ON ( node.id=my.node_id
              AND node.version=my.version
              AND lower(my.metadata_type)='os_y'
-             AND my.metadata_value::integer >= ?
-             AND my.metadata_value::integer <= ? )
+             AND my.metadata_value >= ?
+             AND my.metadata_value <= ? )
       INNER JOIN metadata as mlat
         ON ( node.id=mlat.node_id
              AND node.version=mlat.version

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+ <ShortName>Randomness Guide to London</ShortName>
+ <Description>Search the Randomness Guide to London</Description>
+ <Tags>Randomness Guide to London</Tags>
+ <Url type="text/html"
+      template="http://london.randomness.org.uk/search.cgi?search={searchTerms}"/>
+</OpenSearchDescription>

@@ -55,7 +55,7 @@ if ( $do_search && !$cat && !$loc ) {
     my $dbh = $wiki->store->dbh;
     my $sql = "
       SELECT DISTINCT node.id, node.name, mlat.metadata_value as lat,
-                 mlong.metadata_value as long
+                 mlong.metadata_value as 'long'
       FROM node";
     if ( $cat ) {
       $sql .= "

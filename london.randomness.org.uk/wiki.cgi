@@ -4,8 +4,8 @@ eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
     if 0; # not running under some shell
 
 use strict;
-use lib qw( /export/home/rgl/web/vhosts/london.randomness.org.uk/scripts/lib/ );
 use lib qw( /export/home/rgl/perl5/lib/perl5 );
+use lib qw( /export/home/rgl/web/vhosts/london.randomness.org.uk/scripts/lib/ );
 use warnings;
 use sigtrap die => 'normal-signals';                                            
 

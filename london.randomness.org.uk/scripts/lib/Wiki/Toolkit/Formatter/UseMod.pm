@@ -653,7 +653,9 @@ sub make_external_link {
         ($open, $close) = ( "", "" );
     }
     return qq|$open<a href="$args{url}"|
-           . ( $args{url} =~ /qype\.co/ ? qq| rel="nofollow" | : "" )
+           . ( ( $args{url} =~ /qype\.co/ || $args{url} =~ /beerintheevening/
+                 ||$args{url} =~ /london-eating\.co\.uk/
+               ) ? qq| rel="nofollow" | : "" )
            . qq|>$args{title}</a>$close|;
 }
 

@@ -63,7 +63,7 @@ if ( $q->param( "do_search" ) ) {
 	$sql{$key} = "
           SELECT DISTINCT node.id, node.name, mx.metadata_value as x,
                  my.metadata_value as y, mlat.metadata_value as lat,
-                 mlong.metadata_value as long
+                 mlong.metadata_value as 'long'
           FROM node
           INNER JOIN metadata as mc
             ON ( node.id=mc.node_id

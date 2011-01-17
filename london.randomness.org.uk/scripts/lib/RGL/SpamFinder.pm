@@ -66,12 +66,6 @@ sub looks_like_spam {
             return 1;
         }
 
-        if ( $name eq "Old Salt Quay, SE16 5QU" && $comment =~ /www\.trailfire\.com/ ) {
-            $class->notify_admins( %args, id => "00019",
-                                   reason => "trailfire comment on $name" );
-            return 1;
-        }
-
         if ( $comment =~ m/(\+.*){7,}/ && $comment !~ m'http://' ) {
             $class->notify_admins( %args, id => "00024",
                                    reason => "comment with more than 7 plus "

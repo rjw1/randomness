@@ -45,8 +45,4 @@ href="http://london.randomness.org.uk/wiki.cgi?Bob">Bob</a>.  It was
 <a href="http://london.randomness.org.uk/wiki.cgi?id=Home&version=1"
 rel="nofollow">not very exciting</a>.</p>
 
-<p>You can also view <a
-href="http://london.randomness.org.uk/static/uptime.html">our uptime
-stats</a>.</p>
-
 [% INCLUDE addons_footer.tt %]

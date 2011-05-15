@@ -1,0 +1,89 @@
+Title: Packaging Perl with fpm
+Format: markdown
+Tags: perl, packaging, debian, fpm
+Date: 2011/05/15 17:30
+
+https://github.com/jordansissel/fpm
+http://goo.gl/sWs3Z #fpm presentation
+http://search.cpan.org/~jesse/perl-5.14.0/ 
+http://article.gmane.org/gmane.comp.lang.perl.perl5.porters/94575 # perl 5.14.0 anounce
+http://www.modernperlbooks.com/mt/2011/05/2018-is-the-year-of-perl-510.html
+http://amzn.to/jHIQpN # modern perl link
+
+
+sudo gem install fpm
+wget http://search.cpan.org/CPAN/authors/id/J/JE/JESSE/perl-5.14.0.tar.gz
+tar -zxvf perl-5.14.0.tar.gz
+cd perl-5.14.0/
+./Configure -des -Dprefix=/usr/local/perl/5.14.0
+make
+bob@marjorie:~/svn/bob/blogs/stubs/pie$ ls
+rules_of_pie.txt  test.txt
+bob@marjorie:~/svn/bob/blogs/stubs/pie$ cat rules_of_pie.txt 
+Title: Rules of Pie
+Tags: pie, rules
+Date: 2011/02/13 11:30
+
+Here are the rules for deciding if the thing before you is a pie. 
+
+Title: Packaging Perl with fpm
+Format: markdown
+Tags: perl, packaging, debian, fpm
+Date: 2011/05/15 17:30
+
+https://github.com/jordansissel/fpm
+http://goo.gl/sWs3Z #fpm presentation
+http://search.cpan.org/~jesse/perl-5.14.0/
+http://article.gmane.org/gmane.comp.lang.perl.perl5.porters/94575 # perl 5.14.0
+anounce
+http://www.modernperlbooks.com/mt/2011/05/2018-is-the-year-of-perl-510.html
+http://amzn.to/jHIQpN # modern perl link
+http://search.cpan.org/~gugod/App-perlbrew-0.20/
+
+sudo gem install fpm
+wget http://search.cpan.org/CPAN/authors/id/J/JE/JESSE/perl-5.14.0.tar.gz
+tar -zxvf perl-5.14.0.tar.gz
+cd perl-5.14.0/
+./Configure -des -Dprefix=/usr/local/perl/5.14.0
+make
+make test
+make install DESTDIR=~/build/tmp/perl-5.14
+
+/var/lib/gems/1.8/bin/fpm -p ~bob/build/package/randomness-perl.deb -n randomness-perl-5.14.0 -v 5.14.0 -m bob@randomness.org.uk --description "Perl 5.14.0" --url http://randomness.org.uk -t deb -s dir -C ~/build/tmp/perl-5.14/
+
+dpkg --info randomness-perl.deb 
+new debian package, version 2.0.
+ size 21009038 bytes: control archive= 293 bytes.
+     221 bytes,    10 lines      control              
+       2 bytes,     1 lines      md5sums              
+ Package: randomness-perl-5.14.0
+ Version: 5.14.0
+ Architecture: i386
+ Maintainer: bob@randomness.org.uk
+ Standards-Version: 3.9.1
+ Section: default 
+ Priority: extra
+ Homepage: http://randomness.org.uk
+ Description: Perl 5.14.0
+
+sudo dpkg -i randomness-perl.deb
+dpkg -l randomness-perl-5.14.0
+
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Name           Version        Description
++++-==============-==============-============================================
+ii  randomness-per 5.14.0         Perl 5.14.0
+
+
+/usr/local/perl/5.14.0/bin/perl -V
+
+and indeed cpan should just work out of the box. sudo /usr/local/perl/5.14.0/bin/cpan Acme::Pony
+
+
+
+
+
+
+

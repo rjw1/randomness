@@ -47,17 +47,30 @@ sub looks_like_spam {
     # Everything below here only matches if we come via "Add a comment".
     if ( $args{via_add_comment} ) {
 
-        if ( ( $comment =~ /http:\/\/.*http:\/\//s )
-             || ( $comment =~ /https:\/\/.*https:\/\//s )
-             || ( $comment =~ /a\s+href=.*a\s+href=/s ) ) {
+        if ( ( $comment =~ /http:\/\/.*http:\/\/.*http:\/\//s )
+             || ( $comment =~ /https:\/\/.*https:\/\/.*https:\/\//s )
+             || ( $comment =~ /a\s+href=.*a\s+href=.*a\s+href=/s ) ) {
             $class->notify_admins( %args, id => "00034",
-                               reason => "comment with more than one URL in" );
+                              reason => "comment with more than two URLs in" );
             return 1;
         }
 
         if ( $comment =~ m|\w{6}\s+<a\s+href="http://[a-z]{12}\.com| ) {
             $class->notify_admins( %args, id => "00035",
                     reason => "six-character comment plus link to 12-character URL" );
+            return 1;
+        }
+
+       if ( $name eq "Old Salt Quay, SE16 5QU" && $comment =~ /webspace\.webring\.com/ ) {
+            $class->notify_admins( %args, id => "00036",
+                                   reason => "webring comment on $name" );
+            return 1;
+        }
+
+       if ( $name eq "Hackney Empire, E8 1EJ"
+              && $comment =~ m|\w{20},\s+<a\s+href="http.*</a>,\s+\w{6}| ) {
+            $class->notify_admins( %args, id => "00037",
+                                   reason => "20 char + URL + 6 char comment on $name" );
             return 1;
         }
 

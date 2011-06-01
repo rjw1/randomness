@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 use sigtrap die => 'normal-signals';                                            
+use lib qw( /export/home/lc/perl5/lib/perl5 );
+
 
 use OpenGuides::Config;
 use OpenGuides::Utils;

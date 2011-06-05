@@ -4,26 +4,6 @@
        OR hours_text OR map_link OR categories.size OR locales.size OR
        node_image %]
 <div id="metadata" class="vcard">
-[% IF node_image %]
-  <div id="node_image_box">
-    [% IF node_image_url %]<a href="[% node_image_url %]">[% END %]
-    <img id="node_image" src="[% node_image %]"
-         alt="Picture of [% node_name %]" />
-    [% IF node_image_url %]</a>[% END %]
-    [% IF node_image_copyright %]
-      <div id="node_image_copyright">
-        [% IF node_image_licence %]
-          <a href="[% node_image_licence %]">&copy;
-            [% node_image_copyright %]</a>
-        [% ELSE %]
-          &copy; [% node_image_copyright %]
-        [% END %]
-      </div>
-    [% END %]
-  </div>
-[% ELSE %]
-  <span id="node_no_image" />
-[% END %]
 
   <!-- For the vcard -->
   <span class="fn" style="display:none">[% node_name %]</span>
@@ -81,7 +61,11 @@
       <li class="categories_list">
         <span class="metadata_label">Categories:</span>
         [% FOREACH category = categories %]
-          <a href="[% category.url %]" class="category">[% category.name %]</a>[%- "," UNLESS loop.last %]
+          [% IF category.url != "" %]
+            <a href="[% category.url %]" class="category">[% category.name %]</a>[%- "," UNLESS loop.last %]
+          [% ELSE %]
+            [% category.name %][%- "," UNLESS loop.last %]
+          [% END %]
         [% END %]
       </li>
     [% END %]
@@ -90,7 +74,11 @@
       <li class="locales_list">
         <span class="metadata_label">Locales:</span>
         [% FOREACH locale = locales %]
-          <a href="[% locale.url %]" class="addr locality">[% locale.name %]</a>[%- "," UNLESS loop.last %]
+          [% IF locale.url != "" %]
+            <a href="[% locale.url %]" class="addr locality">[% locale.name %]</a>[%- "," UNLESS loop.last %]
+          [% ELSE %]
+            [% locale.name %][%- "," UNLESS loop.last %]
+          [% END %]
         [% END %]
       </li>
     [% END %]

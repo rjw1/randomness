@@ -1,7 +1,9 @@
 [% USE CGI %]
 [% INCLUDE header.tt page_title = "Edit $node_name - $site_name" %]
 <div id="content">
-
+[% IF read_only %]
+[% INCLUDE read_only.tt %]
+[% ELSE %]
   <h1 class="edit_form_title">Edit &quot;[% node_name %]&quot;</h1>
 
   [% IF conflict %]
@@ -9,6 +11,21 @@
       Someone has committed changes to this page since you began editing.
       You will need to manually merge your changes into the new version.
     </div>
+  [% END %]
+
+  [% IF validate_failed %]
+    <div class="warning_text">
+      <p>
+        Your input was invalid:
+      </p>
+      <ul>
+      [% FOREACH error = validate_failed %] 
+        <li>[% error %]</li>
+      [% END %]
+      </ul>
+      <p>
+        Please correct your input data and try again.
+      </p>
   [% END %]
 
   [% IF preview_html AND preview_above_edit_box %]
@@ -47,7 +64,7 @@
       <legend>Main information</legend>
 
       <div class="edit_form_group" id="content_group">
-        <label for="content">
+        <label for="content_textarea">
           [% IF conflict %]
             Current content:
           [% ELSE %]
@@ -79,6 +96,7 @@
             Current locales:
           [% ELSE %]
             Locales (one per line):
+            <span id="pick_locale"></span>
           [% END %]
         </label>
         <div class="edit_box">
@@ -103,6 +121,7 @@
             Current categories:
           [% ELSE %]
             Categories (one per line):
+            <span id="pick_category"></span>
           [% END %]
         </label>
         <div class="edit_box">
@@ -121,14 +140,50 @@
         [% END %]
       </div>
 
+	  <script type="text/javascript">
+	     function pick(metadata_type, textbox_id) {
+		    var textbox = document.getElementById(textbox_id);
+
+			// For adding the new metadata to the textarea
+			var add_md = function(picked) {
+			   var last = textbox.value.substring(textbox.value.length - 1);
+			   if(last == "\r" || last == "\n") {
+			      // Already has new line
+			   } else {
+			      textbox.value = textbox.value + "\r\n";
+			   }
+
+			   textbox.value = textbox.value + picked;
+			};
+
+			// Fetch the data
+			$.getJSON("[% cgi_url %]?action=metadata;format=json;type=" + metadata_type, function(data) {
+//				alert(data[metadata_type][0]);
+//				add_md(data[metadata_type][1]);
+			});
+		 }
+
+	     function pick_locale() {
+		    pick("locale", "locales");
+		 }
+	     function pick_category() {
+		    pick("category", "categories");
+		 }
+
+	     $(document).ready(function() {
+		    $("#pick_locale").html("<a href='javascript:pick_locale()'>pick Locale</a>");
+		    $("#pick_category").html("<a href='javascript:pick_category()'>pick Category</a>");
+		 });
+	  </script>
+
       <div class="edit_form_group" id="summary_group">
         [% IF conflict %]
-          <label for="summary">Current summary:</label>
+          <label for="summary_input">Current summary:</label>
         [% ELSE %]
-          <label for="summary">One-line summary of this page:</label>
+          <label for="summary_input">One-line summary of this page:</label>
         [% END %]
         <div class="edit_box">
-          <input type="text" size="50" id="summary" name="summary"
+          <input type="text" size="50" id="summary_input" name="summary"
            value="[% summary %]" />
         </div>
         [% IF conflict %]
@@ -366,5 +421,5 @@
     </div>
     <br clear="all" />
   [% END %]
-
+[% END %]
 [% INCLUDE footer.tt omit_footer_search_form = 1 %]

@@ -27,6 +27,28 @@
   </script>
 [% END %]
 
+[% IF node_image %]
+  <div id="node_image_box">
+    [% IF node_image_url %]<a href="[% node_image_url %]">[% END %]
+    <img id="node_image" src="[% node_image %]"
+         alt="Picture of [% node_name %]" />
+    [% IF node_image_url %]</a>[% END %]
+    [% IF node_image_copyright %]
+      <div id="node_image_copyright">
+        [% IF node_image_licence %]
+          <a href="[% node_image_licence %]">&copy;
+            [% node_image_copyright %]</a>
+        [% ELSE %]
+          &copy; [% node_image_copyright %]
+        [% END %]
+      </div>
+    [% END %]
+  </div>
+[% ELSE %]
+  <span id="node_no_image" />
+[% END %]
+
+<div id="node_title">
 [% IF current %]
   [% IF backlinks_in_title AND is_indexable_node %]
     <h2 class="node_name"><a href="[% cgi_url %]?action=index;index_type=[% CGI.escape(index_type) %];index_value=[% CGI.escape(index_value) %]">[% node_name %]</a></h2>
@@ -46,9 +68,20 @@
     <span class="node_name">[% node_name %]</span></em>
   </h2>
 [% END %]
-[% IF not (content || coord_field_1_value || coord_field_2_value || latitude || longitude) %]
-We don't have a node called "[% node_param %]". Would you like to <a href="[% full_cgi_url %]?action=edit;id=[% node_param %]">create it</a>?
+[% IF empty_node %]
+</div>
+<div id="nonexistent_node_message">We don't have a node called "[% node_name %]".
+[% UNLESS read_only %]
+Would you like to <a href="[% full_cgi_url %]?action=edit;id=[% node_param %]">create it</a>?
+[% END %]
+</div>
 [% ELSE %]
+<div id="title_edit_link">
+[% UNLESS read_only %]
+<a href="[% full_cgi_url %]?action=edit;id=[% node_param %]">Edit this page</a>
+[% END %]
+</div>
+</div>
 [% INCLUDE display_metadata.tt %]
 
 <!-- NODE CONTENT STARTS -->
@@ -105,6 +138,7 @@ We don't have a node called "[% node_param %]". Would you like to <a href="[% fu
 [% IF latitude AND longitude %]
   <small>
     (Latitude: 
+    <!-- titles using the wgs84 versions here are for microformats -->
     <abbr class="latitude" title="[% wgs84_lat %]">[% latitude %]</abbr>
 	Longitude: 
 	<abbr class="longitude" title="[% wgs84_long %]">[% longitude %]</abbr>)
@@ -115,6 +149,8 @@ We don't have a node called "[% node_param %]". Would you like to <a href="[% fu
 [% END %]
 <div id="rdf_link">
   <a href="[% cgi_url %]?id=[% node_param %];format=rdf">RDF/XML for this
+  node</a>
+  <a href="[% cgi_url %]?id=[% node_param %];format=json">JSON for this
   node</a>
   [% IF rss_locale_url %]
     / <a href="[% rss_locale_url %]">RSS feed for this locale</a>

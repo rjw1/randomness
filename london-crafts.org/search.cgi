@@ -1,11 +1,12 @@
 #!/usr/bin/perl 
 
-eval 'exec /usr/local/bin/perl  -S $0 ${1+"$@"}'
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
     if 0; # not running under some shell
-use lib qw( /export/home/lc/perl5/lib/perl5 );
 
 use warnings;
 use strict;
+use lib qw( /export/home/lc/perl5/lib/perl5/i386-pc-solaris2.11-thread-multi /export/home/lc/perl5/lib/perl5 );
+use sigtrap die => 'normal-signals';                                            
 
 use CGI;
 use OpenGuides::Config;

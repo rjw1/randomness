@@ -1,15 +1,15 @@
 #!/usr/bin/perl 
 
-eval 'exec /usr/local/bin/perl  -S $0 ${1+"$@"}'
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
     if 0; # not running under some shell
 
 use strict;
+use lib qw( /export/home/lc/perl5/lib/perl5/i386-pc-solaris2.11-thread-multi /export/home/lc/perl5/lib/perl5 );
 use warnings;
-use lib qw( /export/home/lc/perl5/lib/perl5 );
-
+use sigtrap die => 'normal-signals';                                            
 
 use vars qw( $VERSION );
-$VERSION = '0.60';
+$VERSION = '0.65';
 
 use CGI qw/:standard/;
 use CGI::Carp qw(croak);
@@ -20,6 +20,7 @@ use OpenGuides;
 use OpenGuides::CGI;
 use OpenGuides::Config;
 use OpenGuides::RDF;
+use OpenGuides::JSON;
 use OpenGuides::Utils;
 use OpenGuides::Template;
 use Time::Piece;
@@ -191,9 +192,16 @@ eval {
         print $q->redirect( $redir_target );
     } elsif ($action eq 'about') {
         $guide->display_about(format => $format);
-    } else { # Default is to display a node.
+    } elsif ($action eq 'metadata') {
+        $guide->show_metadata(
+                            type   => $q->param("type") || "",
+                            format => $format,
+                          );
+    } elsif ($action eq 'display') { 
         if ( $format and $format eq "rdf" ) {
             display_node_rdf( node => $node );
+        } elsif ( $format and $format eq "json" ) {
+            display_node_json( node => $node );
         } elsif ( $format and $format eq 'raw' ) {
             $guide->display_node(
                                   id       => $node,
@@ -225,7 +233,23 @@ eval {
                                     );
             }
         }
+    } else { 
+        # Fallback: redirect to the display page, preserving all vars
+        # except for the action, which we override.
+        # Note: $q->Vars needs munging if we need to support any
+        # multi-valued params
+        my $params = $q->Vars;
+        $params->{'action'} = 'display';
+        my $redir_target = $script_url . $script_name . '?';
+        my @args = map { "$_=" . $params->{$_} } keys %{$params};
+        $redir_target .= join ';', @args;
+        
+        print $q->redirect(
+            -uri => $redir_target,
+            -status => 303
+        );
     }
+
 };
 
 if ($@) {
@@ -256,7 +280,10 @@ sub show_userstats {
     my @nodes = $wiki->list_recent_changes( %criteria );
     @nodes = map { {name          => $q->escapeHTML($_->{name}),
             last_modified => $q->escapeHTML($_->{last_modified}),
-            comment       => $q->escapeHTML($_->{metadata}{comment}[0]),
+            comment       => OpenGuides::Utils::parse_change_comment(
+                $q->escapeHTML($_->{metadata}{comment}[0]),
+                $script_url . '?',
+            ),
             url           => "$script_name?"
           . $q->escape($formatter->node_name_to_node_param($_->{name})) }
                        } @nodes;
@@ -276,11 +303,19 @@ sub get_cookie {
 
 sub display_node_rdf {
     my %args = @_;
-    my $rdf_writer = OpenGuides::RDF->new( wiki      => $wiki,
-                       config => $config );
+    my $rdf_writer = OpenGuides::RDF->new( wiki => $wiki,
+                                           config => $config );
     print "Content-type: application/rdf+xml\n\n";
     print $rdf_writer->emit_rdfxml( node => $args{node} );
 }
+
+sub display_node_json { 
+    my %args = @_; 
+    my $json_writer = OpenGuides::JSON->new( wiki => $wiki, 
+                                             config => $config ); 
+    print "Content-type: text/javascript\n\n"; 
+    print $json_writer->emit_json( node => $args{node} ); 
+} 
 
 sub process_template {
     my ($template, $node, $vars, $conf, $omit_header) = @_;
@@ -291,7 +326,7 @@ sub process_template {
             template => $template,
             vars     => $vars
     );
-    $output_conf{content_type} = "" if $omit_header; # defaults otherwise
+    $output_conf{noheaders} = 1 if $omit_header; # defaults otherwise
     print OpenGuides::Template->output( %output_conf );
 }
 

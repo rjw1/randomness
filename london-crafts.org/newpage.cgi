@@ -1,11 +1,12 @@
 #!/usr/bin/perl 
 
-eval 'exec /usr/local/bin/perl  -S $0 ${1+"$@"}'
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
     if 0; # not running under some shell
 
 use warnings;
 use strict;
-use lib qw( /export/home/lc/perl5/lib/perl5 );
+use lib qw( /export/home/lc/perl5/lib/perl5/i386-pc-solaris2.11-thread-multi /export/home/lc/perl5/lib/perl5 );
+use sigtrap die => 'normal-signals';                                            
 
 use CGI;
 use OpenGuides::Config;
@@ -38,11 +39,13 @@ sub show_form {
 					config   => $config,
 					template => "newpage.tt",
 					vars     => {
-					    not_editable     => 1,
+                                            not_editable     => 1,
                                             not_deletable    => 1,
                                             deter_robots     => 1,
-				       	    disallowed_chars => \@badchars,
-                                            pagename         => $pagename }
+                                            disallowed_chars => \@badchars,
+                                            pagename         => $pagename,
+                                            read_only        => $config->read_only,
+                                }
     );
 }
 

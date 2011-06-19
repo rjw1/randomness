@@ -1,0 +1,52 @@
+   [% UNLESS not_editable %]
+        <link rel="alternate" type="application/wiki" title="Edit this page!" href="[% source_site or full_cgi_url %]?id=[% node_param %];action=edit">
+[% END %] 
+
+<script type="text/javascript" language="javascript">
+    function makeDirectionsLinks() {
+      var user_postcode = encodeURIComponent(document.getElementById('user_postcode').value);
+      var my_postcode = encodeURIComponent('[% postcode %]');
+      var user_postcode_string = document.getElementById( 'user_postcode' ).value.toUpperCase();
+      document.getElementById( 'get_directions_label' ).innerHTML='Directions to here: ';
+      document.getElementById( 'walkit_link' ).innerHTML='<a href="http://www.walkit.com/walkit_pipe.php?walkit_from='+user_postcode+'&amp;walkit_to='+my_postcode+'&amp;walkit_city=london">WalkIt</a>';
+      document.getElementById( 'gmaps_link' ).innerHTML='<a href="http://maps.google.co.uk/maps?saddr='+user_postcode+'&amp;daddr='+my_postcode+'">Gmaps</a>';
+      document.getElementById( 'journeyplanner_link' ).innerHTML='<a href="http://www.journeyplanner.org/user/XSLT_TRIP_REQUEST2?type_origin=locator&amp;name_origin='+user_postcode+'&amp;type_destination=locator&amp;name_destination='+my_postcode+'&amp;language=en&amp;sessionID=0">Journeyplanner</a>';
+      return false;
+    }
+  </script>
+ 
+  <script type="text/javascript" language="javascript">
+    var tubeReq;
+    function showTubeStations() {
+      document.getElementById( "nearby_tubes" ).innerHTML = "<p>Retrieving data...</p>";
+      // node_param is already URI-encoded
+      var url='scripts/nearest-tube.cgi?origin=[% node_param %]';
+      if (window.XMLHttpRequest) {
+        tubeReq = new XMLHttpRequest();
+        tubeReq.onreadystatechange = processTubeReqChange;
+        tubeReq.open("GET", url, true);
+        tubeReq.send(null);
+      } else if (window.ActiveXObject) {
+        tubeReq = new ActiveXObject("Microsoft.XMLHTTP");
+        if (tubeReq) {
+            tubeReq.onreadystatechange = processTubeReqChange;
+            tubeReq.open("GET", url, true);
+            tubeReq.send();
+        }
+      }
+      return false;
+    }
+
+    function processTubeReqChange() {
+      if (tubeReq.readyState == 4) {
+        var results;
+        if (tubeReq.status == 200) {
+          results = tubeReq.responseText;
+        } else {
+          results = "Error retrieving data: " + tubeReq.statusText;
+        }
+        document.getElementById( "nearby_tubes" ).innerHTML = "<p>Nearby Tube stations: " + results + "</p>";
+      }
+    }
+  </script>
+

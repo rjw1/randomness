@@ -1,0 +1,8 @@
+<div id="common_locales">
+	<div class="navbar_group_title">Locales:</div>
+	<ul id="common_locales_list">
+	[% FOREACH loc = [ 'North London', 'South London', 'East London', 'West London', 'Central London' ] %]
+		<li class="common_locale"><a class="common_locale_link" href="[% catloc_link %]Locale_[% loc %]">[% loc %]</a></li>
+	[% END %]
+	</ul>
+</div>

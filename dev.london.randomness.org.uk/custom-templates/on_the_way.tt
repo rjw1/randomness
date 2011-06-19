@@ -1,0 +1,139 @@
+[% USE CGI %]
+
+[% IF nodes.size %]
+  [% INCLUDE addons_header.tt exclude_navbar = 1 %]
+[% ELSE %]
+  [% INCLUDE addons_header.tt %]
+[% END %]
+
+    <script defer="defer" type="text/javascript">                         
+      //<![CDATA[ 
+        var baseIcon = new GIcon(); 
+        baseIcon.image = "http://www.google.com/mapfiles/marker.png"; 
+        baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png"; 
+        baseIcon.iconSize = new GSize(10, 17); 
+        baseIcon.shadowSize = new GSize(20, 17); 
+        baseIcon.iconAnchor = new GPoint(5, 17); 
+        baseIcon.infoWindowAnchor = new GPoint(9, 2);                      
+        baseIcon.infoShadowAnchor = new GPoint(9, 12);         
+        var endpointIcon = new GIcon(); 
+        endpointIcon.image = "http://the.earth.li/~kake/images/misc/marker-green.png"; 
+        endpointIcon.shadow = "http://www.google.com/mapfiles/shadow50.png"; 
+        endpointIcon.iconSize = new GSize(10, 17); 
+        endpointIcon.shadowSize = new GSize(20, 17); 
+        endpointIcon.iconAnchor = new GPoint(5, 17); 
+        endpointIcon.infoWindowAnchor = new GPoint(9, 2);                      
+        endpointIcon.infoShadowAnchor = new GPoint(9, 12);         
+      //]]> 
+    </script>
+
+
+
+
+<div class="see_other_searches">
+  See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
+</div>
+
+<h2>[% addon_title %]</h2>
+
+<form action="[% self_url %]" method="get">
+  <p>Find me things on the way from:<br />
+    [% choose_how_buttons.os %]
+      OS X [% os_x_origin_box %]
+      OS Y [% os_y_origin_box %]
+      to
+      OS X [% os_x_destin_box %]
+      OS Y [% os_y_destin_box %]<br />
+    [% choose_how_buttons.name %]
+      [% origin_list %]
+      to
+      [% destin_list %]<br />
+    Fudge factor (metres): [% fudge_box %]
+  </p>
+
+  <input type="hidden" name="do_search" value="1">
+  <input type="submit" name="Search" value="Search">
+</form>
+
+[% IF nodes.size == 0 %]
+  <p>Nothing found, sorry.</p>
+[% ELSE %]
+  <ul style="height:400px; overflow:auto; float:right; width:30%">
+
+    [% i = 0 %]
+    [% FOREACH node = nodes %]
+      [% i = i + 1 %]
+      [% IF node.endpoint %]
+        <li class="endpoint_node">
+      [% ELSE %]
+        <li class="midpoint_node">
+      [% END %]
+        <a href='#' onclick="marker[% i %].openInfoWindowHtml(htmlString[% i %]); return false;">[% CGI.escapeHTML( node.name ) %]</a>
+      </li>
+    [% END %]
+
+  </ul>
+
+  <table width="100%" height="100%">
+    <tr>
+      <td><div id="map" style=" width: 65%; height: 450px"></div></td>
+    </tr>
+  </table>
+
+  <script defer="defer" type="text/javascript">
+    //<![CDATA[
+      var map = new GMap( document.getElementById( "map" ) );
+      map.addControl( new GLargeMapControl() );
+      map.addControl( new GMapTypeControl() );
+      map.centerAndZoom( new GPoint( [% long %], [% lat %] ), [% zoom %] );
+
+      [% IF map_type == "satellite" %]
+        map.setMapType( G_SATELLITE_TYPE );
+      [% ELSIF map_type == "hybrid" %]
+        map.setMapType( G_HYBRID_TYPE );
+      [% END %]
+
+      [% i = 0 %]
+      [% FOREACH node = nodes %]
+        [% i = i + 1 %]
+        var point[% i %] = new GPoint( [% node.long %], [% node.lat %] );
+        [% IF node.endpoint %]
+          var marker[% i %] = new GMarker( point[% i %], endpointIcon );
+        [% ELSE %]
+          var marker[% i %] = new GMarker( point[% i %], baseIcon );
+        [% END %]
+        var htmlString[% i %] = "<a href=\"[% base_url %]?[% node.param %]\">[% CGI.escapeHTML( node.name ) %]</a>&nbsp;<a style='text-decoration:none;' href=\"[% base_url %]?id=[% node.param %];action=edit\">(edit)</a><br />[% node.address %]";
+        GEvent.addListener( marker[% i %], "click",
+          function() { 
+            marker[% i %].openInfoWindowHtml( htmlString[% i %] );
+          }
+        ); 
+        map.addOverlay(marker[% i %]); 
+      [% END %]
+
+      function map_change() {
+        var center = map.getCenterLatLng();
+        var link = document.getElementById( "permalink" );
+        var zoom = map.getZoomLevel();
+        var type = map.getCurrentMapType();
+        var map_type;
+        if ( type == G_SATELLITE_TYPE ) {
+          map_type = "satellite";
+        } else if ( type == G_HYBRID_TYPE ) {
+          map_type = "hybrid";
+        } else {
+          map_type = "";
+        }
+        link.href = "?action=index;format=map;long="+center.x+";lat="+center.y+";zoom="+zoom+";map_type="+map_type+";x1=[% x1 %];y1=[% y1 %];x2=[% x2 %];y2=[% y2 %]";
+        }
+        GEvent.addListener(map, "moveend", map_change );
+        GEvent.addListener(map, "maptypechanged", map_change );
+    //]]>
+  </script>
+[% END %]
+
+[% IF nodes.size %]
+  [% INCLUDE addons_footer.tt exclude_navbar = 1 %]
+[% ELSE %]
+  [% INCLUDE addons_footer.tt %]
+[% END %]

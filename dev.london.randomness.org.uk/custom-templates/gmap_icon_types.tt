@@ -1,0 +1,41 @@
+    <script defer="defer" type="text/javascript">                         
+      //<![CDATA[ 
+        var gmapIcons = {};
+        var types = [ 'default_icon', 'small_light_red', 'small_dark_blue', 'large_light_red', 'large_light_blue' ];
+
+        for ( var i=0; i < types.length; i++ ) {
+          var type = types[i];
+          var size = 'small';
+          var icon = new GIcon();
+          if ( type == 'small_dark_blue' ) {
+            icon.image =
+                    "http://the.earth.li/~kake/images/misc/marker-blue.png";
+          } else if ( type == 'large_light_red' ) {
+            icon.image =
+                    "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
+            size = 'large';
+          } else if ( type == 'large_light_blue' ) {
+            icon.image =
+                    "http://maps.google.com/mapfiles/ms/micons/blue-dot.png";
+            size = 'large';
+          } else {
+            icon.image = "http://www.google.com/mapfiles/marker.png"; 
+          }
+          icon.shadow = "http://www.google.com/mapfiles/shadow50.png"; 
+          if ( size == 'large' ) {
+            icon.iconSize = new GSize( 32, 32 );
+            icon.shadowSize = new GSize(20, 17);
+            icon.iconAnchor = new GPoint( 16, 16 );
+          } else {
+            icon.iconSize = new GSize(10, 17);
+            icon.shadowSize = new GSize(20, 17);
+            icon.iconAnchor = new GPoint(5, 17);
+          }
+          icon.infoWindowAnchor = new GPoint(9, 2);                      
+          icon.infoShadowAnchor = new GPoint(9, 12);
+
+          gmapIcons[ type ] = icon;
+        }
+      //]]> 
+    </script>
+

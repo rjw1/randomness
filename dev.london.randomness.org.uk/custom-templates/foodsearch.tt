@@ -1,0 +1,124 @@
+[% INCLUDE addons_header.tt %]
+
+<div class="see_other_searches">
+  See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
+</div>
+
+<h2>[% addon_title %]</h2>
+
+<form action="[% self_url %]" method="get">
+  <div class="criteria_search_group" id="locale_group">
+    <label for="locale">Locale:</label>
+    <div class="criteria_search_box">
+      [% locale_box %]
+    </div>
+  </div>
+  <div class="criteria_search_group" id="postal_district_group">
+    or: <label for="postal_district">Postal district:</label>
+    <div class="criteria_search_box">
+      [% postal_district_box %]
+    </div>
+  </div>
+  <div class="criteria_search_group" id="near_tube_group">
+    or: <label for="tube_distance">Within</label>
+      <div class="criteria_search_box">
+        [% tube_distance_box %]
+      </div>
+    <label for="tube_station">of Tube station:</label>
+    <div class="criteria_search_box">
+      [% tube_box %]
+    </div>
+  </div>
+  <div class="criteria_search_checkbox_group" id="vegan_friendly_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.vegan_friendly %]
+    </div>
+    <label for="vegan_friendly">Vegan friendly</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="veggie_friendly_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.veggie_friendly %]
+    </div>
+    <label for="veggie_friendly">Vegetarian friendly</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="totally_veggie_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.totally_veggie %]
+    </div>
+    <label for="totally_veggie">Totally vegetarian</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="restaurants_only_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.restaurants_only %]
+    </div>
+    <label for="restaurants_only">Only show restaurants</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="cafes_only_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.cafes_only %]
+    </div>
+    <label for="cafes_only">Only show cafes</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="takeaway_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.takeaway %]
+    </div>
+    <label for="takeaway">Offers takeaway</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="delivery_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.delivery %]
+    </div>
+    <label for="delivery">Offers delivery</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="delivers_to_se16">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.delivers_to_se16 %]
+    </div>
+    <label for="delivers_to_se16">Delivers to SE16</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="indian_food">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.indian_food %]
+    </div>
+    <label for="indian_food">Offers Indian food</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="vietnamese_food">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.vietnamese_food %]
+    </div>
+    <label for="vietnamese_food">Offers Vietnamese food</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="step_free_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.step_free %]
+    </div>
+    <label for="step_free">Step-free access</label>
+  </div>
+  <div class="criteria_search_checkbox_group" id="accessible_loo_group">
+    <div class="criteria_search_checkbox">
+      [% checkboxes.accessible_loo %]
+    </div>
+    <label for="accessible_loo">Accessible toilet</label>
+  </div>
+  <div class="criteria_search_submit">
+    <input type="submit" name="Search" value="Search" class="form_button" />
+  </div>
+</form>
+
+[% IF results.size %]
+  <h3>[% results.size %] result[% IF results.size > 1 %]s[% END %] found</h3>
+
+  <dl class="criteria_search_results">
+    [% FOREACH result = results %]
+      <dt><a href="[% full_cgi_url %]?[% result.param %]">[% result.name %]</a></dt>
+      [% IF result.summary %]
+        <dd>[% result.summary %]</dd>
+      [% END %]
+    [% END %]
+  </ul>
+[% ELSIF doing_search %]
+  <p>No results found, sorry.  Try again with fewer (or different) criteria.</p>
+[% END %]
+
+[% INCLUDE addons_footer.tt %]

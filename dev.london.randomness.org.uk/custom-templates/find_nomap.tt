@@ -1,0 +1,24 @@
+    <table border="1" class="category_search_results">
+      <tr>
+        <th><b>[% cat1 %]</b></th>
+        <th><b>[% IF cat2 %][% cat2 %][% ELSE %]&nbsp;[% END %]</b></th>
+        <th><b>Distance (metres)</b></th>
+      </tr>
+
+      [% FOREACH result = results %]
+        <tr>
+          <td>
+            [% IF result.origin.name == last_origin %]
+              &nbsp;
+            [% ELSE %]
+              <a href="[% result.origin.url %]">[% result.origin.name %]</a>
+            [% END %]
+          </td>
+          <td valign="top">
+            <a href="[% result.end.url %]">[% result.end.name %]</a>
+          </td>
+          <td>[% result.dist %]</td>
+        </tr>
+        [% last_origin = result.origin.name %]
+      [% END %]
+    </table>

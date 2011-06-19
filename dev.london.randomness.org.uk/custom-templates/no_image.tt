@@ -1,0 +1,115 @@
+[% USE CGI %]
+[% INCLUDE addons_header.tt %]
+
+<script type="text/javascript" language="javascript">
+<!--
+
+function addLoadEvent( func ) {
+  var oldonload = window.onload;
+  if ( typeof window.onload != 'function' ) {
+    window.onload = func;
+  } else {
+    window.onload = function() {
+      oldonload();
+      func();
+    }
+  }
+}
+
+addLoadEvent( addClearButton );
+
+function addClearButton() {
+  document.getElementById( 'clear_criteria' ).innerHTML = '<input type="submit" name="Clear all criteria" value="Clear all criteria" onClick="return clearAllCriteria()" />';
+}
+
+function clearAllCriteria() {
+  var form = document.getElementById( 'criteria_form' );
+  var textfields = form.getElementsByTagName( 'input' );
+  for ( i = 0; i < textfields.length; i++ ) {
+    if ( textfields[i].getAttribute( 'type' ) == 'text' ) {
+      textfields[i].value = '';
+    }
+  }
+
+  var dropdowns = form.getElementsByTagName( 'select' );
+  for ( i = 0; i < dropdowns.length; i++ ) {
+    dropdowns[i].selectedIndex = 0;
+  }
+  return false;
+}
+
+-->
+</script>
+
+<div class="see_other_searches">
+  See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
+</div>
+
+<h2>[% addon_title %]</h2>
+
+<div id="total_photo_count_message">A total of <b>[% num_photos %]</b> pages
+([% percent_photos %]%) already have photos!</div>
+
+<form id="criteria_form" action="[% self_url %]" method="get">
+  <p>Restrict results to locale [% locale_box %]
+     <small>(Locales not listed have no pages with missing images.)
+     </small>
+  </p>
+
+  <p>Restrict results to category [% category_box %]
+     <small>(Categories not listed have no pages with missing images.)
+     </small>
+  </p>
+
+  [% IF geo_handler == 1 %]
+    <p>Restrict results to within [% os_dist_box %] metres of
+       OS X [% os_x_box %], OS Y [% os_y_box %]</p>
+  [% ELSIF geo_handler == 3 %]
+    <p>Restrict results to within [% latlong_dist_box %] metres of
+       latitude [% latitude_box %], longitude [% longitude_box %]
+       <small>(decimal, WGS-84)</small></p>
+  [% END %]
+
+  <p>Restrict results to within [% origin_dist_box %] metres of
+     [% origin_list %]</p>
+
+  <p>
+    [% exclude_locales_box %] Exclude locale pages.<br />
+    [% exclude_categories_box %] Exclude category pages.
+  </p>
+
+  <p>
+    [% show_map_box %] Show results on map as well as list (may be slow for large result sets).
+  </p>
+  <input type="submit" name="Search" value="Search" />
+  <span id="clear_criteria"></span>
+</form>
+
+[% IF results.size %]
+  [% IF show_map %]
+    <p>
+      Number of photo-less pages satisfying these criteria: [% total_count %]
+      [% IF results.size < total_count %]
+        ([% results.size %] shown on map - untick the map box to see pages
+         without geodata as well)
+      [% ELSE %]
+        (all shown on map)
+      [% END %]
+    </p>
+
+    [% INCLUDE search_result_map.tt %]
+ 
+  [% ELSE %]
+    <p>Number of photo-less pages satisfying these criteria:
+    [% results.size %]</p>
+    <ul>
+      [% FOREACH node = results %]
+        <li><a href="[% node.url %]">[% node.name %]</a></li>
+      [% END %]
+    </ul>
+  [% END %]
+[% ELSE %]
+  <p>No pages found matching your criteria.</p>
+[% END %]
+
+[% INCLUDE addons_footer.tt %]

@@ -1,0 +1,54 @@
+[% USE CGI %]
+[% INCLUDE addons_header.tt %]
+
+<div class="see_other_searches">
+  See also: <a href="[% full_cgi_url %]?Ways_To_Search_RGL">Ways To Search RGL</a>
+</div>
+
+<h2>[% addon_title %]</h2>
+
+<form action="[% self_url %]" method="GET">
+  <p>Find me things in category [% catbox %] located in [% locbox %]</p>
+  <p>[% show_map_box %] Show them on a map
+     [% small_pointers_box %] Use smaller map markers
+      <input type="submit" name="Search" value="Search" class="form_button">
+  </p>
+</form>
+
+[% IF show_search_example %]
+  <div class="category_search_example">
+      Example search: <a href="http://london.randomness.org.uk/scripts/locate.cgi?cat=Cafes&loc=Fitzrovia&map=1">cafes in Fitzrovia</a>
+  </div>
+[% END %]
+
+[% IF error_message %]
+  <p>[% error_message %]</p>
+[% END %]
+
+[% IF do_search %]
+  [% IF cat AND loc %]
+    <h3><a href="[% cat_link %]">[% cat %]</a> in
+        <a href="[% loc_link %]">[% loc %]</a>:</h3>
+  [% ELSIF cat %]
+    <h3><a href="[% cat_link %]">[% cat %]</a> anywhere in London:</h3>
+  [% ELSIF loc %]
+    <h3>All things in <a href="[% loc_link %]">[% loc %]</a>:</h3>
+  [% END %]
+  [% IF results.size %]
+    [% IF show_map %]
+      [% INCLUDE search_result_map.tt %]
+    [% ELSE %]
+      <ul>
+        [% FOREACH result = results %]
+          <li>
+            <a href="[% result.url %]">[% result.name %]</a>
+          </li>
+        [% END %]
+      </ul>
+    [% END %]
+  [% ELSE %]
+    <p>No results, sorry.</p>
+  [% END %]
+[% END %]
+
+[% INCLUDE addons_footer.tt %]

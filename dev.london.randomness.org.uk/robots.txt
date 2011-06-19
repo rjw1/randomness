@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:
+Sitemap: http://london.randomness.org.uk/sitemap.xml
+User-agent: Slurp
+Crawl-delay: 3

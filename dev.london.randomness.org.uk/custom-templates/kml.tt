@@ -1,0 +1,45 @@
+[%- USE CGI -%]
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+  <Document>
+
+ <name>RGL KML file</name>
+<atom:author>      
+      <atom:name>Randomness Guide to London</atom:name>    
+    </atom:author>    
+    <atom:link href="http://london.randomness.org.uk" rel="related" />  
+    [% IF style AND style == 'photo' %]
+      <Style id="photo">
+        <IconStyle>
+          <Icon>
+            <href>http://maps.google.com/mapfiles/ms/micons/camera.png</href>
+          </Icon>
+        </IconStyle>
+      </Style>
+    [% END %]
+    [% FOREACH point = points %]
+      <Placemark>
+        <name>
+          [% point.name %]
+        </name>
+        [% IF style AND style == 'photo' %]
+          <styleUrl>#photo</styleUrl>
+        [% END %]
+        <Point>
+          <coordinates>[% point.long %],[% point.lat %]</coordinates>
+        </Point>
+        <description>
+          <![CDATA[
+            [% IF point.address %]
+              [% point.address %]<br>
+            [% END %]
+            <a href="[% point.url %]">RGL entry</a>
+            [% IF point.categories %]
+              <br>Categories: [% point.categories.join(', ') %]
+            [% END %]
+          ]]>
+        </description>
+      </Placemark>
+    [% END %]
+  </Document>
+</kml>

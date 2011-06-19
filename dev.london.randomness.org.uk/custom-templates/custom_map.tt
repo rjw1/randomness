@@ -1,0 +1,89 @@
+[% INCLUDE addons_header.tt %]
+
+<h2>[% addon_title %]</h2>
+
+<div style="font-size:0.8em">Choose pages from the dropdown list below
+to add them to the map.  Note: this is a new feature which is still
+under development, and hence possibly unstable.  Don't rely on URLs
+staying the same.  Also note that adding a point doesn't currently
+scroll the map; if you don't see your point then try zooming out.
+Known bugs: you can add a place multiple times.  Wanted features:
+choose your own colours for the pointers, add everything in a given
+category, add all pages that need photos, only have short reviews,
+etc.</div>
+
+<form onSubmit="return addNodeToMap()">
+  [% node_list %]
+  <input type="submit" name="Add" value="Add" class="form_button" />
+</form>
+
+<!--
+<form onSubmit="return showAllInfoWindows()">
+  <input type="submit" name="KakeTest" value="KakeTest" class="form_button" />
+</form>
+-->
+
+<table width="100%" height="100%">
+  <tr>
+    <td><div id="map" style="width: 100%; height: 450px"></div></td>
+  </tr>
+</table>
+
+<script defer="defer" type="text/javascript">
+  //<![CDATA[ 
+
+    var nodeIndex = 0;
+    var pointsOnMap = [ ];
+    var markersOnMap = [ ];
+    var legendsOnMap = [ ];
+
+    var nodeData = {
+                     [% FOREACH node = node_data %]
+                       "[% node.name %]": {
+                                            "lat":  "[% node.lat %]",
+                                            "long": "[% node.long %]"
+                                          },
+                     [% END %]
+                   };
+
+    function removeNodeFromMap( index ) {
+      map.removeOverlay( markersOnMap[ index ] );
+    }
+
+    function addNodeToMap() {
+      nodeIndex++;
+      var dropdown = document.getElementById( 'node_list' );
+      var nodeName = dropdown.options[ dropdown.selectedIndex ].value;
+      var lat = nodeData[ nodeName ].lat;
+      var long = nodeData[ nodeName ].long;
+      var point = new GPoint( long, lat );
+      var marker = new GMarker( point, baseIcon );
+      var legend = nodeName + " (<a onclick=\"removeNodeFromMap( " + nodeIndex + ")\">remove</a>)";
+      pointsOnMap[ nodeIndex ] = point;
+      markersOnMap[ nodeIndex ] = marker;
+      legendsOnMap[ nodeIndex ] = legend;
+      GEvent.addListener( marker, "click",
+        function() { 
+          marker.openInfoWindowHtml( legend );
+        }
+      ); 
+      map.addOverlay( marker ); 
+      return false;
+    }
+
+    function showAllInfoWindows() {
+      for ( i = 0; i < markersOnMap.length; i++ ) {
+        markersOnMap[ i ].openInfoWindowHtml( legendsOnMap[ i ] );
+      }
+      return false;
+    }
+
+    var map = new GMap2( document.getElementById( "map" ) );
+    map.addControl( new GLargeMapControl() );
+    map.addControl( new GMapTypeControl() );
+    map.setCenter( new GLatLng( [% lat %], [% long %] ), 17 - [% zoom %] );
+
+  //]]>
+</script>
+
+[% INCLUDE addons_footer.tt %]

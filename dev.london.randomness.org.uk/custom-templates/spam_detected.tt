@@ -1,0 +1,21 @@
+[% INCLUDE header.tt page_title = "Page Not Saved" %]
+[% INCLUDE banner.tt %]
+
+[% IF !config.content_above_navbar_in_html %]
+  [% INCLUDE navbar.tt %]
+[% END %]
+
+<div id="maincontent">
+  <h1>Not saved</h1>
+
+  <p>Sorry; that looks like spam.  If it <i>isn't</i> spam, please
+  <a href="http://london.randomness.org.uk/wiki.cgi?Contact_RGL">contact us</a>
+  and let us know.  The content of your edit has been saved and we will be
+  able to restore it if necessary.</p>
+</div>
+
+[% IF config.content_above_navbar_in_html %]
+  [% INCLUDE navbar.tt %]
+[% END %]
+
+[% INCLUDE footer.tt %]

@@ -1,0 +1,79 @@
+[% INCLUDE addons_header.tt %]
+
+<h2>[% addon_title %]</h2>
+
+[% IF !node_param %]
+  <p>Page name missing or in error; please go back and try again.  If this
+  message persists, please contact the site administrator and tell them what
+  you were trying to do.</p>
+[% ELSIF comment_submitted %]
+  <p>Thank you for your comment.
+  <a href="[% full_cgi_url %]?[% node_param %]">Return to the page</a>.
+  </p>
+[% ELSIF commit_error %]
+  <p>Error saving comment; please go back and try again.  If this
+  message persists, please contact the site administrator and tell them what
+  you were trying to do.</p>
+[% ELSE %]
+  <p>(<a href="[% full_cgi_url %]?[% node_param %]">Cancel and return to page</a>.)</p>
+  <form action="[% self_url %]" method="post">
+    <p>
+      <b>Please note:</b>
+      <ul>
+        <li>Your comment will be appended to the bottom of the page, and will
+            be freely editable by other people.  If it's interesting and
+            useful, someone will probably incorporate it into the main writeup
+            at some point.  It is very unlikely to be left there forever
+            exactly as you wrote it.</li>
+        <li>If the purpose of your comment is to tell the world how much you
+            hate (or love) this establishment, you're probably better off
+            commenting somewhere else <small>(some suggestions:
+            [<a href="http://www.pubsgalore.co.uk/">1</a>]
+            [<a href="http://www.beerintheevening.com/">2</a>]
+            [<a href="http://www.london-eating.co.uk/">3</a>]
+            [<a href="http://www.qype.co.uk/">4</a>]
+            [<a href="http://trustedplaces.com/">5</a>]
+            [<a href="http://www.welovelocal.com/">6</a>]
+            [<a href="http://www.yelp.co.uk/">7</a>])</small>.</li>
+        <li>This bears repeating: we're not a UGC (user-generated content)
+            site, and we're very likely to just delete comments that contain
+            no (or very little) objective, verifiable, factual information
+            &#8212; particularly if you're making a complaint about somewhere.
+            This is not your soapbox, and we are not having a dialogue
+            here.  Please feel free to have your rant (or rave) elsewhere, and
+            then ask us to link to it &#8212; if it's at least vaguely
+            informed and comprehensible, we probably will.</li>
+        <li>If you're reporting a factual mistake on this page, please let us
+            know <i>why</i> you know it's wrong (e.g. you're the owner/manager,
+            or you were in there today and you noticed the prices have
+            changed, that sort of thing).</li>
+        <li>If you want to ask us a question, you're better off using the
+            contact information in <a href="/wiki.cgi?Contact_RGL">Contact
+            RGL</a>.</li>
+      </ul>
+    </p>
+
+    <p>
+      <label for="emanresu">
+        Your username (<a href="[% script_url %]preferences.cgi">set it</a>):
+        <br />
+      </label>
+      <input type="text" size="30" name="emanresu" id="emanresu"
+       value="[% username %]" />
+    </p>
+
+    <p>
+      <label for="tnemmoc">
+        Your comment:<br />
+      </label>
+      <textarea name="tnemmoc" id="tnemmoc" rows="5" cols="50"></textarea>
+    </p>
+
+    <input type="hidden" name="id" value="[% node_name %]" />
+    <p><input type="submit" name="Submit Comment" value="Submit Comment"
+        class="form_button" /></p>
+
+  </form>
+[% END %]
+
+[% INCLUDE addons_footer.tt %]

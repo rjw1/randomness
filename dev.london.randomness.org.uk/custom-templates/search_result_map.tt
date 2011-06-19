@@ -1,0 +1,66 @@
+[% INCLUDE gmap_icon_types.tt %]
+
+  <ul style="height:400px; overflow:auto; float:right; width:20%; font-size: 0.8em">
+
+    [% i = 0 %]
+    [% FOREACH node = results %]
+      [% i = i + 1 %]
+      [% IF node.type %]
+        <li class="map_search_result_type_[% node.type %]">
+      [% ELSE %]
+        <li class="map_search_result">
+      [% END %]
+        <a href='#' onclick="marker[% i %].openInfoWindowHtml(htmlString[% i %]); return false;">[% CGI.escapeHTML( node.name ) %]</a>
+      </li>
+    [% END %]
+
+  </ul>
+
+  <div id="map" style="float: left; width: 75%; height: 600px"></div>
+
+  <script defer="defer" type="text/javascript">
+    //<![CDATA[
+      var map = new GMap2( document.getElementById( "map" ) );
+      map.setCenter( new GLatLng( [% lat %], [% long %] ) );
+      map.addControl( new GLargeMapControl() );
+      map.addControl( new GMapTypeControl() );
+      var zoom = map.getBoundsZoomLevel(
+        new GLatLngBounds(
+          new GLatLng( [% min_lat %], [% min_long %] ),
+          new GLatLng( [% max_lat %], [% max_long %] )
+        )
+      );
+      if ( zoom > 16 ) {
+        zoom = 16;
+      }
+      map.setZoom( zoom );
+
+      [% IF map_type == "satellite" %]
+        map.setMapType( G_SATELLITE_TYPE );
+      [% ELSIF map_type == "hybrid" %]
+        map.setMapType( G_HYBRID_TYPE );
+      [% END %]
+
+      [% i = 0 %]
+      [% FOREACH node = results %]
+        [% i = i + 1 %]
+        var point[% i %] = new GLatLng( [% node.lat %], [% node.long %] );
+        [% IF node.markertype %]
+          if ( gmapIcons.[% node.markertype %] ) {
+            var marker[% i %] = new GMarker( point[% i %], gmapIcons.[% node.markertype %] );
+          } else {
+            var marker[% i %] = new GMarker( point[% i %], gmapIcons.default_icon );
+          }
+        [% ELSE %]
+          var marker[% i %] = new GMarker( point[% i %], gmapIcons.default_icon );
+        [% END %]
+        var htmlString[% i %] = "<a href=\"[% node.url %]\">[% CGI.escapeHTML( node.name ) %]</a><br>[% node.address %]";
+        GEvent.addListener( marker[% i %], "click",
+          function() { 
+            marker[% i %].openInfoWindowHtml( htmlString[% i %] );
+          }
+        ); 
+        map.addOverlay(marker[% i %]); 
+      [% END %]
+    //]]>
+  </script>

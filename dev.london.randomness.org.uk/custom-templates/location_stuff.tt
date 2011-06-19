@@ -1,0 +1,59 @@
+[% USE CGI %]
+
+<div id="location_stuff">
+  [% IF coord_field_1_value AND coord_field_2_value %]
+    <div id="nearby_tubes">
+      <form onSubmit="return showTubeStations()">
+        <p>Show nearby Tube stations:
+        <input type="submit" name="Show" value="Show" class="form_button" />
+      </form>
+    </div>
+
+    <div id="find_within_distance">
+      <form action="search.cgi">
+        <label for="distance">Find all things on RGL within</label>
+        <select name="[% dist_field %]" id="distance">
+          <option value="500">500 metres</option>
+          <option value="1000">1 kilometre</option>
+          <option value="1500">1.5 kilometres</option>
+          <option value="2000">2 kilometres</option>
+        </select>
+        of here.
+        <input type="hidden" name="[% coord_field_1 %]" value="[% coord_field_1_value %]" />
+        <input type="hidden" name="[% coord_field_2 %]" value="[% coord_field_2_value %]" />
+        <input type="submit" name="Go" value="Go" class="form_button" />
+      </form>
+    </div>
+  [% END %]
+
+  [% IF postcode %]
+    <div id="get_directions">
+      <form onSubmit="return makeDirectionsLinks()">
+        <p>Enter your postcode to show directions to this place:
+        <input type="text" id="user_postcode" size="8" />
+        <input type="submit" name="Show" value="Show" class="form_button" />
+      </form>
+      <div id="get_directions_label"></div>
+      <div id="walkit_link"></div>
+      <div id="journeyplanner_link"></div>
+      <div id="gmaps_link"></div>
+    </div>
+
+    <div id="search_your_london">
+[% IF 0 %]
+      Search YourLondon.gov.uk for nearby
+      <a href="http://yourlondon.gov.uk/maps/fyn.jsp?postcode=[% CGI.escape(postcode) %]&classification=06340461">public toilets</a> or
+      <a href="http://yourlondon.gov.uk/maps/fyn.jsp?postcode=[% CGI.escape(postcode) %]&classification=02090141">cash machines</a>.
+[% ELSE %]
+[YourLondon.gov.uk public toilet/cash machine search not currently available &#8212; sorry!]
+[% END %]
+    </div>
+<br />
+    <div id="bus_routes">
+     Find nearby <a href="http://www.tfl.gov.uk/tfl/gettingaround/maps/buses/tfl-bus-map/text/?q=[% CGI.escape(postcode) %]"#>bus routes</a>
+   </div>
+
+  [% END %]
+
+</div>
+

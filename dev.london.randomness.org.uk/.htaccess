@@ -1,0 +1,4 @@
+# Added by OpenGuides installer
+<Files wiki.conf>
+deny from all
+</Files>

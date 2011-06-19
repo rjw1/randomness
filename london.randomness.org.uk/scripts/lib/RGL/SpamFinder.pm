@@ -68,9 +68,9 @@ sub looks_like_spam {
         }
 
        if ( $name eq "Hackney Empire, E8 1EJ"
-              && $comment =~ m|\w{20},\s+<a\s+href="http.*</a>,\s+\w{6}| ) {
-            $class->notify_admins( %args, id => "00037",
-                                   reason => "20 char + URL + 6 char comment on $name" );
+              && $comment =~ m|\w{20},\s+<a\s+href="http.*</a>| ) {
+            $class->notify_admins( %args, id => "00038",
+                                   reason => "20 char + URL comment on $name" );
             return 1;
         }
 

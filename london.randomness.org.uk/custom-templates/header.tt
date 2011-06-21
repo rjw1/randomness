@@ -16,11 +16,11 @@
     <link rev="made" href="mailto:[% contact_email %]" />
   [% END %]
   [% IF summary %]
-    <meta name="description" content="[% node_name %]. [% summary %]" />
+    <meta name="description" content="[% node_name %]. [% summary %] Reviews and links from the Randomness Guide to London." />
   [% END %]
   [% IF (categories.size AND categories.size > 0)
      OR (locales.size AND locales.size > 0) %]
-    <meta name="keywords" content="london, [% IF categories.size AND
+    <meta name="keywords" content="london, reviews, rgl, [% IF categories.size AND
 categories.size > 0 %][% FOREACH category = categories %][%
 category.name %][%- ", " %][% END %][% END %][% IF locales.size AND
 locales.size > 0 %][% FOREACH locale = locales %][% locale.name %][%-

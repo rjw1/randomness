@@ -61,15 +61,16 @@ sub looks_like_spam {
             return 1;
         }
 
-       if ( $name eq "Old Salt Quay, SE16 5QU" && $comment =~ /webspace\.webring\.com/ ) {
+       if ( $name eq "Thattukada, E12 6SJ"
+              && $comment =~ m|\w{20},\s+http://| ) {
             $class->notify_admins( %args, id => "00036",
-                                   reason => "webring comment on $name" );
+                                   reason => "20 char + URL comment on $name" );
             return 1;
         }
 
        if ( $name eq "Hackney Empire, E8 1EJ"
               && $comment =~ m|\w{20},\s+<a\s+href="http.*</a>| ) {
-            $class->notify_admins( %args, id => "00038",
+            $class->notify_admins( %args, id => "00037",
                                    reason => "20 char + URL comment on $name" );
             return 1;
         }
@@ -83,19 +84,9 @@ sub looks_like_spam {
             }
         }
 
-         if ( $content =~ 'http://' && $content =~ /\banal\b/ && $content =~ /\bsex\b/ ) {
-            $class->notify_admins( %args, id => "00039",
-                                   reason => "'anal' + 'sex' + URL" );
-            return 1;
-        }
         if ( $content =~ 'http://' && $content =~ /\bxanax\b/ ) {
             $class->notify_admins( %args, id => "00040",
                                    reason => "'xanax' + URL" );
-            return 1;
-        }
-        if ( $content =~ 'http://' && $content =~ /\boxycodone\b/ ) {
-            $class->notify_admins( %args, id => "00041",
-                                   reason => "'oxycodone' + URL" );
             return 1;
         }
     }

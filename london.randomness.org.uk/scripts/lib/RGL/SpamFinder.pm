@@ -61,34 +61,81 @@ sub looks_like_spam {
             return 1;
         }
 
-       if ( $name eq "Thattukada, E12 6SJ"
-              && $comment =~ m|\w{20},\s+http://| ) {
-            $class->notify_admins( %args, id => "00036",
-                                   reason => "20 char + URL comment on $name" );
+       if ( $name eq "Arcola Theatre"
+              && $comment =~ m|^\w{11},\s+<a\s+href="http://.*\w{10}</a>| ) {
+            $class->notify_admins( %args, id => "00039",
+                                   reason => "11 char + URL comment on $name" );
             return 1;
         }
 
-       if ( $name eq "Hackney Empire, E8 1EJ"
-              && $comment =~ m|\w{20},\s+<a\s+href="http.*</a>| ) {
-            $class->notify_admins( %args, id => "00037",
-                                   reason => "20 char + URL comment on $name" );
-            return 1;
-        }
-
-        if ( $username =~ /^[a-z]+\s[a-z]+$/ ) {
-            my $text = "$username $comment";
-            if ( $text =~ /q[a-tv-z].*q[a-tv-z]/ ) {
-                $class->notify_admins( %args, id => "00038",
-       reason => "two-word lowercase username + two occurrences of q+non-u" );
-                return 1;
-            }
-        }
-
-        if ( $content =~ 'http://' && $content =~ /\bxanax\b/ ) {
+       if ( $name eq "Hawksmoor, E1 6BJ"
+              && $comment =~ m|^\w{11},\s+<a\s+href="http://.*</a>| ) {
             $class->notify_admins( %args, id => "00040",
-                                   reason => "'xanax' + URL" );
+                                   reason => "11 char + URL comment on $name" );
             return 1;
         }
+
+       if ( $name eq "Old Salt Quay, SE16 5QU"
+              && $comment =~ m|http://www.ted.com/profiles| ) {
+            $class->notify_admins( %args, id => "00042",
+                                   reason => "ted.com comment on $name" );
+            return 1;
+        }
+
+       if ( $name eq "Old Salt Quay, SE16 5QU"
+              && $comment =~ m|http://upcoming.yahoo.com/user/| ) {
+            $class->notify_admins( %args, id => "00043",
+                                   reason => "upcoming.com comment on $name" );
+            return 1;
+        }
+
+       if ( $name eq "Old Salt Quay, SE16 5QU"
+              && $comment =~ m|http://www.fotolog.com/| ) {
+            $class->notify_admins( %args, id => "00044",
+                                   reason => "fotolog.com comment on $name" );
+            return 1;
+        }
+
+       if ( $comment =~ m|www.consolidationloanscotland.net| ) {
+            $class->notify_admins( %args, id => "00045",
+                                   reason => "consolidation loan comment" );
+            return 1;
+        }
+
+       if ( $comment =~ m|web20power.txt| ) {
+            $class->notify_admins( %args, id => "00046",
+                                   reason => "web20power" );
+            return 1;
+        }
+
+       if ( $name eq "Old Salt Quay, SE16 5QU"
+              && $comment =~ m|http://www.collegehumor.com/| ) {
+            $class->notify_admins( %args, id => "00047",
+                                   reason => "college humor on $name" );
+            return 1;
+        }
+
+       if ( $name eq "Old Salt Quay, SE16 5QU"
+              && $comment =~ m|http://www.discogs.com/user| ) {
+            $class->notify_admins( %args, id => "00048",
+                                   reason => "discogs.com on $name" );
+            return 1;
+        }
+
+       if ( $name eq "Old Salt Quay, SE16 5QU"
+              && $comment =~ m|webspace.webring.com| ) {
+            $class->notify_admins( %args, id => "00049",
+                                   reason => "webring comment on $name" );
+            return 1;
+        }
+
+       if ( $name eq "Old Salt Quay, SE16 5QU"
+              && $comment =~ m|jugem.jp| ) {
+            $class->notify_admins( %args, id => "00050",
+                                   reason => "jugem.jp comment on $name" );
+            return 1;
+        }
+
     }
 }
 

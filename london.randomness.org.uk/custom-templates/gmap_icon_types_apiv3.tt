@@ -1,0 +1,25 @@
+<script type="text/javascript">                         
+  var gmap_icons_apiv3 = {};
+
+  gmap_icons_apiv3[ "default_icon" ]
+    = "http://www.google.com/mapfiles/marker.png"
+
+  gmap_icons_apiv3[ "small_light_red" ] = new google.maps.MarkerImage(
+    "http://maps.google.com/mapfiles/ms/micons/red-dot.png",
+    null, null, null, new google.maps.Size( 20, 20 ) );
+
+  gmap_icons_apiv3[ "large_light_red" ]
+    = "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
+
+  gmap_icons_apiv3[ "small_dark_blue" ] = new google.maps.MarkerImage(
+    "http://the.earth.li/~kake/images/misc/marker-blue.png",
+    null, null, null, new google.maps.Size( 20, 20 ) );
+
+  gmap_icons_apiv3[ "small_light_blue" ] = new google.maps.MarkerImage(
+    "http://maps.google.com/mapfiles/ms/micons/blue-dot.png",
+    null, null, null, new google.maps.Size( 20, 20 ) );
+
+  gmap_icons_apiv3[ "large_light_blue" ]
+    = "http://maps.google.com/mapfiles/ms/micons/blue-dot.png";
+
+</script>

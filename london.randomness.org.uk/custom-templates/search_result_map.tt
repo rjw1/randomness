@@ -48,7 +48,7 @@
   }
 </script>
 
-  <ul style="height:400px; overflow:auto; float:right; width:20%; font-size: 0.8em">
+  <ul style="height:400px; overflow:auto; float:right; max-width:20%; font-size: 0.8em">
 
     [% i = 0 %]
     [% FOREACH node = results %]
@@ -64,4 +64,4 @@
 
   </ul>
 
-  <div id="map" style="float: left; width: 75%; height: 600px"></div>
+  <div id="map" style="float: left; width: 73%; height: 600px"></div>

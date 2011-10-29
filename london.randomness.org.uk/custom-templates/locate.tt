@@ -11,6 +11,7 @@
   <p>Find me things in category [% catbox %] located in [% locbox %]</p>
   <p>[% show_map_box %] Show them on a map
      [% small_pointers_box %] Use smaller map markers
+     [% blue_pointers_box %] Use blue map markers rather than red
       <input type="submit" name="Search" value="Search" class="form_button">
   </p>
 </form>

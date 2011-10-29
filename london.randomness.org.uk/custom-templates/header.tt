@@ -7,7 +7,7 @@
     <title>[% page_title %]</title>
     <meta name="DC.title" content="[% page_title %]" />
   [% ELSE %]
-    <title>[% node_name %] - [% site_name %]</title>
+    <title>[% node_name %] - [% site_name %] (RGL)</title>
     <meta name="DC.title" content="[% node_name %] - [% site_name %]" />
   [% END %]
     <meta name="DC.publisher" content="[% site_name %]" />
@@ -16,7 +16,7 @@
     <link rev="made" href="mailto:[% contact_email %]" />
   [% END %]
   [% IF summary %]
-    <meta name="description" content="[% node_name %]. [% summary %] Reviews and links from the Randomness Guide to London." />
+    <meta name="description" content="[% node_name %]. [% summary %] Reviews and links from the Randomness Guide to London (RGL)." />
   [% END %]
   [% IF (categories.size AND categories.size > 0)
      OR (locales.size AND locales.size > 0) %]
@@ -27,7 +27,7 @@ locales.size > 0 %][% FOREACH locale = locales %][% locale.name %][%-
 ", " UNLESS loop.last %][% END %][% END %]" />
   [% END %]
   [% IF node_name == "Home" %]
-    <meta name="keywords" content="london, pubs, good beer guide, real ale, real cider, restaurants, community, wiki, openguides" />
+    <meta name="keywords" content="london, pubs, good beer guide, real ale, real cider, restaurants, community, wiki, openguides, rgl, reviews" />
   [% END %]
   [% IF stylesheet %]
     <link rel="stylesheet" href="[% stylesheet %]" type="text/css" title="Stylesheet for [% site_name %]" />

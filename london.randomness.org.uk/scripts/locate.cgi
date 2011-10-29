@@ -38,6 +38,7 @@ if ( $do_search && !$cat && !$loc ) {
 } elsif ( $do_search || $cat || $loc ) {
   $tt_vars{show_search_example} = 0;
   my $small_pointers = $q->param( "small_pointers" ) || 0;
+  my $blue_pointers = $q->param( "blue_pointers" ) || 0;
   my $show_map = $q->param( "map" );
 
   if ( !$cat && !$loc ) {
@@ -85,10 +86,18 @@ if ( $do_search && !$cat && !$loc ) {
       ORDER BY node.name";
 
     my $markertype;
-    if ( $small_pointers ) {
-      $markertype = "small_light_red";
+    if ( $blue_pointers ) {
+      if ( $small_pointers ) {
+        $markertype = "small_light_blue";
+      } else {
+        $markertype = "large_light_blue";
+      }
     } else {
-      $markertype = "large_light_red";
+      if ( $small_pointers ) {
+        $markertype = "small_light_red";
+      } else {
+        $markertype = "large_light_red";
+      }
     }
 
     my @results;
@@ -195,5 +204,7 @@ sub setup_form_fields {
   $tt_vars{show_map_box} = $q->checkbox( -name => "map",
                                          -value => 1, label => "" );
   $tt_vars{small_pointers_box} = $q->checkbox( -name => "small_pointers",
+                                               -value => 1, label => "" );
+  $tt_vars{blue_pointers_box} = $q->checkbox( -name => "blue_pointers",
                                                -value => 1, label => "" );
 }

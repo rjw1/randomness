@@ -45,11 +45,33 @@ if ( $q->param( "do_search" ) ) {
   $dist ||= 0;
   $dist =~ s/[^0-9]//g;
 
-  if ( !$dist || !$cat1 ) {
-    # Yes, the categories are displayed the wrong way around.  Don't want to
-    # break URLs, so don't change it.
-    $tt_vars{error_message} =
-                  "Must supply at least the second category, and a distance.";
+  # NB the categories are displayed the wrong way around.  Don't want to
+  # break URLs, so don't change it.
+
+  if ( !$dist || !$cat1 || !$cat2) {
+    my $err = "To use this search, you should supply two categories and a "
+      . "distance; this will show you all things in the first category that "
+      . "are within that distance of anything in the second category.";
+    if ( $cat1 && $cat2 ) {
+      $err .= " If you just want to view things in one of your chosen "
+        . "categories, take a look at "
+        . "<a href=\"" . $config->script_url . $config->script_name . "?"
+        . $formatter->node_name_to_node_param( "Category $cat2" )
+        . "\">Category: " . $q->escapeHTML( $cat2 ) . "</a> or "
+        . "<a href=\"" . $config->script_url . $config->script_name . "?"
+        . $formatter->node_name_to_node_param( "Category $cat1" )
+        . "\">Category: " . $q->escapeHTML( $cat1 ) . "</a>.";
+    } else {
+      my $one_cat = $cat1 || $cat2;
+      if ( $one_cat ) {
+        $err .= " If you just want to view things in your single chosen "
+          . "category, take a look at <a href=\""
+          . $config->script_url . $config->script_name . "?"
+          . $formatter->node_name_to_node_param( "Category $one_cat" )
+          . "\">Category: " . $q->escapeHTML( $one_cat ) . "</a>.";
+      }
+    }
+    $tt_vars{error_message} = $err;
   } else {
     $tt_vars{do_search} = 1;
     $tt_vars{cat1} = $cat1;

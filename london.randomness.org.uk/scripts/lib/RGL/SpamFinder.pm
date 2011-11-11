@@ -17,7 +17,7 @@ sub looks_like_spam {
     my $host = $args{metadata}{host};
     my $comment = $args{added_comment} || "";
 
-    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine|buyphentermine|adipex|phendimetrazine|ephedrine|lipitor|hydrocodone|replica-watches|propecia|ativan|levitra|lexapro|ambien|citalopram|effexor|fluoxetine|prozac|kamagra|accutane|zithromax|clenbuterol|nolvadex|lorazepam|clonazepam|diazepam|valium|clomid|rimonabant|xenical|lolita|lolitas)\b/is ) {
+    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine|buyphentermine|adipex|phendimetrazine|ephedrine|lipitor|hydrocodone|replica-watches|propecia|ativan|levitra|lexapro|ambien|citalopram|effexor|fluoxetine|prozac|kamagra|accutane|zithromax|clenbuterol|nolvadex|lorazepam|clonazepam|diazepam|valium|clomid|rimonabant|xenical|lolita|lolitas|vimax)\b/is ) {
         $class->notify_admins( %args, id => "00002", reason => "Matches $1" );
         return 1;
     }
@@ -75,64 +75,11 @@ sub looks_like_spam {
             return 1;
         }
 
-       if ( $name eq "Old Salt Quay, SE16 5QU"
-              && $comment =~ m|http://www.ted.com/profiles| ) {
-            $class->notify_admins( %args, id => "00042",
-                                   reason => "ted.com comment on $name" );
-            return 1;
-        }
 
        if ( $name eq "Old Salt Quay, SE16 5QU"
-              && $comment =~ m|http://upcoming.yahoo.com/user/| ) {
-            $class->notify_admins( %args, id => "00043",
-                                   reason => "upcoming.com comment on $name" );
-            return 1;
-        }
-
-       if ( $name eq "Old Salt Quay, SE16 5QU"
-              && $comment =~ m|http://www.fotolog.com/| ) {
-            $class->notify_admins( %args, id => "00044",
-                                   reason => "fotolog.com comment on $name" );
-            return 1;
-        }
-
-       if ( $comment =~ m|www.consolidationloanscotland.net| ) {
-            $class->notify_admins( %args, id => "00045",
-                                   reason => "consolidation loan comment" );
-            return 1;
-        }
-
-       if ( $comment =~ m|web20power.txt| ) {
-            $class->notify_admins( %args, id => "00046",
-                                   reason => "web20power" );
-            return 1;
-        }
-
-       if ( $name eq "Old Salt Quay, SE16 5QU"
-              && $comment =~ m|http://www.collegehumor.com/| ) {
-            $class->notify_admins( %args, id => "00047",
-                                   reason => "college humor on $name" );
-            return 1;
-        }
-
-       if ( $name eq "Old Salt Quay, SE16 5QU"
-              && $comment =~ m|http://www.discogs.com/user| ) {
-            $class->notify_admins( %args, id => "00048",
-                                   reason => "discogs.com on $name" );
-            return 1;
-        }
-
-       if ( $name eq "Old Salt Quay, SE16 5QU"
-              && $comment =~ m|webspace.webring.com| ) {
-            $class->notify_admins( %args, id => "00049",
-                                   reason => "webring comment on $name" );
-            return 1;
-        }
-
-       if ( $name eq "Old Salt Quay, SE16 5QU"
-              && $comment =~ m|jugem.jp| ) {
-            $class->notify_admins( %args, id => "00050",
-                                   reason => "jugem.jp comment on $name" );
+              && $comment =~ m|<a\s+href="\s*http://.*</a>| ) {
+            $class->notify_admins( %args, id => "00041",
+                                   reason => "URL comment on $name" );
             return 1;
         }
 

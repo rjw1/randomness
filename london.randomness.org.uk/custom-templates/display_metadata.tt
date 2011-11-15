@@ -46,12 +46,12 @@
         <span class="metadata_label">Address:</span>
         <span class="adr"><span class="street-address">[% CGI.escapeHTML(address) %]</span></span><!--, [% default_city %] --> [%# uncomment at left to show city %]
         [% IF map_link %]
-          (<a href="[% map_link %]">map</a>)
+          (<a href="[% map_link %]">streetmap</a>)
         [% END %]
         [% IF wgs84_lat AND wgs84_long %]
           (<a href="http://www.openstreetmap.org/?mlat=[% wgs84_lat %]&mlon=[% wgs84_long %]&zoom=15">osm</a>)
-          (<a href="http://www.multimap.com/maps/#t=l&map=[% wgs84_lat %],[% wgs84_long %]|16|4&loc=GB:[% wgs84_lat %]:[% wgs84_long %]:15">multimap</a>)
           (<a href="http://maps.google.co.uk/maps?q=[% FILTER replace( '\s', '+' ) %][% node_name %][% END %]@[% wgs84_lat %],[% wgs84_long %]&z=15">gmap</a>)
+          (<a href="http://www.bing.com/maps/default.aspx?cp=[% wgs84_lat %]~[% wgs84_long %]&style=c&lvl=15&rtp=~pos.[% wgs84_lat %]_[% wgs84_long %]_[% node_name | replace( '\s', '+' ) %]">bingmap</a>)
           (<a href="http://maps.google.co.uk/maps?q=[% wgs84_lat %],[% wgs84_long %]&cbll=[% wgs84_lat %],[% wgs84_long %]&layer=c&cbp=12,0,,0,5">streetview</a>)
         [% END %]
       </li>

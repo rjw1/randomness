@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pubology map &#8212; data upload complete</title>
+  <link rel="stylesheet" href="http://the.earth.li/~kake/tmp/ewan/styles.css"
+        type="text/css" />
+</head>
+
+<body>
+  <h1 class="page_header">Pubology map</h1>
+  <h2>Data upload complete</h2>
+
+  <p>[% succ_msg %]</p>
+  <p><a href="[% cgi_url %]">Upload another CSV</a>.</p>
+  <p><a href="[% base_url %]">View the index</a>.</p>
+
+  </body>
+</html>

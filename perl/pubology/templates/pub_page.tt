@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>[% pub.name | html %][% IF pub.postcode %], [% pub.postcode | html %][% END %] &#8212; Pubology map</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="http://the.earth.li/~kake/tmp/ewan/styles.css" 
+   type="text/css" />
+</head>
+
+<body>
+  <h1 class="page_header">Pubology map</h1>
+  <h2>[% pub.name | html %]</h2>
+
+  <div style="float:left">
+    <table class="pub_info">
+    <tr class="pub_status">
+      <th>Status:</th>
+      <td>
+        [% IF pub.closed %]
+          Closed
+            [% IF pub.closed_date %]([% pub.closed_date | html %])[% END %]
+            [% IF pub.demolished %] and demolished[% END %]
+        [% ELSE %]
+          Open
+        [% END %]
+      </td>
+    </tr>
+    <tr class="pub_address">
+      <th>Address:</th>
+      <td>
+        [% pub.address | html %]
+        [% IF pub.os_x AND pub.os_y %]
+          (<a href="http://streetmap.co.uk/map.srf?x=[% pub.os_x | html %]&y=[% pub.os_y | html %]">streetmap</a>)
+        [% END %]
+        [% IF pub.lat_and_long %]
+          (<a href="http://www.openstreetmap.org/?mlat=[% pub.lat | html %]&amp;mlon=[% pub.long | html %]&amp;zoom=15">osm</a>)
+          (<a href="http://maps.google.co.uk/maps?q=[% FILTER replace( '\s', '+' ) %][% node_name %][% END %]@[% pub.lat %],[% pub.long %]&z=15">gmap</a>)
+          (<a href="http://www.bing.com/maps/default.aspx?cp=[% pub.lat %]~[% pub.long %]&style=c&lvl=15&rtp=~pos.[% pub.lat %]_[% pub.long %]_[% node_name | replace( '\s', '+' ) %]">bingmap</a>)
+          (<a href="http://maps.google.co.uk/maps?q=[% pub.lat %],[% pub.long %]&cbll=[% pub.lat %],[% pub.long %]&layer=c&cbp=12,0,,0,5">streetview</a>)
+        [% END %]
+      </td>
+    </tr>
+    [% IF pub.date_built OR pub.date_closed %]
+      <tr class="pub_dates">
+        <th>Dates Open:</th>
+        <td>
+          [% IF pub.date_built %][% pub.date_built | html %][% END %]&#8211;[% IF pub.date_closed %][% pub.date_closed | html %][% END %]
+        </td>
+      </tr>
+    [% END %]
+    [% IF pub.alt_name %]
+      <tr class="pub_former_name">
+        <th>Former name(s):</th>
+        <td>[% pub.alt_name | html | replace( ';', '<br>' ) %]</td>
+      </tr>
+    [% END %]
+    [% IF pub.former_addr %]
+      <tr class="pub_former_address">
+        <th>Former address:</th>
+        <td>[% pub.former_addr | html | replace( ';', '<br>' ) %]</td>
+      </tr>
+    [% END %]
+    [% IF pub.owner %]
+      <tr class="pub_owner">
+        <th>Owner:</th>
+        <td>[% pub.owner | html %]</td>
+      </tr>
+    [% END %]
+    [% IF pub.website %]
+      <tr class="pub_website">
+        <th>Website:</th>
+        <td><a href="[% pub.website | html %]">Website</a></td>
+      </tr>
+    [% END %]
+    [% IF pub.has_links %]
+      <tr class="pub_links"><th>Links:</th>
+      <td><ul>
+        [% IF pub.rgl %]
+          <li><a href="[% pub.rgl | html %]">Randomness Guide to London</a></li>
+        [% END %]
+        [% IF pub.fap %]
+          <li><a href="[% pub.fap | html %]">Fancyapint</a></li>
+        [% END %]
+        [% IF pub.pubs_galore %]
+          <li><a href="[% pub.pubs_galore | html %]">Pubs Galore</a></li>
+        [% END %]
+        [% IF pub.bite %]
+          <li><a href="[% pub.bite | html %]">Beer in the Evening</a></li>
+        [% END %]
+        [% IF pub.bite_2 %]
+          <li><a href="[% pub.bite_2 | html %]">Beer in the Evening 2</a></li>
+        [% END %]
+        [% IF pub.qype %]
+          <li><a href="[% pub.qype | html %]">Qype</a></li>
+        [% END %]
+        [% IF pub.dead_pubs %]
+          <li><a href="[% pub.dead_pubs | html %]">Dead Pubs</a></li>
+        [% END %]
+        [% IF pub.london_eating %]
+          <li><a href="[% pub.london_eating | html %]">London Eating</a></li>
+        [% END %]
+        [% IF pub.other_link %]
+          <li><a href="[% pub.other_link | html %]">Other link</a></li>
+        [% END %]
+        [% IF pub.other_link_2 %]
+          <li><a href="[% pub.other_link_2 | html %]">Other link 2</a></li>
+        [% END %]
+        [% IF pub.other_link_3 %]
+          <li><a href="[% pub.other_link_3 | html %]">Other link 3</a></li>
+        [% END %]
+      </ul></td></tr>
+    [% END %]
+    [% IF pub.notes %]
+      <tr class="pub_notes">
+        <th>Notes:</th>
+        <td>[% pub.notes | html %]</td>
+      </tr>
+    [% END %]
+    [% IF pub.gbg %]
+      <tr class="pub_gbg">
+        <th>Good Beer Guide:</th>
+        <td>[% pub.gbg | html %]</td>
+      </tr>
+    [% END %]
+    <tr class="pub_last_updated">
+      <th>Last updated:</th>
+      <td>[% updated | html %]</td>
+    </tr>
+    </table>
+  </div>
+
+  <div style="float:right; padding-right:2em">
+    [% IF pub.photo_url %]
+      <a href="[% pub.flickr | html %]"><img src="[% pub.photo_url | html %]" width="[% pub.photo_width | html %]" height="[% pub.photo_height | html %]"></a>
+    [% END %]
+  </div>
+
+  <br clear="both">
+  <p><a href="[% map_url %]">Back to map</a>.</p>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Pubology pub map</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="http://the.earth.li/~kake/tmp/ewan/styles.css" 
+   type="text/css" />
+</head>
+
+<body>
+  <h1 class="page_header">Pubology map</h1>
+
+  <p>Postal districts:</p>
+
+  <ul>
+    [% FOREACH map = maps %]
+      <li><a href="[% map.url | html %]">[% map.label | html %]</a></li>
+    [% END %]
+  </ul>
+
+</body>
+</html>

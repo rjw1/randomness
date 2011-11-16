@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pubology map &#8212; upload data</title>
+  <link rel="stylesheet" href="http://the.earth.li/~kake/tmp/ewan/styles.css"
+        type="text/css" />
+
+  <script type="text/javascript">
+    function reassure() {
+      document.getElementById( 'upload_msg' ).innerHTML='Uploading... please be patient, this may take a little while.';
+      return true;
+    }
+  </script>
+</head>
+
+<body>
+  <h1 class="page_header">Pubology map</h1>
+  <h2>Upload data</h2>
+
+  [% IF errmsg %]
+    <div class="upload_error"><p>ERROR:</p>[% errmsg %]</div>
+  [% END %]
+
+  <form method="post" enctype="multipart/form-data"
+        action="[% cgi_url %]" onSubmit="return reassure()">
+
+    <p>CSV file: <input type="file" name="csv" size="80" /></p>
+
+    <ul class="upload_form_type_selection">
+      <li>
+        <input type="radio" name="upload_type" value="postal_district"
+               checked="1">
+        Treat this as a full update for the following postal district
+        (e.g. CR0): [% postal_district_field %]
+      </li>
+      <li>
+        <input type="radio" name="upload_type" value="pubs">
+        Treat this as updates to individual pubs.
+      </li>
+    </ul>
+
+    <p><input type="submit" name="Upload" value="Upload" /></p>
+
+    <p id="upload_msg"></p>
+
+  </form>
+
+  </body>
+</html>

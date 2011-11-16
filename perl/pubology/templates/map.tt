@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+[% USE CGI %]
+
+<head>
+  <title>[% postal_district | html %] &#8212; Pubology map</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <link rel="stylesheet" href="http://the.earth.li/~kake/tmp/ewan/styles.css" 
+   type="text/css" />
+
+  <style type="text/css">
+    html { height: 100% }
+    body { height: 100%; margin: 0; padding: 1em }
+    #map_canvas { height: 100% }
+  </style>
+
+  <script type="text/javascript"
+          src="http://maps.googleapis.com/maps/api/js?sensor=false&region=GB">
+  </script>
+  <script type="text/javascript">
+    var map;
+    var markers = [];
+    var content = [];
+    var infowindow;
+
+    function initialise() {
+      var map_centre = new google.maps.LatLng(
+                                      [% centre_lat %], [% centre_long %] );
+      var map_options = {
+                          zoom: 12,
+                          center: map_centre,
+                          mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+      map = new google.maps.Map( document.getElementById( "map_canvas" ),
+                                     map_options );
+      infowindow = new google.maps.InfoWindow();
+    }
+
+  </script>
+</head>
+
+<body onload="initialise(); add_markers()">
+  <h1 class="page_header">Pubology map</h1>
+  <h2>[% postal_district | html %]</h1>
+
+  <p>Last updated: [% updated | html %]</p>
+  <p><a href="../index.html">Back to index</a>.</p>
+  <p>green = open, yellow = closed, red = demolished</p>
+
+  <div id="map_canvas" style="width:75%; height:100%; float:left"></div>
+
+  <div id="pub_list" style="max-width:20%; height:100%; float:right">
+    <ul style="height:400px; overflow:auto">
+      [% i = 0 %]
+      [% FOREACH pub = pubs %]
+        [% i = i + 1 %]
+        <li>
+          [% IF pub.not_on_map %]
+            [% CGI.escapeHTML( pub.name ) %] (not on map &#8212;
+            <a href="[% base_url %]pubs/[% pub.id %].html">view pub info</a>)
+          [% ELSE %]
+            <a href="#" onclick="infowindow.setContent( content[[% i %]] ); infowindow.open( map, markers[[% i %]] ); map.panTo( markers[[% i %]].getPosition() ); return false;">[% CGI.escapeHTML( pub.name ) %]</a>
+          [% END %]
+        </li>
+      [% END %]
+    </ul>
+  </div>
+
+  <script type="text/javascript">
+    function add_markers() {
+      var position;
+      [% i = 0 %]
+      [% FOREACH pub = pubs %]
+        [% i = i + 1 %]
+        [% UNLESS pub.not_on_map %]
+          position = new google.maps.LatLng( [% pub.lat %], [% pub.long %] );
+          markers[[% i %]] = new google.maps.Marker({
+            position: position,
+            title: "[% CGI.escapeHTML( pub.name ) %]",
+            map: map,
+            icon: "http://maps.google.com/mapfiles/ms/micons/[% IF pub.demolished %]red[% ELSIF pub.closed %]yellow[% ELSE %]green[% END %]-dot.png"
+        });
+          content[[% i %]] = "<a href=\"[% base_url %]pubs/[% pub.id %].html\">[% CGI.escapeHTML( pub.name ) %]</a> [% IF pub.demolished %] (demolished) [% ELSIF pub.closed %] (closed) [% END %]<br>[% CGI.escapeHTML( pub.address ) %]";
+          google.maps.event.addListener( markers[[% i %]], "click", function() {
+            infowindow.setContent( content[[% i %]] );
+            infowindow.open( map, markers[[% i %]] );
+          } );
+        [% END %]
+      [% END %]
+    }
+  </script>
+
+</body>
+</html>

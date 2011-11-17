@@ -4,7 +4,7 @@
 
 <ul>
   [% FOREACH district = districts %]
-    <li>[% IF district.url %]<a href="[% district.url %]">[% END %][% district.label %] ([% district.name %])[% IF district.url %]</a>[% END %]</li>
+    <li>[% IF district.url %]<a href="[% district.url %]">[% END %][% district.label %][% IF district.url %]</a>[% END %] ([% district.name %])</li>
   [% END %]
 </ul>
 

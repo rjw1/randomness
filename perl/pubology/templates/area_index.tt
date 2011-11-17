@@ -2,10 +2,16 @@
 
 <p>Pubs in [% area_name %] postcodes.</p>
 
-<ul>
-  [% FOREACH district = districts %]
-    <li>[% IF district.url %]<a href="[% district.url %]">[% END %][% district.label %][% IF district.url %]</a>[% END %] ([% district.name %])</li>
+[% FOREACH set = district_sets %]
+  [% IF set.name %]
+    <h3>[% set.name | html %]</h3>
   [% END %]
-</ul>
+
+  <ul class="postal_district_list">
+    [% FOREACH district = set.districts %]
+      <li>[% IF district.url %]<a href="[% district.url %]">[% END %][% district.label %][% IF district.url %]</a>[% END %] ([% district.name %])</li>
+    [% END %]
+  </ul>
+[% END %]
 
 [% INCLUDE footer.tt %]

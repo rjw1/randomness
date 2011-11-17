@@ -46,7 +46,8 @@
   <h2>[% postal_district | html %]</h1>
 
   <p>Last updated: [% updated | html %]</p>
-  <p><a href="../index.html">Back to index</a>.</p>
+  <p><a href="../indexes/[% area_file | html %].html">Back to [% area_name | html %] index</a>.</p>
+  <p><a href="../index.html">Back to main index</a>.</p>
   <p>green = open, yellow = closed, red = demolished</p>
 
   <div id="map_canvas" style="width:75%; height:100%; float:left"></div>

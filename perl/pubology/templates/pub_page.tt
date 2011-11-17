@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>[% pub.name | html %][% IF pub.postcode %], [% pub.postcode | html %][% END %] &#8212; Pubology map</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" href="http://the.earth.li/~kake/tmp/ewan/styles.css" 
-   type="text/css" />
-</head>
-
-<body>
-  <h1 class="page_header">Pubology map</h1>
-  <h2>[% pub.name | html %]</h2>
+[% INCLUDE header.tt subtitle = pub.name | html %]
 
   <div style="float:left">
     <table class="pub_info">
@@ -139,5 +127,4 @@
   <br clear="both">
   <p><a href="[% map_url %]">Back to map</a>.</p>
 
-</body>
-</html>
+[% INCLUDE footer.tt %]

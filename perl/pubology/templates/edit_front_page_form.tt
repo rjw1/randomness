@@ -1,0 +1,22 @@
+[% INCLUDE header.tt subtitle = 'Edit front page text' %]
+
+  [% IF errmsg %]
+    <div class="upload_error">
+      <p>ERROR:</p>
+      [% errmsg %]
+      <p>(If you don't understand this error message, please report it as a
+      bug, including the full text of the message.)</p>
+    </div>
+  [% END %]
+
+  <form method="post" enctype="multipart/form-data"
+        action="[% cgi_url %]">
+
+    <p>Text for front page:</p>
+    [% front_page_text_field %]
+
+    <p><input type="submit" name="Save" value="Save" /></p>
+
+  </form>
+
+[% INCLUDE footer.tt %]

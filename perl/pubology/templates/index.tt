@@ -1,5 +1,7 @@
 [% INCLUDE header.tt %]
 
+<div id="front_page_text"></div>
+
 <ul>
   <li><a href="indexes/north-london.html">North London</a></li>
   <li><a href="indexes/east-london.html">East London</a></li>

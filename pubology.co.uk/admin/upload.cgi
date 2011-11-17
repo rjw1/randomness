@@ -216,7 +216,7 @@ sub rewrite_index {
   my $divisions = $district_conf->{ lc( "$area divisions" ) } || 0;
   if ( $divisions ) {
     my %div_hash = %$divisions;
-    foreach my $name ( keys %div_hash ) {
+    foreach my $name ( sort keys %div_hash ) {
       my $district_str = $div_hash{$name};
       my @districts = split /\s*,\s*/, $district_str;
       my %dist_hash = map { $_ => 1 } @districts;

@@ -4,6 +4,8 @@ use strict;
 use PubSite::Pub;
 use Text::CSV::Simple;
 
+our $errstr;
+
 =head1 NAME
 
 PubSite - Makes Ewan's pub site.
@@ -133,6 +135,37 @@ sub parse_csv {
            min_long => $min_long,
            max_long => $max_long,
          );
+}
+
+=item B<parse_postal_district_config>
+
+  my %district_conf = PubSite->parse_postal_district_config(
+    file => "/export/home/pubology/postal_districts.conf",
+  );
+
+If there's an error, then the return value will be false and $PubSite::errstr
+will be set.
+
+=cut
+
+sub parse_postal_district_config {
+  my $class = shift;
+  my %args = @_;
+
+  if ( !$args{file} ) {
+    $errstr = "No file supplied to parse_postal_district_config().";
+    return 0;
+  }
+
+  my $postal_config = Config::Tiny->read( $args{file} );
+
+  if ( !$postal_config ) {
+    $errstr = "Can't read postal district config file: "
+              . $Config::Tiny::errstr . " (please report this as a bug).";
+    return 0;
+  }
+
+  return $postal_config;
 }
 
 =back

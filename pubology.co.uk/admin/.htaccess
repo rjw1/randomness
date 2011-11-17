@@ -1,0 +1,9 @@
+<Limit GET POST>
+Order deny,allow
+Deny from all
+AuthType Basic
+AuthName "Username: "
+AuthUserFile /export/home/pubology/.htpasswd-admin
+require valid-user
+satisfy any
+</Limit>

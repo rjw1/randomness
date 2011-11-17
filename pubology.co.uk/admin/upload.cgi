@@ -13,7 +13,8 @@ use Config::Tiny;
 use PubSite;
 use Template;
 
-my $base_dir = "/export/home/pubology/web/vhosts/pubology.co.uk/";
+my $HOME = "/export/home/pubology";
+my $base_dir = "$HOME/web/vhosts/pubology.co.uk/";
 my $base_url = "http://pubology.co.uk/";
 
 my $q = CGI->new;
@@ -21,7 +22,7 @@ my $cgi_url = $q->url();
 
 # Set up template stuff
 my $tt_config = {
-  INCLUDE_PATH => "/export/home/pubology/templates/",
+  INCLUDE_PATH => "$HOME/templates/",
   OUTPUT_PATH => $base_dir,
 };
 my $tt = Template->new( $tt_config ) or croak Template->error;
@@ -58,10 +59,7 @@ if ( $errmsg || !$q->param( "Upload" ) ) {
 my $tmpfile = $q->param( "csv" );
 my $tmpfile_name = $q->tmpFileName( $tmpfile );
 
-my $config = Config::Tiny->read( "/export/home/pubology/pubology.conf" )
-               or croak "Can't read config file: $Config::Tiny::errstr "
-                      . "(please report this as a bug)";
-
+# Check postal district is valid and figure out which area it's in.
 my %regexes = (
     "central london"    => qr/^[EW]C\d/i,
     "east london"       => qr/^E\d/i,
@@ -73,7 +71,10 @@ my %regexes = (
     "west london"       => qr/^W\d/i,
 );
 
-# Check postal district is valid and figure out which area it's in.
+my $postal_config = Config::Tiny->read( "$HOME/postal_districts.conf" )
+  or print_form_and_exit( errmsg => "Can't read postal district config file: "
+                 . $Config::Tiny::errstr . " (please report this as a bug)." );
+
 my $this_area;
 if ( $type eq "postal_district" ) {
   foreach my $area ( keys %regexes ) {
@@ -88,7 +89,7 @@ if ( $type eq "postal_district" ) {
               . $q->escapeHTML( $postal_district ) . "\" to an area of "
               . "London.  If you're sure the postal district is correct, "
               . "please report this as a bug.</p>";
-  } elsif ( !$config->{lc($this_area)} ) {
+  } elsif ( !$postal_config->{lc($this_area)} ) {
     $errmsg = "<p>Couldn't find config information for postal district "
               . $q->escapeHTML( $postal_district ) . " &#8212; please report "
               . "this as a bug.</p>"
@@ -98,6 +99,10 @@ if ( $type eq "postal_district" ) {
     print_form_and_exit( errmsg => $errmsg );
   }
 }
+
+my $config = Config::Tiny->read( "$HOME/pubology.conf" )
+               or croak "Can't read config file: $Config::Tiny::errstr "
+                      . "(please report this as a bug)";
 
 my $flickr_key    = $config->{_}->{flickr_key}    || "";
 my $flickr_secret = $config->{_}->{flickr_secret} || "";
@@ -189,7 +194,7 @@ sub rewrite_index {
   my $area = shift;
 
   # already checked this exists in the config
-  my %district_names = %{ $config->{ lc( $area ) } };
+  my %district_names = %{ $postal_config->{ lc( $area ) } };
 
   opendir( my $dh, $base_dir . "maps" ) || croak "Can't open $base_dir";
   my @files = grep { /\.html$/ } readdir( $dh );

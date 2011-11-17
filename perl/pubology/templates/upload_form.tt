@@ -1,9 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Pubology map &#8212; upload data</title>
-  <link rel="stylesheet" href="http://the.earth.li/~kake/tmp/ewan/styles.css"
-        type="text/css" />
+[% INCLUDE header.tt subtitle = 'Upload data' %]
+
+  [% IF errmsg %]
+    <div class="upload_error">
+      <p>ERROR:</p>
+      [% errmsg %]
+      <p>(If you don't understand this error message, please report it as a
+      bug, including the full text of the message.)</p>
+    </div>
+  [% END %]
 
   <script type="text/javascript">
     function reassure() {
@@ -11,15 +15,6 @@
       return true;
     }
   </script>
-</head>
-
-<body>
-  <h1 class="page_header">Pubology map</h1>
-  <h2>Upload data</h2>
-
-  [% IF errmsg %]
-    <div class="upload_error"><p>ERROR:</p>[% errmsg %]</div>
-  [% END %]
 
   <form method="post" enctype="multipart/form-data"
         action="[% cgi_url %]" onSubmit="return reassure()">
@@ -45,5 +40,4 @@
 
   </form>
 
-  </body>
-</html>
+[% INCLUDE footer.tt %]

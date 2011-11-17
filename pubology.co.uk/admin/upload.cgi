@@ -71,9 +71,9 @@ my %regexes = (
     "west london"       => qr/^W\d/i,
 );
 
-my $postal_config = Config::Tiny->read( "$HOME/postal_districts.conf" )
-  or print_form_and_exit( errmsg => "Can't read postal district config file: "
-                 . $Config::Tiny::errstr . " (please report this as a bug)." );
+my $district_conf = PubSite->parse_postal_district_config(
+                        file => "$HOME/postal_districts.conf",
+  ) || print_form_and_exit( errmsg => "<p>$PubSite::errstr</p>" );
 
 my $this_area;
 if ( $type eq "postal_district" ) {
@@ -89,7 +89,7 @@ if ( $type eq "postal_district" ) {
               . $q->escapeHTML( $postal_district ) . "\" to an area of "
               . "London.  If you're sure the postal district is correct, "
               . "please report this as a bug.</p>";
-  } elsif ( !$postal_config->{lc($this_area)} ) {
+  } elsif ( !$district_conf->{lc($this_area)} ) {
     $errmsg = "<p>Couldn't find config information for postal district "
               . $q->escapeHTML( $postal_district ) . " &#8212; please report "
               . "this as a bug.</p>"
@@ -194,7 +194,7 @@ sub rewrite_index {
   my $area = shift;
 
   # already checked this exists in the config
-  my %district_names = %{ $postal_config->{ lc( $area ) } };
+  my %district_names = %{ $district_conf->{ lc( $area ) } };
 
   opendir( my $dh, $base_dir . "maps" ) || croak "Can't open $base_dir";
   my @files = grep { /\.html$/ } readdir( $dh );

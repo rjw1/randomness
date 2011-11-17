@@ -13,8 +13,6 @@ use Config::Tiny;
 use PubSite;
 use Template;
 
-my $version = "version-5";
-
 my $base_dir = "/export/home/pubology/web/vhosts/pubology.co.uk/";
 my $base_url = "http://pubology.co.uk/";
 

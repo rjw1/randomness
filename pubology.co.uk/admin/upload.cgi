@@ -204,13 +204,31 @@ sub rewrite_index {
                    { uc( $label ) => $base_url . "maps/$_" }
                  } @files;
 
-  my @districts = map { my $label = uc( $_ );
-                        {
-                          label => $label,
-                          url   => $urls{$label} || "",
-                          name  => $district_names{$label}
-                        }
-                      } sort { pc_cmp( $a, $b ) } keys %district_names;
+  my @all_districts = map { my $label = uc( $_ );
+                            {
+                              label => $label,
+                              url   => $urls{$label} || "",
+                              name  => $district_names{$label}
+                            }
+                          } sort { pc_cmp( $a, $b ) } keys %district_names;
+
+  my @district_sets;
+  my $divisions = $district_conf->{ lc( "$area divisions" ) } || 0;
+  if ( $divisions ) {
+    my %div_hash = %$divisions;
+    foreach my $name ( keys %div_hash ) {
+      my $district_str = $div_hash{$name};
+      my @districts = split /\s*,\s*/, $district_str;
+      my %dist_hash = map { $_ => 1 } @districts;
+      my @these_districts = grep { $dist_hash{$_->{label}} } @all_districts;
+      push @district_sets, {
+        name => $name,
+        districts => \@these_districts,
+      };
+    }
+  } else {
+    @district_sets = ( { districts => \@all_districts } );
+  }
 
   my $area_name = $area;
   $area_name =~ s/\b(\w)/\u$1/g;
@@ -219,7 +237,7 @@ sub rewrite_index {
 
   my $tt_vars = {
                   area_name => $area_name,
-                  districts => \@districts,
+                  district_sets => \@district_sets,
                 };
 
   open( my $output_fh, ">", $base_dir . "indexes/$area_file.html" )

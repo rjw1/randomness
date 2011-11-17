@@ -1,0 +1,11 @@
+[% INCLUDE header.tt subtitle = area_name %]
+
+<p>Pubs in [% area_name %] postcodes.</p>
+
+<ul>
+  [% FOREACH district = districts %]
+    <li>[% IF district.url %]<a href="[% district.url %]">[% END %][% district.label %] ([% district.name %])[% IF district.url %]</a>[% END %]</li>
+  [% END %]
+</ul>
+
+[% INCLUDE footer.tt %]

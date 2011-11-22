@@ -13,7 +13,7 @@
         action="[% cgi_url %]">
 
     <p>Text for front page:</p>
-    [% front_page_text_field %]
+    <textarea name="front_page_text" rows="20" cols="100">[% current_text %]</textarea>
 
     <p><input type="submit" name="Save" value="Save" /></p>
 

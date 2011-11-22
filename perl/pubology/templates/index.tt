@@ -1,6 +1,6 @@
 [% INCLUDE header.tt %]
 
-<div id="front_page_text"></div>
+<div id="front_page_text">[% text %]</div>
 
 <ul>
   <li><a href="indexes/north-london.html">North London</a></li>

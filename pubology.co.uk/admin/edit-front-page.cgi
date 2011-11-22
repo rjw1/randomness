@@ -67,8 +67,16 @@ EOF
 sub write_index_page {
   my %args = @_;
   my $text = encode_entities( $args{text} );
+
   # get rid of double-encoding
   $text =~ s/&amp;#/&#/g;
+
+  # preserve bolding and italics
+  $text =~ s|&lt;(/?[bi])&gt;|<$1>|g;
+
+  # deal with line breaks
+  $text =~ s|\r\n|<br>|g;
+
   my $tt_vars = { text => $text };
   open( my $output_fh, ">", "$base_dir/index.html" )
     || print_form_and_exit( errmsg => $! );
@@ -87,10 +95,26 @@ sub print_form_and_exit {
   while ( my $token = $parser->get_tag( "div" ) ) {
     my $attrs = $token->[1];
     if ( $attrs->{id} eq "front_page_text" ) {
-      $current_text = $parser->get_trimmed_text;
+      while ( my $bit = $parser->get_token ) {
+        if ( $bit->[0] eq "E" && $bit->[1] eq "div" ) {
+          last;
+        }
+        if ( $bit->[0] eq "S" ) {
+          $current_text .= "<" . $bit->[1] . ">";
+        } elsif ( $bit->[0] eq "E" ) {
+          $current_text .= "</" . $bit->[1] . ">";
+        } elsif ( $bit->[0] eq "T" ) {
+          $current_text .= $bit->[1];
+        }
+      }
       last;
     }
   }
+
+  $current_text = encode_entities( $current_text );
+
+  # put linebreaks back
+  $current_text =~ s/&lt;br&gt;/\r\n/g;
 
   my %tt_vars = (
                   cgi_url => $cgi_url,
@@ -99,7 +123,7 @@ sub print_form_and_exit {
                       -rows => 20,
                       -columns => 100,
                   ),
-                  current_text => encode_entities( $current_text ),
+                  current_text => $current_text,
                   errmsg => $args{errmsg} || "",
                 );
   print $q->header;

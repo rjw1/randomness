@@ -1,4 +1,5 @@
-[% INCLUDE header.tt subtitle = pub.name | html %]
+[% subtitle = pub.name | html %]
+[% INCLUDE header.tt %]
 
   <div style="float:left">
     <table class="pub_info">

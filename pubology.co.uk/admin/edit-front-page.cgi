@@ -10,6 +10,7 @@ use lib qw(
 use CGI;
 use CGI::Carp qw( fatalsToBrowser );
 use HTML::Entities;
+use HTML::PullParser;
 use HTML::TokeParser;
 use Template;
 
@@ -66,18 +67,34 @@ EOF
 
 sub write_index_page {
   my %args = @_;
-  my $text = encode_entities( $args{text} );
-
-  # get rid of double-encoding
-  $text =~ s/&amp;#/&#/g;
-
-  # preserve bolding and italics
-  $text =~ s|&lt;(/?[bi])&gt;|<$1>|g;
+  my $text = $args{text};
+  my $encoded_text = "";
 
   # deal with line breaks
-  $text =~ s|\r\n|<br>|g;
+#  $text =~ s|\r\n|<br>|g;
 
-  my $tt_vars = { text => $text };
+  # PullParser rather than TokeParser because it seems a simpler way of doing
+  # it here.  I think?  This may be an artefact of me having previously done
+  # it this way in Wiki::Toolkit though.
+  my $parser = HTML::PullParser->new(
+                                      doc => $text,
+                                      start => '"TAG", tag, text',
+                                      end   => '"TAG", tag, text',
+                                      text  => '"TEXT", tag, text'
+                                    );
+
+  my %allowed = map { lc($_) => 1, "/" . lc($_) => 1 }
+                qw( b i strong em a br ul li hr h3 h4 h5 h6 p );
+  while ( my $token = $parser->get_token ) {
+    my ( $flag, $tag, $stuff, $attr ) = @$token;
+    if ( $flag eq "TAG" and !defined $allowed{ lc( $tag ) } ) {
+      $encoded_text .= encode_entities( $stuff );
+    } else {
+      $encoded_text .= $stuff;
+    }
+  }
+
+  my $tt_vars = { text => $encoded_text };
   open( my $output_fh, ">", "$base_dir/index.html" )
     || print_form_and_exit( errmsg => $! );
   $tt->process( "index.tt", $tt_vars, $output_fh )

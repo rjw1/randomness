@@ -9,6 +9,8 @@ use lib qw(
 
 use CGI;
 use CGI::Carp qw( fatalsToBrowser );
+use HTML::Entities;
+use HTML::TokeParser;
 use Template;
 
 my $HOME = "/export/home/pubology";
@@ -39,7 +41,7 @@ if ( $errmsg || !$q->param( "Save" ) ) {
   print_form_and_exit( errmsg => $errmsg );
 }
 
-write_index_page();
+write_index_page( text => $text );
 
 print $q->header;
 print <<EOF;
@@ -63,7 +65,11 @@ print <<EOF;
 EOF
 
 sub write_index_page {
-  my $tt_vars = {};
+  my %args = @_;
+  my $text = encode_entities( $args{text} );
+  # get rid of double-encoding
+  $text =~ s/&amp;#/&#/g;
+  my $tt_vars = { text => $text };
   open( my $output_fh, ">", "$base_dir/index.html" )
     || print_form_and_exit( errmsg => $! );
   $tt->process( "index.tt", $tt_vars, $output_fh )
@@ -73,6 +79,19 @@ sub write_index_page {
 sub print_form_and_exit {
   my %args = @_;
 
+  open( my $fh, "<", "$base_dir/index.html" )
+    || die $!;
+  my $parser = HTML::TokeParser->new( $fh );
+
+  my $current_text = "";
+  while ( my $token = $parser->get_tag( "div" ) ) {
+    my $attrs = $token->[1];
+    if ( $attrs->{id} eq "front_page_text" ) {
+      $current_text = $parser->get_trimmed_text;
+      last;
+    }
+  }
+
   my %tt_vars = (
                   cgi_url => $cgi_url,
                   front_page_text_field => $q->textarea(
@@ -80,6 +99,7 @@ sub print_form_and_exit {
                       -rows => 20,
                       -columns => 100,
                   ),
+                  current_text => encode_entities( $current_text ),
                   errmsg => $args{errmsg} || "",
                 );
   print $q->header;

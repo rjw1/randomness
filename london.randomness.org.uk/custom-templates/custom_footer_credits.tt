@@ -1,6 +1,19 @@
     <p>
-      Powered by <a href="[% full_cgi_url%]?action=about">OpenGuides [% openguides_version %]</a>.<br />
-Design adapted from the <a href="http://creativecommons.org/licenses/by-nc/2.5/" target="new">Creative Commons Licensed</a> &#8220;Naturalist&#8221; by <a href="http://www.designsbydarren.com/" target="new">Designs by Darren</a>.</p>
+      Powered by <a href="[% full_cgi_url%]?action=about">OpenGuides [% openguides_version %]</a>.
+[% IF map_style == "osm" %]
+  <br />Map data and images provided by and &copy;
+  <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, used under
+  <a href="http://creativecommons.org/licenses/by-sa/2.0/">cc-by-sa</a>.
+[% ELSIF map_style == "mq" %]
+  <br />Map data and images provided by and &copy;
+  <a href="http://www.mapquest.com/">MapQuest</a> and
+  <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, used under
+  <a href="http://creativecommons.org/licenses/by-sa/2.0/">cc-by-sa</a>.
+[% ELSIF show_map %]
+  <br />Map data and images provided by and &copy; Google.
+[% END %]
+
+<br />Site design adapted from the <a href="http://creativecommons.org/licenses/by-nc/2.5/" target="new">Creative Commons Licensed</a> &#8220;Naturalist&#8221; by <a href="http://www.designsbydarren.com/" target="new">Designs by Darren</a>.</p>
     [% IF licence_name %]
       <p>
         The textual content of this work is licensed under the 

@@ -6,16 +6,47 @@
   var content = [];
   var infowindow;
 
+  [% IF map_style == "osm" %]
+    [% map_type_id = '"OSM"' %]
+  [% ELSIF map_style == "mq" %]
+    [% map_type_id = '"MapQuest"' %]
+  [% ELSE %]
+    [% map_type_id = "google.maps.MapTypeId.ROADMAP" %]
+  [% END %]
+
   function initialise() {
     var map_centre = new google.maps.LatLng( [% lat %], [% long %] );
     var map_options = {
                         zoom: 12,
                         center: map_centre,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        mapTypeId: [% map_type_id %],
                         streetViewControl: 0
                       };
     map = new google.maps.Map( document.getElementById( "map" ),
                                map_options );
+
+    map.mapTypes.set( "OSM",
+      new google.maps.ImageMapType({
+        getTileUrl: function(coord, zoom) {
+          return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+          },
+        tileSize: new google.maps.Size( 256, 256 ),
+        name: "OpenStreetMap",
+        maxZoom: 18
+      })
+    );
+
+    map.mapTypes.set( "MapQuest",
+      new google.maps.ImageMapType({
+        getTileUrl: function(coord, zoom) {
+          return "http://otile1.mqcdn.com/tiles/1.0.0/osm/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+          },
+        tileSize: new google.maps.Size( 256, 256 ),
+        name: "MapQuest",
+        maxZoom: 18
+      })
+    );
+
     map.fitBounds( new google.maps.LatLngBounds(
                    new google.maps.LatLng( [% min_lat %] - 0.0001, [% min_long %] - 0.0001 ),
                    new google.maps.LatLng( [% max_lat %] + 0.0001, [% max_long %] + 0.0001 ) ) );

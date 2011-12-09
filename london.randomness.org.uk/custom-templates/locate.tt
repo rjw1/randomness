@@ -28,12 +28,13 @@
 
 [% IF do_search %]
   [% IF cat AND loc %]
-    <h3><a href="[% cat_link %]">[% cat %]</a> in
+    <h3><a href="[% cat_link %]">[% cat %]</a> [% INCLUDE in_or_on.tt %]
         <a href="[% loc_link %]">[% loc %]</a>:</h3>
   [% ELSIF cat %]
     <h3><a href="[% cat_link %]">[% cat %]</a> anywhere in London:</h3>
   [% ELSIF loc %]
-    <h3>All things in <a href="[% loc_link %]">[% loc %]</a>:</h3>
+    <h3>All things [% INCLUDE in_or_on.tt %]
+        <a href="[% loc_link %]">[% loc %]</a>:</h3>
   [% END %]
   [% IF results.size %]
     [% IF show_map %]

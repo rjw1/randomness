@@ -1,0 +1,5 @@
+[% IF loc.match( " Road$" ) || loc.match( " Street$" ) %]
+  on (or near)
+[% ELSE %]
+  in
+[% END %]

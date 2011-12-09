@@ -41,6 +41,7 @@ if ( $q->param( "do_search" ) ) {
   my $small_pointers = $q->param( "small_pointers" ) || 0;
 
   my $show_map = $q->param( "show_map" );
+  my $map_style = $q->param( "map_style" );
 
   $dist ||= 0;
   $dist =~ s/[^0-9]//g;
@@ -157,6 +158,7 @@ if ( $q->param( "do_search" ) ) {
                    enable_gmaps        => 1,
                    display_google_maps => 1,
                    show_map            => 1,
+                   map_style           => $map_style,
                  );
       my ( %origin_results, %end_results );
       my ( $min_lat, $max_lat, $min_long, $max_long, $bd_set );
@@ -328,4 +330,11 @@ sub setup_form_fields {
                                                  -value => 1, label => "" );
   $tt_vars{small_pointers_box} = $q->checkbox( -name => "small_pointers",
                                                -value => 1, label => "" );
+  $tt_vars{map_style_group} = $q->radio_group(
+      -name => "map_style",
+      -values => [ "mq", "osm", "google" ],
+      -default => "google",
+      -labels => { "mq" => "MapQuest", "osm" => "OpenStreetMap",
+                   "google" => "Google Maps" },
+  );
 }

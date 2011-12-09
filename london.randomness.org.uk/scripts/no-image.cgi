@@ -39,6 +39,7 @@ my $latlong_dist = $q->param( "latlong_dist" );
 my $origin = $q->param( "origin" );
 my $origin_dist = $q->param( "origin_dist" );
 my $show_map = $q->param( "show_map" );
+my $map_style = $q->param( "map_style" );
 
 my ( $x, $y, $dist );
 
@@ -301,6 +302,14 @@ $tt_vars{exclude_categories_box} = $q->checkbox( -name => "exclude_categories",
                                                  -value => 1, label => "" );
 $tt_vars{show_map_box} = $q->checkbox( -name => "show_map",
                                                  -value => 1, label => "" );
+$tt_vars{map_style_group} = $q->radio_group(
+    -name => "map_style",
+    -values => [ "mq", "osm", "google" ],
+    -default => "google",
+    -labels => { "mq" => "MapQuest", "osm" => "OpenStreetMap",
+                 "google" => "Google Maps" },
+);
+
 my $custom_template_path = $config->custom_template_path || "";
 my $template_path = $config->template_path;
 my $tt = Template->new( { INCLUDE_PATH =>
@@ -314,6 +323,7 @@ if ( $show_map ) {
                  enable_gmaps        => 1,
                  display_google_maps => 1,
                  show_map            => 1,
+                 map_style           => $map_style,
                  exclude_navbar      => 1,
                  min_lat             => $min_lat,
                  max_lat             => $max_lat,

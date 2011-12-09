@@ -43,6 +43,7 @@ sub get_tt_vars {
                   gmaps_api_key => $config->gmaps_api_key,
                   not_editable => 1,
                   config => $config,
+                  openguides_version => $OpenGuides::VERSION,
                 );
 
   my %cookie_data = OpenGuides::CGI->get_prefs_from_cookie(config=>$config); 

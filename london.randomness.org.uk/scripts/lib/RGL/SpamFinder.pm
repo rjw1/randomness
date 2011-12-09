@@ -61,13 +61,6 @@ sub looks_like_spam {
             return 1;
         }
 
-       if ( $name eq "Arcola Theatre"
-              && $comment =~ m|^\w{11},\s+<a\s+href="http://.*\w{10}</a>| ) {
-            $class->notify_admins( %args, id => "00039",
-                                   reason => "11 char + URL comment on $name" );
-            return 1;
-        }
-
        if ( $name eq "Hawksmoor, E1 6BJ"
               && $comment =~ m|^\w{11},\s+<a\s+href="http://.*</a>| ) {
             $class->notify_admins( %args, id => "00040",
@@ -80,6 +73,13 @@ sub looks_like_spam {
               && $comment =~ m|<a\s+href="\s*http://.*</a>| ) {
             $class->notify_admins( %args, id => "00041",
                                    reason => "URL comment on $name" );
+            return 1;
+        }
+
+       if ( $name eq "Dagenham Vue"
+              && $comment =~ m|^\w{11},\s+<a\s+href="https?://.*</a>| ) {
+            $class->notify_admins( %args, id => "00042",
+                                  reason => "11 char + URL comment on $name" );
             return 1;
         }
 

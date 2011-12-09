@@ -74,14 +74,14 @@ function clearAllCriteria() {
      [% origin_list %]</p>
 
   <p>
-    [% exclude_locales_box %] Exclude locale pages.<br />
-    [% exclude_categories_box %] Exclude category pages.
+    [% exclude_locales_box %] Exclude locale pages
+    [% exclude_categories_box %] Exclude category pages
+    [% show_map_box %] Show results on map (may be slow for large result sets)
   </p>
-
-  <p>
-    [% show_map_box %] Show results on map as well as list (may be slow for large result sets).
+  <p>Map style: [% map_style_group %]
+     <input type="hidden" name="do_search" value="1">
+     <input type="submit" name="Search" value="Search" class="form_button">
   </p>
-  <input type="submit" name="Search" value="Search" />
   <span id="clear_criteria"></span>
 </form>
 

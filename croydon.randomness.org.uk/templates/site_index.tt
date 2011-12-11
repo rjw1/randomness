@@ -1,0 +1,43 @@
+[% IF criterion %]
+  [% INCLUDE header.tt 
+      page_title = "Index of $criterion.name - $site_name"
+	  feed_base = "$cgi_url?action=index;index_type=$criterion.type;index_value=$criterion.value"
+   %]
+[% ELSE %]
+  [% INCLUDE header.tt page_title = "Things within $limit of $origin - $site_name" %]
+[% END %]
+[% INCLUDE banner.tt %]
+<div id="content">
+[% INCLUDE navbar.tt %]
+<div id="maincontent">
+<h2>Node List
+  [%- IF criterion -%]
+    [%- IF criterion.url -%]
+      - <a href="[% criterion.url %]">[%- criterion.name -%]</a>
+    [%- ELSE -%]
+      - [%- criterion.name -%]
+    [%- END -%]
+  [%- END -%]
+  [%- IF origin -%]
+    - Things within [%- limit -%] of <a href="[% cgi_url %]?[%- origin_param -%]">[%- origin -%]</a>
+  [%- END -%]
+</h2>
+<ol>
+  [% FOREACH node = nodes %]
+     <li><a href="[% cgi_url %]?[% node.param %]">[% node.name %]</a>
+         [% IF node.distance %]([% node.distance %] metres away)[% END %]
+     </li>
+  [% END %]
+</ol>
+</div>
+
+<p>
+  This list is available as
+  <a href="[% cgi_url %]?action=index;index_type=[% criterion.type %];index_value=[% criterion.value %];format=rdf">rdf</a>,
+  or as a
+  <a href="[% cgi_url %]?action=index;index_type=[% criterion.type %];index_value=[% criterion.value %];format=rss">rss feed</a>,
+  or as an
+  <a href="[% cgi_url %]?action=index;index_type=[% criterion.type %];index_value=[% criterion.value %];format=atom">atom feed</a>.
+</p>
+
+[% INCLUDE footer.tt %]

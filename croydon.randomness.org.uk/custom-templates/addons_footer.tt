@@ -1,0 +1,5 @@
+</div>
+[% IF !exclude_navbar %]
+  [% INCLUDE navbar.tt %]
+[% END %]
+[% INCLUDE footer.tt %]

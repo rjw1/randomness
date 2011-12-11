@@ -1,0 +1,16 @@
+<p>Powered by <a href="[% full_cgi_url%]?action=about">OpenGuides [% openguides_version %]</a>.
+
+[% IF map_style == "osm" %]
+  <br />Map data and images provided by and &copy;
+  <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, used under
+  <a href="http://creativecommons.org/licenses/by-sa/2.0/">cc-by-sa</a>.
+[% ELSIF map_style == "google" %]
+  <br />Map data and images provided by and &copy; Google.
+[% ELSIF show_map %]
+  <br />Map data and images provided by and &copy;
+  <a href="http://www.mapquest.com/">MapQuest</a> and
+  <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, used under
+  <a href="http://creativecommons.org/licenses/by-sa/2.0/">cc-by-sa</a>.
+[% END %]
+
+</p>

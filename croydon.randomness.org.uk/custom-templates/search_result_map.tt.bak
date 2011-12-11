@@ -1,0 +1,72 @@
+[% INCLUDE gmap_icon_types_apiv3.tt %]
+
+<script type="text/javascript">
+  var map;
+  var markers = [];
+  var content = [];
+  var infowindow;
+
+  function initialise() {
+    var map_centre = new google.maps.LatLng( [% lat %], [% long %] );
+    var map_options = {
+                        zoom: 12,
+                        center: map_centre,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        streetViewControl: 0
+                      };
+    map = new google.maps.Map( document.getElementById( "map" ),
+                               map_options );
+    map.fitBounds( new google.maps.LatLngBounds(
+                   new google.maps.LatLng( [% min_lat %] - 0.0001, [% min_long %] - 0.0001 ),
+                   new google.maps.LatLng( [% max_lat %] + 0.0001, [% max_long %] + 0.0001 ) ) );
+    google.maps.event.addListenerOnce( map, "idle", function() { 
+      if ( map.getZoom() > 17 ) {
+        map.setZoom( 17 );
+      } 
+    } );
+    infowindow = new google.maps.InfoWindow();
+  }
+
+  function add_markers() {
+    var position;
+    [% i = 0 %]
+    [% FOREACH node = results %]
+      [% i = i + 1 %]
+      position = new google.maps.LatLng( [% node.lat %], [% node.long %] );
+      markers[[% i %]] = new google.maps.Marker({
+        position: position,
+        title: "[% CGI.escapeHTML( node.name ) %]",
+        map: map,
+        icon: [% IF node.markertype %]gmap_icons_apiv3[ "[% node.markertype %]" ][% ELSE %]gmap_icons_apiv3[ "default_icon" ][% END %]
+      });
+      content[[% i %]] = "<a href=\"[% node.url %]\">[% CGI.escapeHTML( node.name ) %]</a><br>[% node.address %]";
+      google.maps.event.addListener( markers[[% i %]], "click", function() {
+        infowindow.setContent( content[[% i %]] );
+        infowindow.open( map, markers[[% i %]] ); 
+      } );
+    [% END %]
+  }
+
+  window.onload = function() {
+    initialise();
+    add_markers();
+  }
+</script>
+
+  <ul style="height:400px; overflow:auto; float:right; max-width:20%; font-size: 0.8em">
+
+    [% i = 0 %]
+    [% FOREACH node = results %]
+      [% i = i + 1 %]
+      [% IF node.type %]
+        <li class="map_search_result_type_[% node.type %]">
+      [% ELSE %]
+        <li class="map_search_result">
+      [% END %]
+          <a href="#" onclick="infowindow.setContent( content[[% i %]] ); infowindow.open( map, markers[[% i %]] ); map.panTo( markers[[% i %]].getPosition() ); return false;">[% CGI.escapeHTML( node.name ) %]</a> 
+      </li>
+    [% END %]
+
+  </ul>
+
+  <div id="map" style="float: left; width: 73%; height: 600px"></div>

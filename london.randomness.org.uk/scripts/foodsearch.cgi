@@ -76,7 +76,8 @@ INNER JOIN metadata as cat
        AND (
 ";
 
-  my @foodcats = $categoriser->subcategories( category => "Food" );
+  my @foodcats = ( "restaurants", "cafes", "food served lunchtimes",
+                   "food served evenings", "pub food", "takeaway" );
   @foodcats = map { "lower(cat.metadata_value) = '" . lc($_) . "'"; }
               @foodcats;
   $sql .= join " OR ", @foodcats;

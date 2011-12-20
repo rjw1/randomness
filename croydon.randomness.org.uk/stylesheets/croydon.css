@@ -1,40 +1,41 @@
 /* Global stuff */
 body {
-  background: #656868;
+  background: #3a5c9c;
   color: #000000;
-  font-family: 'Lucida Grande', verdana, arial, sans-serif;
+  font-family: lucida, verdana, arial, sans-serif;
 }
 
 a {
-  color: #ac5519;
-  font-family: 'Lucida Grande', verdana, arial, sans-serif;
+  color: #3a5c9c;
+  font-family: lucida, verdana, arial, sans-serif;
 }
-a:visited { color: #734f37; }
+a:visited { color: #446688; }
 a:active  { text-decoration: underline; }
 a:hover   { text-decoration: underline; }
 
 input.form_button {
   font-weight: bold;
   font-size: 0.9em;
-  color: #FCF8E3;
-  background: #595A38;
-  border: 1px solid #3A3B22;
+  color: #e7eeff;
+  background: #585c7e;
+  border: 1px solid #000000;
 }
 
 /* Main body */
 div#body_wrapper {
-  background: #F2E9BC;
+  background: #e7eeff;
   margin-left: 5%;
   margin-right: 5%;
   margin-top: 1.5em;
-  border: 1px solid black;
+  border: 1px solid #000;
 }
 
 #banner {
   padding-left: 0.5em;
   margin-top: -1.35em;
-  background: #595A38;
+  background: #585c7e;
   color: #fff;
+  letter-spacing: 0.1em;
 }
 
 #banner h1 {
@@ -43,9 +44,10 @@ div#body_wrapper {
 }
 
 #banner a {
-  color: #F1C969;
+  color: #c0c6dc;
   font-size: 0.8em;
   text-decoration: none;
+  font-weight: normal;
 }
 
 #banner h1 a:active { text-decoration: none; }
@@ -66,9 +68,10 @@ div#summary {
   margin-left: -0.5em;
   padding-left: 0.5em;
   padding-top: 5px;
-  background: #A5A162 url('http://london.randomness.org.uk/summary_bar.jpg') top left;
+  background: #A5A162 url('http://croydon.randomness.org.uk/static/summary_bar.jpg') top left;
   color: #000000;
   height: 25px; /* Yes yes I know but there's an image to line up with. */
+  letter-spacing: 0;
 }
 
 div#summary_text {
@@ -82,9 +85,11 @@ div.summary_bar_link {
   padding: 0 0.5em 0 0.5em;
   border-left: 1px solid black;
 }
+
 #banner div.summary_bar_link a {
   color: #000000;
 }
+
 #banner div.summary_bar_link a:hover { text-decoration: underline; }
 #banner div.summary_bar_link a:active { text-decoration: underline; }
 
@@ -92,12 +97,13 @@ div.summary_bar_link {
 #navbar {
   float: right;
   color: black;
-  background: #F1C969;
+  background: #c9daff;
   width: 25%;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  border-left: 1px dotted #595A38;
-  border-bottom: 1px dotted #595A38;
+  border-left: 1px solid #585c7e;
+  border-bottom: 1px solid #585c7e;
+  border-top: 1px solid #585c7e;
 }
 
 #navbar a {
@@ -115,8 +121,8 @@ div.summary_bar_link {
 .navbar_group_title {
   font-weight: bold;
   font-size: 0.75em;
-  color: #FCF8E3;
-  background: #595A38;
+  color: #e7eeff;
+  background: #585c7e;
   padding: 0.4em;
   margin-left: 0.5em;
   margin-right: 0.5em;
@@ -136,8 +142,8 @@ div.summary_bar_link {
 }
 
 #nav_search {
-  color: #333333;
-  background: #F2E9BC;
+  color: #585c7e;
+  background: #e7eeff;
   padding-left: 0.2em;
   margin-bottom: 0.2em;
   border: 1px solid #58078E;
@@ -234,8 +240,10 @@ div#node_image_copyright a {
 {
 }
 
+/* The name of a node */
+
 h2.node_name {
-  color: #A0410D;
+  color: #2d2f41;
   font-style: italic;
   font-size: 1.2em;
   padding-top: 0.5em;
@@ -323,7 +331,7 @@ div#journeyplanner_link {
 /* The 'RDF/XML for this node' link that appears on all nodes */
 #rdf_link
 {
-  font-size: 0.8em;
+  display: none;
 }
 
 /* The footer that appears on all nodes */

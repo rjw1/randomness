@@ -31,7 +31,7 @@
       OR hours_text OR map_link %] 
   <ul id="general_metadata">
 
-    [% IF phone %]
+    [% IF phone AND 0 %]
       <li class="telephone">
         <span class="metadata_label">Telephone:</span> <span class="tel">[% CGI.escapeHTML(phone) %]</span>
       </li>

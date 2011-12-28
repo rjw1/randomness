@@ -1,4 +1,5 @@
-[% IF loc.match( " Road$" ) || loc.match( " Street$" ) || loc == "Pitlake" %]
+[% IF loc.match( " Road$" ) || loc.match( " Street$" ) || loc == "Pitlake"
+   || loc == "North End" || loc == "South End" %]
   on
 [% ELSE %]
   in

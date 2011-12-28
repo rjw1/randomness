@@ -202,6 +202,7 @@
     <fieldset id="additional_information">
       <legend>Additional information</legend>
 
+[% IF 0 %]
       <div class="edit_form_group" id="phone_group">
         [% IF conflict %]
           <label for="phone">Current phone:</label>
@@ -241,6 +242,7 @@
           </div>
         [% END %]
       </div>
+[% END %]
 
       <div class="edit_form_group" id="website_group">
         [% IF conflict %]

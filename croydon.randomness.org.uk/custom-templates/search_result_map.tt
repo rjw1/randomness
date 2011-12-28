@@ -21,7 +21,6 @@
                         zoom: 12,
                         center: map_centre,
                         mapTypeId: [% map_type_id %],
-                        mapTypeControlOptions: { mapTypeIds: ["OSM"] },
                         streetViewControl: 0
                       };
     map = new google.maps.Map( document.getElementById( "map" ),
@@ -83,7 +82,7 @@
   }
 </script>
 
-  <ul style="height:400px; overflow:auto; float:right; max-width:20%; font-size: 0.8em">
+  <ul style="height:400px; overflow:auto; float:right; max-width:20%; font-size: 0.8em; border: thin solid black">
 
     [% i = 0 %]
     [% FOREACH node = results %]

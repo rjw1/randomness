@@ -55,20 +55,6 @@ sub looks_like_spam {
             return 1;
         }
 
-        if ( $comment =~ m|\w{6}\s+<a\s+href="http://[a-z]{12}\.com| ) {
-            $class->notify_admins( %args, id => "00035",
-                    reason => "six-character comment plus link to 12-character URL" );
-            return 1;
-        }
-
-       if ( $name eq "Hawksmoor, E1 6BJ"
-              && $comment =~ m|^\w{11},\s+<a\s+href="http://.*</a>| ) {
-            $class->notify_admins( %args, id => "00040",
-                                   reason => "11 char + URL comment on $name" );
-            return 1;
-        }
-
-
        if ( $name eq "Old Salt Quay, SE16 5QU"
               && $comment =~ m|<a\s+href="\s*http://.*</a>| ) {
             $class->notify_admins( %args, id => "00041",
@@ -77,7 +63,7 @@ sub looks_like_spam {
         }
 
        if ( $name eq "Dagenham Vue"
-              && $comment =~ m|^\w{11},\s+<a\s+href="https?://.*</a>| ) {
+              && $comment =~ m|^\w{11},.*https?://| ) {
             $class->notify_admins( %args, id => "00042",
                                   reason => "11 char + URL comment on $name" );
             return 1;

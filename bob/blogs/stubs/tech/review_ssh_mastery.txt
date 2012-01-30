@@ -1,0 +1,7 @@
+Title: Review of SSH Mastery by Micheal W Lucas
+Format: markdown
+Tags: book, review, ssh
+Date: 2012/01/30 23:00
+
+[SSH Mastery](http://www.amazon.co.uk/gp/product/B006ZO9ULK/ref=as_li_ss_tl?ie=UTF8&tag=randomness05-21&linkCode=as2&camp=1634&creative=19450&creativeASIN=B006ZO9ULK) is a self-published book by Micheal W Lucas ( available at [Amazon](http://www.amazon.co.uk/gp/product/B006ZO9ULK/ref=as_li_ss_tl?ie=UTF8&tag=randomness05-21&linkCode=as2&camp=1634&creative=19450&creativeASIN=B006ZO9ULK) and [Smashwords](http://www.smashwords.com/books/view/124810?ref=rjw1) ) who wrote the most excellent [Cisco Routers for the Desperate](http://www.amazon.co.uk/gp/product/159327193X/ref=as_li_ss_tl?ie=UTF8&tag=randomness05-21&linkCode=as2&camp=1634&creative=19450&creativeASIN=159327193X). 
+ 

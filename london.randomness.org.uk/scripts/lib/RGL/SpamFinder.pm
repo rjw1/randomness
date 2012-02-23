@@ -17,7 +17,7 @@ sub looks_like_spam {
     my $host = $args{metadata}{host};
     my $comment = $args{added_comment} || "";
 
-    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine|buyphentermine|adipex|phendimetrazine|ephedrine|lipitor|hydrocodone|replica-watches|propecia|ativan|levitra|lexapro|ambien|citalopram|effexor|fluoxetine|prozac|kamagra|accutane|zithromax|clenbuterol|nolvadex|lorazepam|clonazepam|diazepam|valium|clomid|rimonabant|xenical|lolita|lolitas|vimax)\b/is ) {
+    if ( $content =~ /\b(viagra|cialis|supermeganah|tramadol|vicodin|phentermine|buyphentermine|adipex|phendimetrazine|ephedrine|lipitor|hydrocodone|replica-watches|propecia|ativan|levitra|lexapro|ambien|citalopram|effexor|fluoxetine|prozac|kamagra|accutane|zithromax|clenbuterol|nolvadex|lorazepam|clonazepam|diazepam|valium|clomid|rimonabant|xenical|lolita|lolitas|vimax|prednisone|nexium|ultram|klonopin)\b/is ) {
         $class->notify_admins( %args, id => "00002", reason => "Matches $1" );
         return 1;
     }
@@ -62,10 +62,22 @@ sub looks_like_spam {
             return 1;
         }
 
-       if ( $name eq "Dagenham Vue"
+       if ( ( $name eq "Dagenham Vue" || $name eq "Green Park Station" )
               && $comment =~ m|^\w{11},.*https?://| ) {
             $class->notify_admins( %args, id => "00042",
                                   reason => "11 char + URL comment on $name" );
+            return 1;
+        }
+
+        if ( $comment =~ m|^\w{6}\s+<a\s+href="http://(\w{12}).com/">\1</a>| ){
+            $class->notify_admins( %args, id => "00043",
+                                  reason => "URL/URL comment on $name" );
+            return 1;
+        }
+
+        if ( $comment =~ m{http://www.(prominentinsurers.com|ensureyourhealth.net|protectionrates.net|bestinsurerstoday.com|healthinsurplans.com|discountinsurlife.com|autoprotectionquotes.net|coveryourhealth.net|insureeverything.net|topinsurancerates.net|getyourquote.net|cheapautoinsur.net|protectionagencies.net|teamschuco.com|topinsurancerates.net|locateautoinsur.com|quotesinyourstate.com|affordableautoinsur.net|bestinsurplans.net|businessinsurtips.com|bestinsurcoverage.com)}is ) {
+            $class->notify_admins( %args, id => "00044",
+                                  reason => "insurance spam comment" );
             return 1;
         }
 

@@ -178,6 +178,7 @@ div.summary_bar_link {
 
 .recentchanges_node_name {
   font-size: 0.8em;
+  min-width: 12em;
 }
 .recentchanges_meta {
   font-size: 0.8em;

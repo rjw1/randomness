@@ -77,34 +77,6 @@ my %sql = (
     WHERE img.date_added >= $min_date
       AND img.date_added < $max_date
                        ",
-  x_min => "
-    SELECT min( md.metadata_value )
-    FROM node, metadata AS md
-    WHERE node.id=md.node_id
-      AND node.version=md.version
-      AND md.metadata_type='os_x'
-           ",
-  x_max => "
-    SELECT max( md.metadata_value )
-    FROM node, metadata AS md
-    WHERE node.id=md.node_id
-      AND node.version=md.version
-      AND md.metadata_type='os_x'
-           ",
-  y_min => "
-    SELECT min( md.metadata_value )
-    FROM node, metadata AS md
-    WHERE node.id=md.node_id
-      AND node.version=md.version
-      AND md.metadata_type='os_y'
-           ",
-  y_max => "
-    SELECT max( md.metadata_value )
-    FROM node, metadata AS md
-    WHERE node.id=md.node_id
-      AND node.version=md.version
-      AND md.metadata_type='os_y'
-           ",
 );
 
 my %data;
@@ -130,20 +102,6 @@ $data{month_real_count}  = RGL::Addons->get_page_count( wiki => $wiki,
 $data{month_total_count} = RGL::Addons->get_page_count( wiki => $wiki,
                                                   added_last_month => 1,
                                                 );
-
-$data{km_squared} = ( ( $data{x_max} - $data{x_min} ) / 1000 )
-                  * ( ( $data{y_max} - $data{y_min} ) / 1000 );
-
-$data{miles_squared} = $data{km_squared} * 0.386;
-
-# We can streamline this by using select count in the RGL::Addons select.
-my @pages_with_geodata = RGL::Addons->get_nodes_with_geodata(
-    wiki => $wiki,
-    config => $config,
-);
-my $num_with_geodata = scalar @pages_with_geodata;
-$data{pages_per_square_km}   = $num_with_geodata / $data{km_squared};
-$data{pages_per_square_mile} = $num_with_geodata / $data{miles_squared};
 
 $tt_vars{data} = \%data;
 

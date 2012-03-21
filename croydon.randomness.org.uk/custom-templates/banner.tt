@@ -1,0 +1,14 @@
+<div id="banner">
+  [% TRY %]
+    [% INCLUDE custom_banner.tt %]
+  [% CATCH %]
+    <h1><a href="[% home_link %]">[% site_name %]</a></h1>
+      <div id="summary">
+        [% IF username %]
+          You are logged in as [% username %].
+        [% ELSE %]
+          You are not logged in.
+        [% END %]
+      </div>
+  [% END %]
+</div>

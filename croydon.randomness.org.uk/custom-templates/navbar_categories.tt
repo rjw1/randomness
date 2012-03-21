@@ -1,0 +1,11 @@
+<div id="navbar_categories">
+  <div class="navbar_group_title">Categories:</div>
+  <ul class="navbar_group">
+    <li><a href="[% config.script_url _ config.script_name %]?Category_Retail_Shops" title="View types of retail shop">Shops</a></li>
+    <li><a href="[% config.script_url _ config.script_name %]?Category_Cafes" title="View a list of all cafes">Cafes</a> (<a href="[% config.script_url %]scripts/locate.cgi?cat=Cafes;map=1" rel="nofollow" title="View all cafes on a map">map</a>) (<a href="[% config.script_url _ config.script_name %]?action=random;category=Cafes" title="View a random cafe">random</a>)</li>
+    <li><a href="[% config.script_url _ config.script_name %]?Category_Pubs" title="View a list of all pubs">Pubs</a> (<a href="[% config.script_url %]scripts/locate.cgi?cat=Pubs;map=1" rel="nofollow" title="View all pubs on a map">map</a>) (<a href="[% config.script_url _ config.script_name %]?action=random;category=Pubs" title="View a random pub">random</a>)</li>
+    <li><a href="[% config.script_url _ config.script_name %]?Category_Restaurants" title="View a list of all restaurants">Restaurants</a> (<a href="[% config.script_url _ config.script_name %]?action=index;format=map;index_type=category;index_value=Restaurants" rel="nofollow" title="View all restaurants on a map">map</a>) (<a href="[% config.script_url _ config.script_name %]?action=random;category=Restaurants" title="View a random restaurant">random</a>)</li>
+    <li><a href="[% config.script_url _ config.script_name %]?Category_Category">All Categories</a></li>
+    <li><a href="[% config.script_url _ config.script_name %]?Category_Locales">All Locales</a></li>
+  </ul>
+</div>

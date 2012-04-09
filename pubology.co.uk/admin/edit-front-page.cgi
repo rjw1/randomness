@@ -117,7 +117,20 @@ sub print_form_and_exit {
           last;
         }
         if ( $bit->[0] eq "S" ) {
-          $current_text .= "<" . $bit->[1] . ">";
+          if ( $bit->[1] eq "a" ) {
+            my $href = $bit->[2]->{href};
+            my $name = $bit->[2]->{name};
+            my $class = $bit->[2]->{class};
+            my $id = $bit->[2]->{id};
+            $current_text .= "<" . $bit->[1]
+                           . ( $href  ? " href=\"$href\"" : "" )
+                           . ( $name  ? " name=\"$name\"" : "" )
+                           . ( $class ? " class=\"$class\"" : "" )
+                           . ( $id    ? " id=\"$id\"" : "" )
+                           . ">";
+          } else {
+            $current_text .= "<" . $bit->[1] . ">";
+          }
         } elsif ( $bit->[0] eq "E" ) {
           $current_text .= "</" . $bit->[1] . ">";
         } elsif ( $bit->[0] eq "T" ) {

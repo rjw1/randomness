@@ -1,34 +1,9 @@
-<!DOCTYPE html>
-<html>
-
 [% USE CGI %]
 [% USE JSON ( convert_blessed => 1, allow_blessed => 1 ) %]
 
-<head>
-  <title>[% postal_district | html %] &#8212; Pubology map</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-  <link rel="stylesheet" href="http://the.earth.li/~kake/tmp/ewan/styles.css" 
-   type="text/css" />
-
-  <style type="text/css">
-    html { height: 100% }
-    body { height: 100%; margin: 0; padding: 1em }
-    #map_canvas { height: 100% }
-  </style>
-
-  <script type="text/javascript"
-          src="http://maps.googleapis.com/maps/api/js?sensor=false&region=GB">
-  </script>
-
-  <script src="http://www.pubology.co.uk/js/functions.js"
-          type="text/javascript"></script>
-
-</head>
-
-<body onload="initialise( [% centre_lat %], [% centre_long %] ); add_markers()">
-  <h1 class="page_header">Pubology map</h1>
-  <h2>[% postal_district | html %]</h1>
+[% do_map = 1 %]
+[% subtitle = postal_district | html %]
+[% INCLUDE header.tt %]
 
   <p>Last updated: [% updated | html %]</p>
   <p><a href="../indexes/[% area_file | html %].html">Back to [% area_name | html %] index</a>.</p>

@@ -9,13 +9,6 @@
     </div>
   [% END %]
 
-  <script type="text/javascript">
-    function reassure() {
-      document.getElementById( 'upload_msg' ).innerHTML='Uploading... please be patient, this may take a little while.';
-      return true;
-    }
-  </script>
-
   <form method="post" enctype="multipart/form-data"
         action="[% cgi_url %]" onSubmit="return reassure()">
 

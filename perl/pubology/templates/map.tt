@@ -47,7 +47,7 @@
             [% CGI.escapeHTML( pub.name ) %] (not on map &#8212;
             <a href="[% base_url %]pubs/[% pub.id %].html">view pub info</a>)
           [% ELSE %]
-            <a href="#" onclick="infowindow.setContent( content[[% i %]] ); infowindow.open( map, markers[[% i %]] ); map.panTo( markers[[% i %]].getPosition() ); return false;">[% CGI.escapeHTML( pub.name ) %]</a>
+            <a href="#" onclick="return open_marker( [% i %] )">[% CGI.escapeHTML( pub.name ) %]</a>
           [% END %]
         </li>
       [% END %]

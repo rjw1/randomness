@@ -1,4 +1,5 @@
 [% subtitle = pub.name | html %]
+[% subtitle_class = "pub_name" %]
 [% INCLUDE header.tt %]
 
   <div style="float:left">

@@ -58,3 +58,11 @@ function add_marker( i, pub ) {
     infowindow.open( map, markers[ i ] );
   } );
 }
+
+function open_marker( i ) {
+  infowindow.setContent( content[ i ] );
+  infowindow.open( map, markers[ i ] );
+  map.panTo( markers[ i ].getPosition() );
+  return false;
+}
+

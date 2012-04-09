@@ -55,24 +55,20 @@
 
   <script type="text/javascript">
     function add_markers() {
-      var position;
       [% i = 0 %]
       [% FOREACH pub = pubs %]
         [% i = i + 1 %]
-        [% UNLESS pub.not_on_map %]
-          position = new google.maps.LatLng( [% pub.lat %], [% pub.long %] );
-          markers[[% i %]] = new google.maps.Marker({
-            position: position,
-            title: "[% CGI.escapeHTML( pub.name ) %]",
-            map: map,
-            icon: "http://maps.google.com/mapfiles/ms/micons/[% IF pub.demolished %]red[% ELSIF pub.closed %]yellow[% ELSE %]green[% END %]-dot.png"
-        });
-          content[[% i %]] = "<a href=\"[% base_url %]pubs/[% pub.id %].html\">[% CGI.escapeHTML( pub.name ) %]</a> [% IF pub.demolished %] (demolished) [% ELSIF pub.closed %] (closed) [% END %]<br>[% CGI.escapeHTML( pub.address ) %]";
-          google.maps.event.addListener( markers[[% i %]], "click", function() {
-            infowindow.setContent( content[[% i %]] );
-            infowindow.open( map, markers[[% i %]] );
-          } );
-        [% END %]
+        var pub = {
+          not_on_map : [% pub.not_on_map %],
+          lat : [% pub.lat %],
+          long : [% pub.long %],
+          name : "[% CGI.escapeHTML( pub.name ) %]",
+          address : "[% CGI.escapeHTML( pub.address ) %]",
+          demolished: [% pub.demolished %],
+          closed: [% pub.closed %],
+          id: [% pub.id %]
+        };
+        add_marker( [% i %], pub );
       [% END %]
     }
   </script>

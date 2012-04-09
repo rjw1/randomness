@@ -31,12 +31,16 @@
         [% END %]
       </td>
     </tr>
-    [% IF pub.date_built OR pub.date_closed %]
-      <tr class="pub_dates">
-        <th>Dates Open:</th>
-        <td>
-          [% IF pub.date_built %][% pub.date_built | html %][% END %]&#8211;[% IF pub.date_closed %][% pub.date_closed | html %][% END %]
-        </td>
+    [% IF pub.date_built %]
+      <tr class="pub_date_built">
+        <th>Date built:</th>
+        <td>[% pub.date_built | html %]</td>
+      </tr>
+    [% END %]
+    [% IF pub.date_closed %]
+      <tr class="pub_date_closed">
+        <th>Date closed:</th>
+        <td>[% pub.date_closed | html %]</td>
       </tr>
     [% END %]
     [% IF pub.alt_name %]

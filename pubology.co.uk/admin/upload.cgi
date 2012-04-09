@@ -72,7 +72,7 @@ my %regexes = (
 );
 
 my $district_conf = PubSite->parse_postal_district_config(
-                        file => "$HOME/postal_districts.conf",
+                        file => "$HOME/conf/postal_districts.conf",
   ) || print_form_and_exit( errmsg => "<p>$PubSite::errstr</p>" );
 
 my $this_area;
@@ -100,7 +100,7 @@ if ( $type eq "postal_district" ) {
   }
 }
 
-my $config = Config::Tiny->read( "$HOME/pubology.conf" )
+my $config = Config::Tiny->read( "$HOME/conf/pubology.conf" )
                or croak "Can't read config file: $Config::Tiny::errstr "
                       . "(please report this as a bug)";
 
@@ -109,7 +109,7 @@ my $flickr_secret = $config->{_}->{flickr_secret} || "";
 
 my %data = PubSite->parse_csv(
   file          => $tmpfile_name,
-  check_flickr  => 0,
+  check_flickr  => 1,
   flickr_key    => $flickr_key,
   flickr_secret => $flickr_secret,
 );

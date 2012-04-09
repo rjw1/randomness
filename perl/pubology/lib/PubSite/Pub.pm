@@ -185,4 +185,15 @@ You can access any of the things you put in when you called new(), e.g.
 
 =cut
 
+sub TO_JSON {
+  my $self = shift;
+  return {
+    %$self,
+    lat => $self->lat,
+    long => $self->long,
+    not_on_map => $self->not_on_map,
+    address => $self->address,
+  };
+}
+
 1;

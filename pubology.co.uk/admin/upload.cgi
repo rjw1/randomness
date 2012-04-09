@@ -187,7 +187,8 @@ sub write_map_page {
 
   my $template = "map.tt";
   open( my $output_fh, ">", $base_dir . $map_file ) or die $!;
-  $tt->process( $template, $tt_vars, $output_fh );
+  $tt->process( $template, $tt_vars, $output_fh )
+    || print_form_and_exit( errmsg => $tt->error );
 }
 
 sub rewrite_index {

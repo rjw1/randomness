@@ -2,15 +2,4 @@
 
 <div id="front_page_text">[% text %]</div>
 
-<ul>
-  <li><a href="indexes/north-london.html">North London</a></li>
-  <li><a href="indexes/east-london.html">East London</a></li>
-  <li><a href="indexes/south-east-london.html">South-East London</a></li>
-  <li><a href="indexes/south-west-london.html">South-West London</a></li>
-  <li><a href="indexes/west-london.html">West London</a></li>
-  <li><a href="indexes/north-west-london.html">North-West London</a></li>
-  <li><a href="indexes/central-london.html">Central London</a></li>
-  <li><a href="indexes/outer-london.html">Outer London</a></li>
-</ul>
-
 [% INCLUDE footer.tt %]

@@ -1,31 +1,31 @@
 <div id="navbar">
   <ul id="internal_links">
     <li id="home_link">
-      <a href="/index.html">Home</a>
+      <a href="[% base_url %]index.html">Home</a>
     </li>
     <li class="area_link">
-      <a href="/indexes/central-london.html">Central</a>
+      <a href="[% base_url %]indexes/central-london.html">Central</a>
     </li>
     <li class="area_link">
-      <a href="/indexes/east-london.html">East</a>
+      <a href="[% base_url %]indexes/east-london.html">East</a>
     </li>
     <li class="area_link">
-      <a href="/indexes/north-london.html">North</a>
+      <a href="[% base_url %]indexes/north-london.html">North</a>
     </li>
     <li class="area_link">
-      <a href="/indexes/north-west-london.html">North-West</a>
+      <a href="[% base_url %]indexes/north-west-london.html">North-West</a>
     </li>
     <li class="area_link">
-      <a href="/indexes/south-east-london.html">South-East</a>
+      <a href="[% base_url %]indexes/south-east-london.html">South-East</a>
     </li>
     <li class="area_link">
-      <a href="/indexes/south-west-london.html">South-West</a>
+      <a href="[% base_url %]indexes/south-west-london.html">South-West</a>
     </li>
     <li class="area_link">
-      <a href="/indexes/west-london.html">West</a>
+      <a href="[% base_url %]indexes/west-london.html">West</a>
     </li>
     <li class="area_link">
-      <a href="/indexes/outer-london.html">Outer</a>
+      <a href="[% base_url %]indexes/outer-london.html">Outer</a>
     </li>
     [% IF pub AND postal_district %]
       <li id="postal_district_link">

@@ -31,18 +31,6 @@
         [% END %]
       </td>
     </tr>
-    [% IF pub.date_built %]
-      <tr class="pub_date_built">
-        <th>Date built:</th>
-        <td>[% pub.date_built | html %]</td>
-      </tr>
-    [% END %]
-    [% IF pub.date_closed %]
-      <tr class="pub_date_closed">
-        <th>Date closed:</th>
-        <td>[% pub.date_closed | html %]</td>
-      </tr>
-    [% END %]
     [% IF pub.alt_name %]
       <tr class="pub_former_name">
         <th>Former name(s):</th>
@@ -53,6 +41,28 @@
       <tr class="pub_former_address">
         <th>Former address:</th>
         <td>[% pub.former_addr | html | replace( ';', '<br>' ) %]</td>
+      </tr>
+    [% END %]
+    [% IF pub.date_built OR pub.date_closed %]
+      <tr class="pub_dates_open">
+        <th>Dates open:</th>
+        <td>
+          [% IF pub.date_built %]
+            [% pub.date_built | html %]
+            [% IF pub.date_closed %]
+              <br />
+            [% END %]
+          [% END %] 
+          [% IF pub.date_closed %]
+            [% pub.date_closed | html %]
+          [% END %]
+        </td>
+      </tr>
+    [% END %]
+    [% IF pub.gbg %]
+      <tr class="pub_gbg">
+        <th>Good Beer Guide:</th>
+        <td>[% pub.gbg | html %]</td>
       </tr>
     [% END %]
     [% IF pub.owner %]
@@ -111,16 +121,6 @@
         <td>[% pub.notes | html %]</td>
       </tr>
     [% END %]
-    [% IF pub.gbg %]
-      <tr class="pub_gbg">
-        <th>Good Beer Guide:</th>
-        <td>[% pub.gbg | html %]</td>
-      </tr>
-    [% END %]
-    <tr class="pub_last_updated">
-      <th>Last updated:</th>
-      <td>[% updated | html %]</td>
-    </tr>
     </table>
   </div>
 
@@ -131,6 +131,5 @@
   </div>
 
   <br clear="both">
-  <p><a href="[% map_url %]">Back to map</a>.</p>
 
 [% INCLUDE footer.tt %]

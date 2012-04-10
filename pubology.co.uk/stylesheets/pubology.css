@@ -48,7 +48,7 @@ div#navbar ul#internal_links li#home_link {
   padding-bottom: 1em;
 }
 
-div#navbar ul#internal_links li#postal_district_link, li#map_link {
+div#navbar ul#internal_links li#postal_district_link, li#map_link, li#postal_district_nolink, li#map_nolink {
   padding-left: 1em;
 }
 

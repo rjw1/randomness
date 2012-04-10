@@ -146,6 +146,10 @@ sub print_form_and_exit {
   # put linebreaks back
   $current_text =~ s/&lt;br&gt;/\r\n/g;
 
+  # Strip leading and trailing whitespace.
+  $current_text =~ s/^\s+//;
+  $current_text =~ s/\s+$//;
+
   my %tt_vars = (
                   cgi_url => $cgi_url,
                   front_page_text_field => $q->textarea(

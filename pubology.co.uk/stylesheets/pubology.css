@@ -64,6 +64,10 @@ div#main_content {
   height: 100%;
 }
 
+div#front_page_text {
+  padding-top: 1em;
+}
+
 div#map_canvas {
   float: right;
   width: 75%;

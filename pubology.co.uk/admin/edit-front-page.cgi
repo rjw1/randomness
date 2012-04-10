@@ -100,7 +100,7 @@ sub print_form_and_exit {
   my $current_text = "";
   while ( my $token = $parser->get_tag( "div" ) ) {
     my $attrs = $token->[1];
-    if ( $attrs->{id} eq "main_content" ) {
+    if ( $attrs->{id} eq "front_page_text" ) {
       while ( my $bit = $parser->get_token ) {
         if ( $bit->[0] eq "E" && $bit->[1] eq "div" ) {
           last;

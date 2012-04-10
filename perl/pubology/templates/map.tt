@@ -6,7 +6,6 @@
 [% INCLUDE header.tt %]
 
 <div id="main_content">
-  <p>Last updated: [% updated | html %]</p>
   <p>green = open, yellow = closed, red = demolished</p>
 </div>
 
@@ -29,6 +28,9 @@
         </li>
       [% END %]
     </ul>
+
+    <p>Last updated at [% updated | html %].</p>
+
   </div>
 
   <script type="text/javascript">
@@ -43,5 +45,4 @@
     }
   </script>
 
-</body>
-</html>
+[% INCLUDE footer.tt %]

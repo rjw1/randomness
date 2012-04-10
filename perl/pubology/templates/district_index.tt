@@ -4,7 +4,6 @@
 [% INCLUDE header.tt %]
 
 <div id="main_content">
-  <p>Last updated: [% updated | html %]</p>
 
   <div id="pub_list_no_map">
     <p>Pubs in [% postal_district | html %]
@@ -17,6 +16,9 @@
       [% END %]
     </ul>
   </div>
+
+  <p>Last updated at [% updated | html %].</p>
+
 </div>
 
 [% INCLUDE footer.tt %]

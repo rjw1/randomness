@@ -2,7 +2,12 @@
 [% subtitle_class = "pub_name" %]
 [% INCLUDE header.tt %]
 
-  <div id="pub_info">
+<div id="main_content">
+  [% IF pub.photo_url %]
+    <div id="pub_info" class="pub_info_with_photo">
+  [% ELSE %]
+    <div id="pub_info">
+  [% END %]
     <table>
     <tr class="pub_status">
       <th>Status:</th>
@@ -129,7 +134,6 @@
       <a href="[% pub.flickr | html %]"><img src="[% pub.photo_url | html %]" width="[% pub.photo_width | html %]" height="[% pub.photo_height | html %]"></a>
     [% END %]
   </div>
-
-  <br clear="both">
+</div>
 
 [% INCLUDE footer.tt %]

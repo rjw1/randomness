@@ -1,5 +1,7 @@
 [% INCLUDE header.tt subtitle = 'Edit front page text' %]
 
+<div id="main_content">
+
   [% IF errmsg %]
     <div class="upload_error">
       <p>ERROR:</p>
@@ -13,10 +15,11 @@
         action="[% cgi_url %]">
 
     <p>Text for front page:</p>
-    <textarea name="front_page_text" rows="20" cols="100">[% current_text %]</textarea>
+    <textarea name="front_page_text" rows="30" cols="85">[% current_text %]</textarea>
 
     <p><input type="submit" name="Save" value="Save" /></p>
 
   </form>
+</div>
 
 [% INCLUDE footer.tt %]

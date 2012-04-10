@@ -24,6 +24,11 @@ h1.page_header {
   text-transform: uppercase;
 }
 
+h1.page_header a {
+  color: #000000;
+  text-decoration: none;
+}
+
 div#navbar {
   float: left;
   width: 8%;

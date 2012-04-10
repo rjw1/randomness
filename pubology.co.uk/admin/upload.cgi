@@ -144,7 +144,7 @@ $tt->process( "upload_complete.tt", \%tt_vars ) || die $tt->error;
 sub write_pub_page {
   my $pub = shift;
 
-  my $tt_vars = { pub => $pub, map_url => $map_url,
+  my $tt_vars = { pub => $pub, map_url => $map_url, base_url => $base_url,
                   district_url => $district_url,
                   postal_district => $postal_district };
 

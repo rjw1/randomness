@@ -12,7 +12,7 @@
 <form method="post" enctype="multipart/form-data" action="[% cgi_url %]">
 
   <p>Text for front page:</p>
-  <textarea name="front_page_text" rows="30" cols="100">[% current_text %]</textarea>
+  <textarea name="front_page_text" rows="30" cols="90">[% current_text %]</textarea>
 
   <p><input type="submit" name="Save" value="Save" /></p>
 

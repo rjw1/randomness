@@ -15,7 +15,6 @@
   </ul>
 [% END %]
 
-<p><a href="../index.html">Back to main index</a>.</p>
 </div>
 
 [% INCLUDE footer.tt %]

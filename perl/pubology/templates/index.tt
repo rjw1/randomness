@@ -1,5 +1,5 @@
 [% INCLUDE header.tt %]
 
-<div id="front_page_text">[% text %]</div>
+<div id="main_content">[% text %]</div>
 
 [% INCLUDE footer.tt %]

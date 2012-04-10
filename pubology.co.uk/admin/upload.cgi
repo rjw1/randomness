@@ -120,6 +120,8 @@ my ( $min_lat, $max_lat, $min_long, $max_long )
 
 my $map_file = "maps/" . lc( $postal_district ) . ".html";
 my $map_url = $base_url . $map_file;
+my $kml_file = "kml/" . lc( $postal_district ) . ".kml";
+my $kml_url = $base_url . $kml_file;
 
 foreach my $pub ( @pubs ) {
   write_pub_page( $pub, $map_url );
@@ -127,6 +129,7 @@ foreach my $pub ( @pubs ) {
 
 if ( $type eq "postal_district" ) {
   write_map_page();
+  write_kml_file();
   rewrite_index( $this_area );
 }
 
@@ -136,7 +139,8 @@ if ( $type eq "pubs" ) {
   $succ_msg = "Data successfully uploaded.";
 } else {
   $succ_msg = "Data successfully uploaded for $postal_district. "
-              . "<a href=\"$base_url$map_file\">Here is your map</a>.";
+              . "<a href=\"$base_url$map_file\">Here is your map</a>, and "
+              . "<a href=\"$base_url$kml_file\">here is your KML</a>."
 }
 
 my %tt_vars = (
@@ -187,6 +191,43 @@ sub write_map_page {
 
   my $template = "map.tt";
   open( my $output_fh, ">", $base_dir . $map_file ) or die $!;
+  $tt->process( $template, $tt_vars, $output_fh )
+    || print_form_and_exit( errmsg => $tt->error );
+}
+
+sub write_kml_file {
+  my $area_file = $this_area;
+  $area_file =~ s/\s+/-/g;
+
+  my @points;
+  foreach my $pub ( @pubs ) {
+    if ( !$pub->lat || !$pub->long ) {
+      next;
+    }
+    my %data = (
+                 name => $pub->name,
+                 long => $pub->long,
+                 lat => $pub->lat,
+                 address => $pub->address,
+                 url => $base_url . "pubs/" . $pub->id . ".html",
+               );
+    if ( $pub->demolished ) {
+      $data{style} = "red";
+    } elsif ( $pub->closed ) {
+      $data{style} = "yellow";
+    } else {
+      $data{style} = "green";
+    }
+    push @points, \%data;
+  }
+
+  my $tt_vars = {
+    points => \@points,
+    postal_district => uc( $postal_district ),
+  };
+
+  my $template = "kml.tt";
+  open( my $output_fh, ">", $base_dir . $kml_file ) or die $!;
   $tt->process( $template, $tt_vars, $output_fh )
     || print_form_and_exit( errmsg => $tt->error );
 }

@@ -1,0 +1,6 @@
+[% INCLUDE header.tt subtitle = 'Front page edited' %]
+
+<p><a href="[% cgi_url %]">Edit it again</a>.</p>
+<p><a href="[% base_url %]">View it</a>.</p>
+
+[% INCLUDE footer.tt %]

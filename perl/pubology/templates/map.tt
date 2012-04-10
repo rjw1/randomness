@@ -7,8 +7,6 @@
 
 <div id="main_content">
   <p>Last updated: [% updated | html %]</p>
-  <p><a href="../indexes/[% area_file | html %].html">Back to [% area_name | html %] index</a>.</p>
-  <p><a href="../index.html">Back to main index</a>.</p>
   <p>green = open, yellow = closed, red = demolished</p>
 </div>
 

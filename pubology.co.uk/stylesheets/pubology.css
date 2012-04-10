@@ -5,10 +5,19 @@ html {
 body {
   height: 100%;
   margin: 0;
-  padding: 1em;
+  padding: 0;
   background-color: #c0c0c0;
   color: #000000;
   font-family: calibri, sans-serif;
+}
+
+div#banner {
+  background-color: #b0b0b0;
+  margin: -1em;
+  margin-top: -2.5em;
+  padding-left: 1em;
+  padding-top: 1em;
+  padding-bottom: 0.1em;
 }
 
 h1.page_header {
@@ -17,10 +26,13 @@ h1.page_header {
 
 div#navbar {
   float: left;
-  width: 10%;
-  margin-left: -1.5em;
-  padding-right: 1.5em;
+  width: 8%;
+  margin-left: -2em;
+  margin-top: 0.9em;
+  padding-right: 3em;
   white-space: nowrap;
+  background-color: #a0a0a0;
+  height: 100%;
 }
 
 div#navbar ul {
@@ -37,11 +49,13 @@ div#navbar ul#internal_links li#postal_district_link {
 
 div#body_wrapper {
   height: 100%;
+  margin: 0;
+  padding: 1em;
 }
 
 div#main_content {
   float: right;
-  width: 90%;
+  width: 88%;
   height: 100%;
 }
 

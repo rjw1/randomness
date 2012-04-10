@@ -10,6 +10,7 @@ use lib qw(
 use CGI;
 use CGI::Carp qw( fatalsToBrowser );
 use Config::Tiny;
+use POSIX qw( strftime );
 use PubSite;
 use Template;
 
@@ -145,8 +146,7 @@ sub write_pub_page {
 
   my $tt_vars = { pub => $pub, map_url => $map_url,
                   district_url => $district_url,
-                  postal_district => $postal_district,
-                  updated => scalar localtime() };
+                  postal_district => $postal_district };
 
   my $template = "pub_page.tt";
 
@@ -154,6 +154,13 @@ sub write_pub_page {
       or die $!;
   $tt->process( $template, $tt_vars, $output_fh )
     || print_form_and_exit( errmsg => $tt->error );
+}
+
+sub get_time {
+  # strftime on here doesn't have %P
+  return strftime( "%l:%M", localtime )
+         . lc( strftime( "%p", localtime ) )
+         . strftime( " on %A %e %B %Y", localtime );
 }
 
 sub write_map_page {
@@ -174,7 +181,7 @@ sub write_map_page {
     max_long => $max_long,
     centre_lat => ( ( $max_lat + $min_lat ) / 2 ),
     centre_long => ( ( $max_long + $min_long ) / 2 ),
-    updated => scalar localtime(),
+    updated => get_time(),
     postal_district => uc( $postal_district ),
   };
 
@@ -194,7 +201,7 @@ sub write_district_page {
     pubs => \@pubs,
     base_url => $base_url,
     map_url => $map_url,
-    updated => scalar localtime(),
+    updated => get_time(),
     postal_district => uc( $postal_district ),
   };
 

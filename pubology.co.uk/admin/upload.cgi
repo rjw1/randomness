@@ -144,6 +144,7 @@ sub write_pub_page {
   my $pub = shift;
 
   my $tt_vars = { pub => $pub, map_url => $map_url,
+                  district_url => $district_url,
                   postal_district => $postal_district,
                   updated => scalar localtime() };
 

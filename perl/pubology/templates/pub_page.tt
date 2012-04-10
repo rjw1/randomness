@@ -73,7 +73,7 @@
     [% IF pub.owner %]
       <tr class="pub_owner">
         <th>Owner:</th>
-        <td>[% pub.owner | html %]</td>
+        <td>[% pub.owner | html | replace( ';', '<br>' ) %]</td>
       </tr>
     [% END %]
     [% IF pub.website %]

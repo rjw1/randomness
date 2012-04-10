@@ -5,44 +5,42 @@
 [% subtitle = postal_district | html %]
 [% INCLUDE header.tt %]
 
-<div id="main_content">
-  <p>green = open, yellow = closed, red = demolished</p>
+<p>green = open, yellow = closed, red = demolished</p>
+
+<div id="map_canvas"></div>
+
+<div id="pub_list">
+  <p>Pubs in [% postal_district | html %]
+     (<a href="[% district_url %]">view without a map</a>):</p>
+  <ul>
+    [% i = 0 %]
+    [% FOREACH pub = pubs %]
+      [% i = i + 1 %]
+      <li>
+        [% IF pub.not_on_map %]
+          [% CGI.escapeHTML( pub.name ) %] (not on map &#8212;
+          <a href="[% base_url %]pubs/[% pub.id %].html">view pub info</a>)
+        [% ELSE %]
+          <a href="#" onclick="return open_marker( [% i %] )">[% CGI.escapeHTML( pub.name ) %]</a>
+        [% END %]
+      </li>
+    [% END %]
+  </ul>
+
+  <p>Last updated at [% updated | html %].</p>
+
 </div>
 
-  <div id="map_canvas"></div>
-
-  <div id="pub_list">
-    <p>Pubs in [% postal_district | html %]
-       (<a href="[% district_url %]">view without a map</a>):</p>
-    <ul>
-      [% i = 0 %]
-      [% FOREACH pub = pubs %]
-        [% i = i + 1 %]
-        <li>
-          [% IF pub.not_on_map %]
-            [% CGI.escapeHTML( pub.name ) %] (not on map &#8212;
-            <a href="[% base_url %]pubs/[% pub.id %].html">view pub info</a>)
-          [% ELSE %]
-            <a href="#" onclick="return open_marker( [% i %] )">[% CGI.escapeHTML( pub.name ) %]</a>
-          [% END %]
-        </li>
-      [% END %]
-    </ul>
-
-    <p>Last updated at [% updated | html %].</p>
-
-  </div>
-
-  <script type="text/javascript">
-    function add_markers() {
-      var pub;
-      [% i = 0 %]
-      [% FOREACH pub = pubs %]
-        [% i = i + 1 %]
-        pub = [% pub.json %];
-        add_marker( [% i %], pub );
-      [% END %]
-    }
-  </script>
+<script type="text/javascript">
+  function add_markers() {
+    var pub;
+    [% i = 0 %]
+    [% FOREACH pub = pubs %]
+      [% i = i + 1 %]
+      pub = [% pub.json %];
+      add_marker( [% i %], pub );
+    [% END %]
+  }
+</script>
 
 [% INCLUDE footer.tt %]

@@ -20,10 +20,16 @@
   <body>
 [% END %]
 
-[% INCLUDE navbar.tt %]
+<div id="body_wrapper">
 
-  <h1 class="page_header">London Pubology</h1>
+  <div id="banner">
+    <h1 class="page_header">London Pubology</h1>
+  </div>
 
-  [% IF subtitle %]
-    <h2[% IF subtitle_class %] class="[% subtitle_class %]"[% END %]>[% subtitle %]</h2>
-  [% END %]
+  [% INCLUDE navbar.tt %]
+
+  <div id="main_content">
+
+    [% IF subtitle %]
+      <h2[% IF subtitle_class %] class="[% subtitle_class %]"[% END %]>[% subtitle %]</h2>
+    [% END %]

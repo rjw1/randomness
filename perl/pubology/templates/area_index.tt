@@ -1,6 +1,5 @@
 [% INCLUDE header.tt subtitle = area_name %]
 
-<div id="main_content">
 <p>Pubs in [% area_name %] postcodes.</p>
 
 [% FOREACH set = district_sets %]
@@ -14,7 +13,5 @@
     [% END %]
   </ul>
 [% END %]
-
-</div>
 
 [% INCLUDE footer.tt %]

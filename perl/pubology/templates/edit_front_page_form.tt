@@ -1,25 +1,21 @@
 [% INCLUDE header.tt subtitle = 'Edit front page text' %]
 
-<div id="main_content">
+[% IF errmsg %]
+  <div class="upload_error">
+    <p>ERROR:</p>
+    [% errmsg %]
+    <p>(If you don't understand this error message, please report it as a
+    bug, including the full text of the message.)</p>
+  </div>
+[% END %]
 
-  [% IF errmsg %]
-    <div class="upload_error">
-      <p>ERROR:</p>
-      [% errmsg %]
-      <p>(If you don't understand this error message, please report it as a
-      bug, including the full text of the message.)</p>
-    </div>
-  [% END %]
+<form method="post" enctype="multipart/form-data" action="[% cgi_url %]">
 
-  <form method="post" enctype="multipart/form-data"
-        action="[% cgi_url %]">
+  <p>Text for front page:</p>
+  <textarea name="front_page_text" rows="30" cols="100">[% current_text %]</textarea>
 
-    <p>Text for front page:</p>
-    <textarea name="front_page_text" rows="30" cols="85">[% current_text %]</textarea>
+  <p><input type="submit" name="Save" value="Save" /></p>
 
-    <p><input type="submit" name="Save" value="Save" /></p>
-
-  </form>
-</div>
+</form>
 
 [% INCLUDE footer.tt %]

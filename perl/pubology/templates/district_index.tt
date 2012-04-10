@@ -3,22 +3,18 @@
 [% subtitle = postal_district | html %]
 [% INCLUDE header.tt %]
 
-<div id="main_content">
-
-  <div id="pub_list_no_map">
-    <p>Pubs in [% postal_district | html %]
-       (<a href="[% map_url %]">view them on a map</a>):</p>
-    <ul>
-      [% FOREACH pub = pubs %]
-        <li>
-          <a href="[% base_url %]pubs/[% pub.id | html %].html">[% pub.name | html %]</a>
-        </li>
-      [% END %]
-    </ul>
-  </div>
-
-  <p>Last updated at [% updated | html %].</p>
-
+<div id="pub_list_no_map">
+  <p>Pubs in [% postal_district | html %]
+     (<a href="[% map_url %]">view them on a map</a>):</p>
+  <ul>
+    [% FOREACH pub = pubs %]
+      <li>
+        <a href="[% base_url %]pubs/[% pub.id | html %].html">[% pub.name | html %]</a>
+      </li>
+    [% END %]
+  </ul>
 </div>
+
+<p>Last updated at [% updated | html %].</p>
 
 [% INCLUDE footer.tt %]

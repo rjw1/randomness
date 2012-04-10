@@ -35,9 +35,14 @@ div#navbar ul#internal_links li#postal_district_link {
   padding-left: 1em;
 }
 
+div#body_wrapper {
+  height: 100%;
+}
+
 div#main_content {
   float: right;
   width: 90%;
+  height: 100%;
 }
 
 div#map_canvas {
@@ -110,8 +115,4 @@ div.upload_error {
   background-color: #ff0000;
   border: 0.2em solid black;
   padding: 1em;
-}
-
-#map_canvas {
-  height: 100%;
 }

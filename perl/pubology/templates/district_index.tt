@@ -6,13 +6,18 @@
 <div id="pub_list_no_map">
   <p>Pubs in [% postal_district | html %]
      (<a href="[% map_url %]">view them on a map</a>):</p>
-  <ul>
+  <table>
+    <tr>
+      <th>Name</th><th>Former name(s)</th><th>Address</th>
+    </tr>
     [% FOREACH pub = pubs %]
-      <li>
-        <a href="[% base_url %]pubs/[% pub.id | html %].html">[% pub.name | html %]</a>
-      </li>
+      <tr>
+        <td><a href="[% base_url %]pubs/[% pub.id | html %].html">[% pub.name | html %]</a></td>
+        <td>[% IF pub.alt_name %][% pub.alt_name | html %][% END %]</td>
+        <td>[% pub.address | html %]</td>
+      </tr>
     [% END %]
-  </ul>
+  </table>
 </div>
 
 <p>Last updated at [% updated | html %].</p>

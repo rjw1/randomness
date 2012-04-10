@@ -16,7 +16,7 @@ use Template;
 
 my $HOME = "/export/home/pubology";
 my $base_dir = "$HOME/web/vhosts/pubology.co.uk/";
-my $base_url = "http://pubology.co.uk/";
+my $base_url = "http://www.pubology.co.uk/";
 
 my $q = CGI->new;
 my $cgi_url = $q->url();
@@ -294,6 +294,7 @@ sub rewrite_index {
   $area_file =~ s/\s+/-/g;
 
   my $tt_vars = {
+                  base_url => $base_url,
                   area_name => $area_name,
                   district_sets => \@district_sets,
                 };

@@ -14,19 +14,6 @@
 
     <p>CSV file: <input type="file" name="csv" size="80" /></p>
 
-    <ul class="upload_form_type_selection">
-      <li>
-        <input type="radio" name="upload_type" value="postal_district"
-               checked="1">
-        Treat this as a full update for the following postal district
-        (e.g. CR0): [% postal_district_field %]
-      </li>
-      <li>
-        <input type="radio" name="upload_type" value="pubs">
-        Treat this as updates to individual pubs.
-      </li>
-    </ul>
-
     <p><input type="submit" name="Upload" value="Upload" /></p>
 
     <p id="upload_msg"></p>

@@ -2,6 +2,5 @@
 
 <p>[% succ_msg %]</p>
 <p><a href="[% cgi_url %]">Upload another CSV</a>.</p>
-<p><a href="[% base_url %]">View the index</a>.</p>
 
 [% INCLUDE footer.tt %]

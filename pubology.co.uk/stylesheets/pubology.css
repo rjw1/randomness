@@ -6,7 +6,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 1em;
-  background: #c0c0c0;
+  background-color: #c0c0c0;
   color: #000000;
   font-family: calibri, sans-serif;
 }
@@ -17,6 +17,7 @@ h1.page_header {
 
 div#navbar {
   float: left;
+  width: 15%;
 }
 
 div#navbar ul {
@@ -25,6 +26,24 @@ div#navbar ul {
 
 div#main_content {
   float: right;
+  width: 80%;
+}
+
+div#map_canvas {
+  float: left;
+  width: 75%;
+  height: 100%;
+}
+
+div#pub_list {
+  float: right;
+  max-width: 20%;
+  height: 100%;
+}
+
+div#pub_list ul {
+  height: 400px;
+  overflow: auto;
 }
 
 table.pub_info {

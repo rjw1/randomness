@@ -120,6 +120,8 @@ my ( $min_lat, $max_lat, $min_long, $max_long )
 
 my $map_file = "maps/" . lc( $postal_district ) . ".html";
 my $map_url = $base_url . $map_file;
+my $district_file = "indexes/" . lc( $postal_district ) . ".html";
+my $district_url = $base_url . $district_file;
 my $kml_file = "kml/" . lc( $postal_district ) . ".kml";
 my $kml_url = $base_url . $kml_file;
 
@@ -129,6 +131,7 @@ foreach my $pub ( @pubs ) {
 
 if ( $type eq "postal_district" ) {
   write_map_page();
+  write_district_page();
   write_kml_file();
   rewrite_index( $this_area );
 }
@@ -139,7 +142,8 @@ if ( $type eq "pubs" ) {
   $succ_msg = "Data successfully uploaded.";
 } else {
   $succ_msg = "Data successfully uploaded for $postal_district. "
-              . "<a href=\"$base_url$map_file\">Here is your map</a>, and "
+              . "<a href=\"$base_url$district_file\">Here is your index</a>, "
+              . "<a href=\"$base_url$map_file\">here is your map</a>, and "
               . "<a href=\"$base_url$kml_file\">here is your KML</a>."
 }
 
@@ -179,6 +183,7 @@ sub write_map_page {
     base_url => $base_url,
     area_name => $area_name,
     area_file => $area_file,
+    district_url => $district_url,
     min_lat => $min_lat,
     max_lat => $max_lat,
     min_long => $min_long,
@@ -191,6 +196,26 @@ sub write_map_page {
 
   my $template = "map.tt";
   open( my $output_fh, ">", $base_dir . $map_file ) or die $!;
+  $tt->process( $template, $tt_vars, $output_fh )
+    || print_form_and_exit( errmsg => $tt->error );
+}
+
+sub write_district_page {
+  my $area_name = $this_area;
+  $area_name =~ s/\b(\w)/\u$1/g;
+  my $area_file = $this_area;
+  $area_file =~ s/\s+/-/g;
+
+  my $tt_vars = {
+    pubs => \@pubs,
+    base_url => $base_url,
+    map_url => $map_url,
+    updated => scalar localtime(),
+    postal_district => uc( $postal_district ),
+  };
+
+  my $template = "district_index.tt";
+  open( my $output_fh, ">", $base_dir . $district_file ) or die $!;
   $tt->process( $template, $tt_vars, $output_fh )
     || print_form_and_exit( errmsg => $tt->error );
 }
@@ -238,12 +263,12 @@ sub rewrite_index {
   # already checked this exists in the config
   my %district_names = %{ $district_conf->{ lc( $area ) } };
 
-  opendir( my $dh, $base_dir . "maps" ) || croak "Can't open $base_dir";
+  opendir( my $dh, $base_dir . "indexes" ) || croak "Can't open $base_dir";
   my @files = grep { /\.html$/ } readdir( $dh );
   @files = grep { $regexes{ $this_area } } @files;
   my %urls = map { my $label = $_;
                    $label =~ s/\.html//;
-                   { uc( $label ) => $base_url . "maps/$_" }
+                   { uc( $label ) => $base_url . "indexes/$_" }
                  } @files;
 
   my @all_districts = map { my $label = uc( $_ );

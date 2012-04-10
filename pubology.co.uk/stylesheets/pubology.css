@@ -27,6 +27,10 @@ div#navbar ul {
   list-style: none;
 }
 
+div#navbar ul#internal_links li#home_link {
+  padding-bottom: 1em;
+}
+
 div#main_content {
   float: right;
   width: 80%;

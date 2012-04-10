@@ -124,7 +124,7 @@ my $kml_file = "kml/" . lc( $postal_district ) . ".kml";
 my $kml_url = $base_url . $kml_file;
 
 foreach my $pub ( @pubs ) {
-  write_pub_page( $pub, $map_url );
+  write_pub_page( $pub );
 }
 
 if ( $type eq "postal_district" ) {
@@ -155,9 +155,9 @@ $tt->process( "upload_complete.tt", \%tt_vars ) || die $tt->error;
 
 sub write_pub_page {
   my $pub = shift;
-  my $map_url = shift;
 
   my $tt_vars = { pub => $pub, map_url => $map_url,
+                  postal_district => $postal_district,
                   updated => scalar localtime() };
 
   my $template = "pub_page.tt";

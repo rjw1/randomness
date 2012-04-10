@@ -17,14 +17,14 @@ h1.page_header {
 
 div#navbar {
   float: left;
-  width: 15%;
+  width: 20%;
 }
 
 div#navbar ul {
   list-style: none;
 }
 
-div#main_content {
+div#front_page_text {
   float: right;
   width: 80%;
 }

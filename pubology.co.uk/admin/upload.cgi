@@ -27,37 +27,31 @@ my $tt_config = {
 };
 my $tt = Template->new( $tt_config ) or croak Template->error;
 
-my $errmsg = "";
-my $type = $q->param( "upload_type" ) || "";
-
-if ( $q->param( "Upload" ) ) {
-  if ( $type ne "postal_district" && $type ne "pubs" ) {
-    $errmsg .= "<p>Wrong upload type: " . $q->escapeHTML( $type )
-                     . "(please report this as a bug).</p>";
-  }
-  if ( !$q->param( "csv" ) ) {
-    $errmsg .= "<p>Must supply a CSV file.</p>";
-  }
+# If we aren't trying to upload, just print the form.
+if ( !$q->param( "Upload" ) ) {
+  print_form_and_exit();
 }
 
-my $postal_district;
-if ( $type eq "postal_district" ) {
-  $postal_district = $q->param( "postal_district" );
-  $postal_district =~ s/\s+//g;
-  if ( $postal_district !~ m/^[bcdehiknrstuw][abcdegmnprtw]?\d\d?[cw]?$/i ) {
-    $errmsg .= "<p>Postal district in wrong format &#8212; should "
-              . "be one or two letters followed by one or two numbers "
-              . "and an optional final letter.</p>";
-  }
-}
-
-if ( $errmsg || !$q->param( "Upload" ) ) {
-  print_form_and_exit( errmsg => $errmsg );
-}
-
-# OK, we have data to process.
+# Make sure we actually have a CSV file.
 my $tmpfile = $q->param( "csv" );
+if ( $q->param( "Upload" ) && !$tmpfile ) {
+  print_form_and_exit( errmsg => "<p>Must supply a CSV file.</p>" );
+}
+
+# OK, we have data to process.  Check we can extract the postal district.
 my $tmpfile_name = $q->tmpFileName( $tmpfile );
+
+my $postal_district = lc( $tmpfile );
+$postal_district =~ s/^pubs //;
+$postal_district =~ s/\.csv$//;
+
+if ( $postal_district !~ m/^[bcdehiknrstuw][abcdegmnprtw]?\d\d?[cw]?$/i ) {
+  print_form_and_exit( errmsg => "<p>Filename in wrong format &#8212; should "
+    . "be of the form 'Pubs [postal district].csv', where postal district is "
+    . "one or two letters followed by one or two numbers and an optional "
+    . "final letter.  Filename was $tmpfile, postal district was "
+    . "$postal_district.</p>" );
+}
 
 # Check postal district is valid and figure out which area it's in.
 my %regexes = (
@@ -76,28 +70,23 @@ my $district_conf = PubSite->parse_postal_district_config(
   ) || print_form_and_exit( errmsg => "<p>$PubSite::errstr</p>" );
 
 my $this_area;
-if ( $type eq "postal_district" ) {
-  foreach my $area ( keys %regexes ) {
-    if ( $postal_district =~ $regexes{$area} ) {
-      $this_area = $area;
-      last;
-    }
+foreach my $area ( keys %regexes ) {
+  if ( $postal_district =~ $regexes{$area} ) {
+    $this_area = $area;
+    last;
   }
+}
 
-  if ( !$this_area ) {
-    $errmsg = "<p>Couldn't match postal district \""
-              . $q->escapeHTML( $postal_district ) . "\" to an area of "
-              . "London.  If you're sure the postal district is correct, "
-              . "please report this as a bug.</p>";
-  } elsif ( !$district_conf->{lc($this_area)} ) {
-    $errmsg = "<p>Couldn't find config information for postal district "
-              . $q->escapeHTML( $postal_district ) . " &#8212; please report "
-              . "this as a bug.</p>"
-  }
-
-  if ( $errmsg ) {
-    print_form_and_exit( errmsg => $errmsg );
-  }
+if ( !$this_area ) {
+  print_form_and_exit( errmsg => "<p>Couldn't match postal district \""
+            . $q->escapeHTML( $postal_district ) . "\" to an area of "
+            . "London.  If you're sure the postal district is correct, "
+            . "please report this as a bug.</p>" );
+} elsif ( !$district_conf->{lc($this_area)} ) {
+  print_form_and_exit( errmsg => "<p>Couldn't find config information for "
+            . "postal district "
+            . $q->escapeHTML( $postal_district ) . " &#8212; please report "
+            . "this as a bug.</p>" );
 }
 
 my $config = Config::Tiny->read( "$HOME/conf/pubology.conf" )
@@ -129,23 +118,17 @@ foreach my $pub ( @pubs ) {
   write_pub_page( $pub );
 }
 
-if ( $type eq "postal_district" ) {
-  write_map_page();
-  write_district_page();
-  write_kml_file();
-  rewrite_index( $this_area );
-}
+write_map_page();
+write_district_page();
+write_kml_file();
+rewrite_index( $this_area );
 
 # If we get this far then hopefully we've succeeded.
-my $succ_msg;
-if ( $type eq "pubs" ) {
-  $succ_msg = "Data successfully uploaded.";
-} else {
-  $succ_msg = "Data successfully uploaded for $postal_district. "
-              . "<a href=\"$base_url$district_file\">Here is your index</a>, "
-              . "<a href=\"$base_url$map_file\">here is your map</a>, and "
-              . "<a href=\"$base_url$kml_file\">here is your KML</a>."
-}
+my $succ_msg = "Data successfully uploaded for " . uc( $postal_district )
+               . ". "
+               . "<a href=\"$base_url$district_file\">Here is your index</a>, "
+               . "<a href=\"$base_url$map_file\">here is your map</a>, and "
+               . "<a href=\"$base_url$kml_file\">here is your KML</a>.";
 
 my %tt_vars = (
                 cgi_url => $cgi_url,

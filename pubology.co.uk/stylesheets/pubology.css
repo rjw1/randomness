@@ -17,26 +17,29 @@ h1.page_header {
 
 div#navbar {
   float: left;
-  width: 20%;
+  width: 15%;
+  margin-left: -1.5em;
+  padding-right: 1.5em;
+  white-space: nowrap;
 }
 
 div#navbar ul {
   list-style: none;
 }
 
-div#front_page_text {
+div#main_content {
   float: right;
   width: 80%;
 }
 
 div#map_canvas {
-  float: left;
+  float: right;
   width: 75%;
   height: 100%;
 }
 
 div#pub_list {
-  float: right;
+  float: left;
   max-width: 20%;
   height: 100%;
 }
@@ -46,21 +49,30 @@ div#pub_list ul {
   overflow: auto;
 }
 
-table.pub_info {
+div#pub_photo {
+  float:right;
+  padding-right:2em;
+}
+
+div#pub_info {
+  float: left;
+}
+
+div#pub_info table {
   text-align: left;
   font-family: helvetica, arial, sans-serif;
 }
 
-table.pub_info th, td {
+div#pub_info table th, td {
   padding: 0.5em;
   vertical-align: top;
 }
 
-table.pub_info th {
+div#pub_info table th {
   width: 8em;
 }
 
-table.pub_info td ul {
+div#pub_info table td ul {
   margin: 0;
   padding: 0;
   list-style-type: none;

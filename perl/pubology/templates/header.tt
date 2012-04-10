@@ -4,8 +4,7 @@
 <head>
   <title>[% IF subtitle %][% subtitle %]: [% END %]London Pubology</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" href="http://the.earth.li/~kake/tmp/ewan/styles.css" 
-   type="text/css" />
+  <link rel="stylesheet" href="/stylesheets/pubology.css" type="text/css" />
   [% IF do_map %]
     <script type="text/javascript"
      src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;region=GB">

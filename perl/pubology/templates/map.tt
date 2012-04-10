@@ -10,10 +10,10 @@
   <p><a href="../index.html">Back to main index</a>.</p>
   <p>green = open, yellow = closed, red = demolished</p>
 
-  <div id="map_canvas" style="width:75%; height:100%; float:left"></div>
+  <div id="map_canvas"></div>
 
-  <div id="pub_list" style="max-width:20%; height:100%; float:right">
-    <ul style="height:400px; overflow:auto">
+  <div id="pub_list">
+    <ul>
       [% i = 0 %]
       [% FOREACH pub = pubs %]
         [% i = i + 1 %]

@@ -29,7 +29,7 @@
     </li>
     [% IF pub AND postal_district %]
       <li id="postal_district_link">
-        <a href="[% map_url %]">[% postal_district | html %]</a>
+        <a href="[% district_url %]">[% postal_district | upper | html %]</a>
       </li>
     [% END %]
   </ul>

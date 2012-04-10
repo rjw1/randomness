@@ -16,10 +16,13 @@ use Template;
 
 my $HOME = "/export/home/pubology";
 my $base_dir = "$HOME/web/vhosts/pubology.co.uk/";
-my $base_url = "http://pubology.co.uk/";
+my $base_url = "http://www.pubology.co.uk/";
 
 my $q = CGI->new;
 my $cgi_url = $q->url();
+if ( $cgi_url !~ /www/ ) {
+  $cgi_url =~ s|http://|http://www.|;
+}
 
 # Set up template stuff
 my $tt_config = {
@@ -44,26 +47,12 @@ if ( $errmsg || !$q->param( "Save" ) ) {
 
 write_index_page( text => $text );
 
+my %tt_vars = (
+                base_url => $base_url,
+                cgi_url => $cgi_url,
+              );
 print $q->header;
-print <<EOF;
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Pubology pub map &#8212; Front page edited</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" href="http://the.earth.li/~kake/tmp/ewan/styles.css" 
-   type="text/css" />
-</head>
-<body>
-  <h1 class="page_header">Pubology map</h1>
-  <h2>Front page edited</h2>
-
-  <p><a href="$cgi_url">Edit it again</a>.</p>
-  <p><a href="../index.html">View it</a>.</p>
-</body>
-</html>
-
-EOF
+$tt->process( "front_page_edited.tt", \%tt_vars ) || die $tt->error;
 
 sub write_index_page {
   my %args = @_;
@@ -151,6 +140,7 @@ sub print_form_and_exit {
   $current_text =~ s/\s+$//;
 
   my %tt_vars = (
+                  base_url => $base_url,
                   cgi_url => $cgi_url,
                   front_page_text_field => $q->textarea(
                       -name => "front_page_text",

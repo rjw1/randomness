@@ -55,10 +55,10 @@ sub parse_csv {
   }
 
   my $parser = Text::CSV::Simple->new({ binary => 1 });
-  $parser->field_map( qw/id name closed demolished alt_name date_built
-                         date_closed
-                         addr_num addr_street postcode former_addr owner
-                         os_x os_y location_accurate website rgl fap_rating fap
+
+  $parser->field_map( qw/id name closed demolished addr_num addr_street
+                         postcode 
+                         os_x os_y location_accurate alt_name former_addr date_built date_closed owner website rgl fap_rating fap
                          pubs_galore bite
                          bite_2 qype dead_pubs london_eating time_out_rating
                          time_out other_link other_link_2 other_link_3

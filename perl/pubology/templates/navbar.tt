@@ -27,13 +27,25 @@
     <li class="area_link">
       <a href="[% base_url %]indexes/outer-london.html">Outer</a>
     </li>
-    [% IF pub AND postal_district %]
-      <li id="postal_district_link">
-        <a href="[% district_url %]">[% postal_district | upper | html %]</a>
-      </li>
-      <li id="map_link">
-        <a href="[% map_url %]">[% postal_district | upper | html %] map</a>
-      </li>
+    [% IF postal_district %]
+      [% IF pub OR do_map %]
+        <li id="postal_district_link">
+          <a href="[% district_url %]">[% postal_district | upper | html %]</a>
+        </li>
+      [% ELSE %]
+        <li id="postal_district_nolink">
+          [% postal_district | upper | html %]
+        </li>
+      [% END %]
+      [% IF pub OR !do_map %]
+        <li id="map_link">
+          <a href="[% map_url %]">[% postal_district | upper | html %] map</a>
+        </li>
+      [% ELSE %]
+        <li id="map_nolink">
+          [% postal_district | upper | html %] map
+        </li>
+      [% END %]
     [% END %]
   </ul>
   <ul id="external_links">

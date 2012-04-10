@@ -1,0 +1,74 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 1em;
+  background: #c0c0c0;
+  color: #000000;
+  font-family: calibri, sans-serif;
+}
+
+h1.page_header {
+  text-transform: uppercase;
+}
+
+div#navbar {
+  float: left;
+}
+
+div#navbar ul {
+  list-style: none;
+}
+
+div#main_content {
+  float: right;
+}
+
+table.pub_info {
+  text-align: left;
+  font-family: helvetica, arial, sans-serif;
+}
+
+table.pub_info th, td {
+  padding: 0.5em;
+  vertical-align: top;
+}
+
+table.pub_info th {
+  width: 8em;
+}
+
+table.pub_info td ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+tr.pub_last_updated {
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+img {
+  border: thin solid black;
+}
+
+ul.upload_form_type_selection {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+div.upload_error {
+  color: #000000;
+  background-color: #ff0000;
+  border: 0.2em solid black;
+  padding: 1em;
+}
+
+#map_canvas {
+  height: 100%;
+}

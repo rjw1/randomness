@@ -1,13 +1,39 @@
 <div id="navbar">
-  <ul>
-    <li><a href="/index.html">Home</a></li>
-    <li><a href="/indexes/north-london.html">North London</a></li>
-    <li><a href="/indexes/east-london.html">East London</a></li>
-    <li><a href="/indexes/south-east-london.html">South-East London</a></li>
-    <li><a href="/indexes/south-west-london.html">South-West London</a></li>
-    <li><a href="/indexes/west-london.html">West London</a></li>
-    <li><a href="/indexes/north-west-london.html">North-West London</a></li>
-    <li><a href="/indexes/central-london.html">Central London</a></li>
-    <li><a href="/indexes/outer-london.html">Outer London</a></li>
+  <ul id="internal_links">
+    <li id="home_link">
+      <a href="/index.html">Home</a>
+    </li>
+    <li class="area_link">
+      <a href="/indexes/central-london.html">Central</a>
+    </li>
+    <li class="area_link">
+      <a href="/indexes/east-london.html">East</a>
+    </li>
+    <li class="area_link">
+      <a href="/indexes/north-london.html">North</a>
+    </li>
+    <li class="area_link">
+      <a href="/indexes/north-west-london.html">North-West</a>
+    </li>
+    <li class="area_link">
+      <a href="/indexes/south-east-london.html">South-East</a>
+    </li>
+    <li class="area_link">
+      <a href="/indexes/south-west-london.html">South-West</a>
+    </li>
+    <li class="area_link">
+      <a href="/indexes/west-london.html">West</a>
+    </li>
+    <li class="area_link">
+      <a href="/indexes/outer-london.html">Outer</a>
+    </li>
+  </ul>
+  <ul id="external_links">
+    <li id="blog_link">
+      <a href="http://pubology.wordpress.com/">Blog</a>
+    </li>
+    <li id="rgl_link">
+      <a href="http://london.randomness.org.uk/">RGL</a>
+    </li>
   </ul>
 </div>

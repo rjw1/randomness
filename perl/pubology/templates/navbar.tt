@@ -37,6 +37,9 @@
     <li id="blog_link">
       <a href="http://pubology.wordpress.com/">Blog</a>
     </li>
+    <li id="twitter_link">
+      <a href="http://twitter.com/pubologyblog">Twitter</a>
+    </li>
     <li id="rgl_link">
       <a href="http://london.randomness.org.uk/">RGL</a>
     </li>

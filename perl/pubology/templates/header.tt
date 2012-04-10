@@ -23,7 +23,7 @@
 <div id="body_wrapper">
 
   <div id="banner">
-    <h1 class="page_header">London Pubology</h1>
+    <h1 class="page_header"><a href="[% base_url %]">London Pubology</a></h1>
   </div>
 
   [% INCLUDE navbar.tt %]

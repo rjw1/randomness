@@ -20,6 +20,9 @@ my $base_url = "http://www.pubology.co.uk/";
 
 my $q = CGI->new;
 my $cgi_url = $q->url();
+if ( $cgi_url !~ /www/ ) {
+  $cgi_url =~ s|http://|http://www.|;
+}
 
 # Set up template stuff
 my $tt_config = {
@@ -357,6 +360,7 @@ sub print_form_and_exit {
 
   my %tt_vars = (
                   cgi_url => $cgi_url,
+                  base_url => $base_url,
                   postal_district_field =>
                                   $q->textfield( -name => "postal_district" ),
                   errmsg => $args{errmsg} || "",

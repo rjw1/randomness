@@ -155,7 +155,7 @@ sub print_form_and_exit {
                   front_page_text_field => $q->textarea(
                       -name => "front_page_text",
                       -rows => 20,
-                      -columns => 100,
+                      -columns => 90,
                   ),
                   current_text => $current_text,
                   errmsg => $args{errmsg} || "",

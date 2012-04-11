@@ -1,3 +1,4 @@
+[% is_admin_page = 1 %]
 [% INCLUDE header.tt subtitle = 'Edit front page text' %]
 
 [% IF errmsg %]

@@ -1,8 +1,3 @@
-function reassure() {
-  document.getElementById( 'upload_msg' ).innerHTML='Uploading... please be patient, this may take a little while.';
-  return true;
-}
-
 var map;
 var markers = [];
 var content = [];
@@ -12,7 +7,7 @@ var base_url = "http://pubology.co.uk/";
 function initialise( centre_lat, centre_long ) {
   var map_centre = new google.maps.LatLng( centre_lat, centre_long );
   var map_options = {
-                      zoom: 12,
+                      zoom: 13,
                       center: map_centre,
                       mapTypeId: google.maps.MapTypeId.ROADMAP
                     };

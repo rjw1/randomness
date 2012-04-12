@@ -1,5 +1,7 @@
 [% INCLUDE gmap_icon_types_apiv3.tt %]
 
+<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js"></script>
+
 <script type="text/javascript">
   var map;
   var markers = [];
@@ -8,6 +10,8 @@
 
   [% IF map_style == "osm" %]
     [% map_type_id = '"OSM"' %]
+  [% ELSIF map_style == "watercolour" %]
+    [% map_type_id = '"watercolour"' %]
   [% ELSIF map_style == "google" %]
     [% map_type_id = "google.maps.MapTypeId.ROADMAP" %]
   [% ELSE %]
@@ -35,6 +39,8 @@
         maxZoom: 18
       })
     );
+    map.mapTypes.set( "watercolour",
+                      new google.maps.StamenMapType( "watercolor" ) );
     map.mapTypes.set( "MapQuest",
       new google.maps.ImageMapType({
         getTileUrl: function(coord, zoom) {

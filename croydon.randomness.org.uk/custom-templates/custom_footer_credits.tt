@@ -4,6 +4,8 @@
   <br />Map data and images provided by and &copy;
   <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, used under
   <a href="http://creativecommons.org/licenses/by-sa/2.0/">cc-by-sa</a>.
+[% ELSIF map_style == "watercolour" %]
+  <br />Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.
 [% ELSIF map_style == "google" %]
   <br />Map data and images provided by and &copy; Google.
 [% ELSIF show_map %]

@@ -32,10 +32,10 @@ my $do_search = $q->param( "Search" );
 my $cat = $q->param( "cat" );
 my $loc = $q->param( "loc" );
 
-if ( $do_search && !$cat && !$loc ) {
-  $tt_vars{error_message} = "Sorry!  You need to choose a locale or a "
-    . "category (or both) for this search to work.";
-} elsif ( $do_search || $cat || $loc ) {
+if ( $do_search || $cat || $loc ) {
+  if ( !$loc ) {
+    $loc = "Croydon";
+  }
   $tt_vars{show_search_example} = 0;
   my $small_pointers = $q->param( "small_pointers" ) || 0;
   my $blue_pointers = $q->param( "blue_pointers" ) || 0;
@@ -211,9 +211,10 @@ sub setup_form_fields {
                                                -value => 1, label => "" );
   $tt_vars{map_style_group} = $q->radio_group(
       -name => "map_style",
-      -values => [ "mq", "osm", "google" ],
+      -values => [ "mq", "osm", "watercolour", "google" ],
       -default => "mq",
       -labels => { "mq" => "MapQuest", "osm" => "OpenStreetMap",
+                   "watercolour" => "Stamen Watercolour",
                    "google" => "Google Maps" },
   );
 }

@@ -77,7 +77,11 @@
     [% IF hours_text %]
       <li class="opening_hours">
         <span class="metadata_label">Opening Hours:</span>
-        [% CGI.escapeHTML(hours_text) %]
+        [% IF ( otck = hours_text.match( '^http://(?:www\.)?opening-times.co.uk/([-a-z]+)$' ) ) %]
+          <a href="http://www.opening-times.co.uk/[% otck.first %]">see opening-times.co.uk</a>
+        [% ELSE %]
+          [% CGI.escapeHTML(hours_text) %]
+        [% END %]
       </li>
     [% END %]
   </ul>

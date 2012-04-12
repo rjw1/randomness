@@ -55,13 +55,6 @@ sub looks_like_spam {
             return 1;
         }
 
-       if ( $name eq "Old Salt Quay, SE16 5QU"
-              && $comment =~ m|<a\s+href="\s*http://.*</a>| ) {
-            $class->notify_admins( %args, id => "00041",
-                                   reason => "URL comment on $name" );
-            return 1;
-        }
-
        if ( ( $name eq "Dagenham Vue" || $name eq "Green Park Station" )
               && $comment =~ m|^\w{11},.*https?://| ) {
             $class->notify_admins( %args, id => "00042",
@@ -75,7 +68,7 @@ sub looks_like_spam {
             return 1;
         }
 
-        if ( $comment =~ m{http://www.(prominentinsurers.com|ensureyourhealth.net|protectionrates.net|bestinsurerstoday.com|healthinsurplans.com|discountinsurlife.com|autoprotectionquotes.net|coveryourhealth.net|insureeverything.net|topinsurancerates.net|getyourquote.net|cheapautoinsur.net|protectionagencies.net|teamschuco.com|topinsurancerates.net|locateautoinsur.com|quotesinyourstate.com|affordableautoinsur.net|bestinsurplans.net|businessinsurtips.com|bestinsurcoverage.com)}is ) {
+        if ( $comment =~ m{http://www.(prominentinsurers.com|ensureyourhealth.net|protectionrates.net|bestinsurerstoday.com|healthinsurplans.com|discountinsurlife.com|autoprotectionquotes.net|coveryourhealth.net|insureeverything.net|topinsurancerates.net|getyourquote.net|cheapautoinsur.net|protectionagencies.net|teamschuco.com|topinsurancerates.net|locateautoinsur.com|quotesinyourstate.com|affordableautoinsur.net|bestinsurplans.net|businessinsurtips.com|bestinsurcoverage.com|carinsuragency.com|autoprotectiontips.com|comparelifeinsurers.net|homeownerscover.com|getthebestratesfast.com|findyourcarinsurance.net|insurancequotesforfree.net|freequotesfast.net|www.carinsurplans.com|www.lifeinsurpolicies.com|carinsurplans.com|yourhealthservice.net|lifeinsurforseniors.com|carinsurforyou.com|bestcarinsurers.net|lifeinsurpolicies.com|autoinsurplans.net)}is ) {
             $class->notify_admins( %args, id => "00044",
                                   reason => "insurance spam comment" );
             return 1;

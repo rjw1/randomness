@@ -130,7 +130,7 @@
 
 <div id="pub_photo">
   [% IF pub.photo_url %]
-    <a href="[% pub.flickr | html %]"><img src="[% pub.photo_url | html %]" width="[% pub.photo_width | html %]" height="[% pub.photo_height | html %]"></a>
+    <a href="[% pub.flickr | html %]"><img class="pub_photo" src="[% pub.photo_url | html %]" width="[% pub.photo_width | html %]" height="[% pub.photo_height | html %]"></a>
   [% END %]
 </div>
 

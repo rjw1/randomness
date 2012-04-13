@@ -3,18 +3,23 @@ var markers = [];
 var content = [];
 var infowindow;
 var base_url = "http://pubology.co.uk/";
+var centre_lat, centre_long;
 
-function initialise( centre_lat, centre_long ) {
-  var map_centre = new google.maps.LatLng( centre_lat, centre_long );
-  var map_options = {
-                      zoom: 13,
-                      center: map_centre,
-                      mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-  map = new google.maps.Map( document.getElementById( "map_canvas" ),
+$(
+  function() {
+    var map_centre = new google.maps.LatLng( centre_lat, centre_long );
+    var map_options = {
+                        zoom: 13,
+                        center: map_centre,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                      };
+    map = new google.maps.Map( document.getElementById( "map_canvas" ),
                                  map_options );
-  infowindow = new google.maps.InfoWindow();
-}
+    infowindow = new google.maps.InfoWindow();
+
+    add_markers();
+  }
+);
 
 function add_marker( i, pub ) {
   var icon;

@@ -35,6 +35,7 @@
 
   centre_lat = [% centre_lat %];
   centre_long = [% centre_long %];
+  use_gmaps = [% use_gmaps %];
 
   function add_markers() {
     var pub;

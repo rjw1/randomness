@@ -18,12 +18,14 @@
   [% END %]
 
   [% IF do_map %]
-    <script type="text/javascript"
-     src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;region=GB">
-    </script>
     <script src="http://code.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
-    <script type="text/javascript"
-            src="[% base_url %]js/leaflet-google.js"></script>
+    [% IF use_gmaps %]
+      <script type="text/javascript"
+       src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;region=GB">
+      </script>
+      <script type="text/javascript"
+              src="[% base_url %]js/leaflet-google.js"></script>
+    [% END %]
     <script type="text/javascript"
             src="http://www.pubology.co.uk/js/map.js"></script>
   [% END %]

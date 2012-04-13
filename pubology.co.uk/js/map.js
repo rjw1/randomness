@@ -1,68 +1,60 @@
-var map;
+var centre_lat, centre_long, map;
 var markers = [];
-var content = [];
-var infowindow;
 var base_url = "http://pubology.co.uk/";
-var centre_lat, centre_long;
+var icons = {};
+
+var gicon = L.Icon.extend( {
+    shadowUrl: null,
+    iconSize: new L.Point( 32, 32 ),
+    iconAnchor: new L.Point( 15, 32 ),
+    popupAnchor: new L.Point( 0, -40 )
+} );
+var icon_base_url = 'http://maps.google.com/mapfiles/ms/micons/';
+
+icons.open = new gicon( icon_base_url + 'green-dot.png' );
+icons.closed = new gicon( icon_base_url + 'yellow-dot.png' );
+icons.demolished = new gicon( icon_base_url + 'red-dot.png' );
 
 $(
   function() {
-    var map_centre = new google.maps.LatLng( centre_lat, centre_long );
-    var map_options = {
-                        zoom: 13,
-                        center: map_centre,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                      };
-    map = new google.maps.Map( document.getElementById( "map_canvas" ),
-                                 map_options );
-    infowindow = new google.maps.InfoWindow();
+    map = new L.Map( 'map_canvas' );
+    var glayer = new L.Google( 'ROADMAP' );
+    var map_centre = new L.LatLng( centre_lat, centre_long );
+    map.setView( map_centre, 13 ).addLayer( glayer );
 
     add_markers();
   }
 );
 
 function add_marker( i, pub ) {
-  var icon;
-  var position;
+  var content, icon, marker;
 
   if ( pub.not_on_map ) {
     return;
   }
 
-  position = new google.maps.LatLng( pub.lat, pub.long );
-  icon = "http://maps.google.com/mapfiles/ms/micons/";
   if ( pub.demolished ) {
-    icon = icon + "red";
+    icon = icons.demolished;
   } else if ( pub.closed ) {
-    icon = icon + "yellow";
+    icon = icons.closed;
   } else {
-    icon = icon + "green";
+    icon = icons.open;
   }
-  icon = icon + "-dot.png";
-  markers[ i ] = new google.maps.Marker({
-      position: position,
-      title: pub.name,
-      map: map,
-      icon: icon
-  });
-  content[ i ] = '<a href="' + base_url + 'pubs/' + pub.id + '.html">' +
-                 pub.name + '</a>';
+
+  marker = new L.Marker( new L.LatLng( pub.lat, pub.long ),
+                         { icon: icon } );
+  map.addLayer( marker );
+
+  content = '<a href="' + base_url + 'pubs/' + pub.id + '.html">' +
+            pub.name + '</a>';
   if ( pub.demolished ) {
-    content[ i ] = content[ i ] + ' (demolished)';
+    content = content + ' (demolished)';
   } else if ( pub.closed ) {
-    content[ i ] = content[ i ] + ' (closed)';
+    content = content + ' (closed)';
   }
-  content[ i ] = content[ i ] + '<br>' + pub.address;
-  google.maps.event.addListener( markers[ i ], "click", function() {
-    infowindow.setContent( content[ i ] );
-    infowindow.open( map, markers[ i ] );
-  } );
-}
+  content = content + '<br>' + pub.address;
 
-function open_marker( i ) {
-  infowindow.setContent( content[ i ] );
-  infowindow.open( map, markers[ i ] );
-  map.panTo( markers[ i ].getPosition() );
-  return false;
-}
+  marker.bindPopup( content );
 
+  markers[ i ] = marker;
+}

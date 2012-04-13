@@ -21,7 +21,7 @@
           [% CGI.escapeHTML( pub.name ) %] (not on map &#8212;
           <a href="[% base_url %]pubs/[% pub.id %].html">view pub info</a>)
         [% ELSE %]
-          <a href="#" onclick="markers[ [% i %] ].openPopup(); return false">[% CGI.escapeHTML( pub.name ) %]</a>
+          <a href="#" onclick="return show_marker( [% i %] )">[% CGI.escapeHTML( pub.name ) %]</a>
         [% END %]
       </li>
     [% END %]

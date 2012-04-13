@@ -188,11 +188,13 @@ You can access any of the things you put in when you called new(), e.g.
 sub TO_JSON {
   my $self = shift;
   return {
-    %$self,
+    name => $self->name,
     lat => $self->lat,
     long => $self->long,
     not_on_map => $self->not_on_map,
     address => $self->address,
+    demolished => $self->demolished,
+    closed => $self->closed,
   };
 }
 

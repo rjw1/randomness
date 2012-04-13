@@ -1,5 +1,5 @@
 var centre_lat, centre_long, map;
-var markers = [];
+var positions = [], markers = [];
 var base_url = "http://pubology.co.uk/";
 var icons = {};
 
@@ -27,11 +27,13 @@ $(
 );
 
 function add_marker( i, pub ) {
-  var content, icon, marker;
+  var content, icon, marker, position;
 
   if ( pub.not_on_map ) {
     return;
   }
+
+  position = new L.LatLng( pub.lat, pub.long );
 
   if ( pub.demolished ) {
     icon = icons.demolished;
@@ -41,8 +43,7 @@ function add_marker( i, pub ) {
     icon = icons.open;
   }
 
-  marker = new L.Marker( new L.LatLng( pub.lat, pub.long ),
-                         { icon: icon } );
+  marker = new L.Marker( position, { icon: icon } );
   map.addLayer( marker );
 
   content = '<a href="' + base_url + 'pubs/' + pub.id + '.html">' +
@@ -57,4 +58,12 @@ function add_marker( i, pub ) {
   marker.bindPopup( content );
 
   markers[ i ] = marker;
+  positions[ i ] = position;
 }
+
+function show_marker( i ) {
+  markers[ i ].openPopup();
+  map.panTo( positions[ i ] );
+  return false;
+}
+

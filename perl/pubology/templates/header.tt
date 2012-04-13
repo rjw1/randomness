@@ -4,7 +4,7 @@
 <head>
   <title>[% IF subtitle %][% subtitle %]: [% END %]London Pubology</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" href="/stylesheets/pubology.css" type="text/css" />
+  <link rel="stylesheet" href="[% base_url %]stylesheets/pubology.css" type="text/css" />
   [% IF do_map OR is_admin_page %]
     <script type="text/javascript" 
       src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"> 
@@ -23,11 +23,7 @@
   [% END %]
 </head>
 
-[% IF do_map %]
-  <body onload="initialise( [% centre_lat %], [% centre_long %] ); add_markers()">
-[% ELSE %]
-  <body>
-[% END %]
+<body>
 
 <div id="body_wrapper">
 

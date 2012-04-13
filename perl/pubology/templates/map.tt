@@ -32,6 +32,10 @@
 </div>
 
 <script type="text/javascript">
+
+  centre_lat = [% centre_lat %];
+  centre_long = [% centre_long %];
+
   function add_markers() {
     var pub;
     [% i = 0 %]

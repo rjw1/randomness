@@ -99,6 +99,7 @@ my $config = Config::Tiny->read( "$HOME/conf/pubology.conf" )
 
 my $flickr_key    = $config->{_}->{flickr_key}    || "";
 my $flickr_secret = $config->{_}->{flickr_secret} || "";
+my $use_gmaps     = $config->{_}->{use_gmaps} || 0;
 
 my %data = PubSite->parse_csv(
   file          => $tmpfile_name,
@@ -184,6 +185,7 @@ sub write_map_page {
     max_long => $max_long,
     centre_lat => ( ( $max_lat + $min_lat ) / 2 ),
     centre_long => ( ( $max_long + $min_long ) / 2 ),
+    use_gmaps => $use_gmaps,
     updated => get_time(),
     postal_district => uc( $postal_district ),
   };

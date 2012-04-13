@@ -1,5 +1,8 @@
 <h1><a href="[% home_link %]">[% site_name %]</a></h1>
 <div id="summary">
+  [% IF username %]
+    <div class="summary_bar_username">You are logged in as [% username %].</div>
+  [% END %]
   <div class="summary_bar_link">
     <a href="[% full_cgi_url %]?News">RGL News</a>
   </div> 
